@@ -6,18 +6,22 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathtools}
+\usepackage{stmaryrd}
 \newtheorem {mydef} {D\'efinition}
+\newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
 \begin{document}
 
     \title{Diagnosability}
 
     \author{François Godi, Xavier Montillet, Chen Qian}
 
-\section{Automate}
+\section{Pr\'erequis}
 
-\subsection{D\'efinition}
+\subsection{Automates}
 
-Un automate fini non déterministe avec  $\varepsilon$-transitions est un 5-uplet
+\subsubsection{D\'efinition}
+
+Un automate fini non déterministe (avec $\varepsilon$-transitions) est un 5-uplet
 $$A = (Q, \Sigma, \Delta, q_0, F)$$
 o\`u
 \begin{itemize}
@@ -28,24 +32,40 @@ o\`u
 	\item $F$ l'ensemble des \'etats finaux.
 \end{itemize}
 
-\subsection{Notations}
-\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \overset{l}{\underset{\Delta}{\to}}1 q$ pour $(p,l,q) \in \Delta$.
+\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \overset{l}{\underset{\Delta}{\to}}q$ pour $(p,l,q) \in \Delta$.
 
-On notera $q_0 \overset{l_0}{\underset{\Delta}{\to}} \dots \overset{l_n}{\underset{\Delta}{\to}} q_{n+1}$ pour $\forall k \in \{0,\dots,n\}, q_k \overset{l_k}{\underset{\Delta}{\to}} q_{k+1}$.
+On notera \'egalement $q_0 \overset{l_0}{\underset{\Delta}{\to}} \dots \overset{l_n}{\underset{\Delta}{\to}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k \overset{l_k}{\underset{\Delta}{\to}} q_{k+1}$.
 
-\subsection{Produit synchrone}
 
-Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma, \Delta', q_0', F')$, on définit le produit synchrone de ces automates, $A\times A' = (Q \times Q', \Sigma, \Delta'', (q_0, q_0'), F\times F')$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{\underset{\Delta''}{\to}}(q,q') \iff p\overset{l}{\underset{\Delta}{\to}}q \land p'\overset{l}{\underset{\Delta'}{\to}}q'$.
 
-\subsection{$\varepsilon$-clôture}
+Un automate fini non d\'eterministe sans $\varepsilon$-transitions est un automate fini non d\'eterministe tel que $\Delta \subseteq (Q\times \Sigma \times Q)$.
+
+Un automate fini d\'eterministe est un automate fini non-d\'eterministe sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{\underset{\Delta}{\to}}q \land p\overset{l}{\underset{\Delta}{\to}}q' \implies q=q'$
+
+\subsubsection{Langage reconnu}
+
+Le langage $L(A)$ reconnu par un automate $A$ est d\'efini par... TODO
+
+
+\subsubsection{Produit synchrone}
+
+Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma, \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma, \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{\underset{\Delta''}{\to}}(q,q') \iff p\overset{l}{\underset{\Delta}{\to}}q \land p'\overset{l}{\underset{\Delta'}{\to}}q'$.
+
+\subsubsection{$\varepsilon$-clôture}
 
 On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$, l'$\varepsilon$-clôture \`a gauche de l'automate $A$.
 
 $\Delta'$ est d\'efinie par $p \overset{l}{\underset{\Delta'}{\to}} r \iff \exists q_1,\dots,q_n \in Q, p \overset{\varepsilon}{\underset{\Delta}{\to}} q_1 \overset{\varepsilon}{\underset{\Delta}{\to}} \dots \overset{\varepsilon}{\underset{\Delta}{\to}} q_n \overset{l}{\underset{\Delta}{\to}} r$.
 
-\section{Mots et langages}
+\subsection{Mots et langages}
 
-On d\'efinit le langage $L(A)$ reconnu par un automate $A$ comme ...
+\subsubsection{Langage reconnu}
+
+On d\'efinit le langage $L(A)$ reconnu par un automate $A$ comme ... TODO?
+
+Le produit synchrone
+
+\subsubsection{Projection}
 
 On définit la projection des événements sur les observables $P:\Sigma^* \rightarrow \Sigma_0^*$ par :
 $$P(\varepsilon) = \varepsilon$$
