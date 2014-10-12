@@ -51,7 +51,7 @@ Le langage $L(A)$ reconnu par un automate $A$ est d\'efini par... TODO
 
 Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma, \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma, \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{\underset{\Delta''}{\to}}(q,q') \iff p\overset{l}{\underset{\Delta}{\to}}q \land p'\overset{l}{\underset{\Delta'}{\to}}q'$.
 
-On notera que $L(A\times B) = L(A) \cap L(B)$ et que $|A\times B| = |A| \times |B|$.
+On notera que $L(A\times B) = L(A) \cap L(B)$.
 
 \subsection{$\varepsilon$-clôture}
 
@@ -59,12 +59,13 @@ On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$, 
 
 $\Delta'$ est d\'efinie par $p \overset{l}{\underset{\Delta'}{\to}} r \iff \exists q_1,\dots,q_n \in Q, p \overset{\varepsilon}{\underset{\Delta}{\to}} q_1 \overset{\varepsilon}{\underset{\Delta}{\to}} \dots \overset{\varepsilon}{\underset{\Delta}{\to}} q_n \overset{l}{\underset{\Delta}{\to}} r$.
 
-On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$( et que $|\operatorname{cl}_\varepsilon(A)|=O(|A|)$???).
+On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
 On d\'efinit le langage $L(A)$ reconnu par un automate $A$ comme ... TODO?
 
 \subsection{Projection}
 TODO automate correspondant
+
 Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $P_{\Sigma \to \Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
 
 $$P_{\Sigma \to \Sigma'}(\varepsilon) = \varepsilon$$
@@ -75,6 +76,14 @@ a &\text{if } a\in \Sigma'\\
 $$\forall a \in \Sigma, \forall u \in \Sigma^+, P_{\Sigma \to \Sigma'}(au)=P_{\Sigma \to \Sigma'}(a)P_{\Sigma \to \Sigma'}(u)$$
 
 \section{Diagnosticabilit\'e}
+
+Diagnostiquer un syst\`eme, c'est d\'etecter s'il a fait une faute en un temps born\'e apr\`es la faute. On formalise cette notion de la fa\c{c}on suivante :
+\begin{itemize}
+	\item On se donne un alphabet $\Sigma=\Sigma_o\sqcup\Sigma_f$ o\`u $\Sigma_o$ est l'ensemble des \'ev\`enements observables et $\Sigma_f$ et l'ensemble des \'ev\`enements fautifs
+	\item On repr\'esente le syst\`eme par un automate $\mathcal F$
+	\item On repr\'esente le mod\`ele de faute par un langage r\'egulier $L$
+	\item 
+\end{itemize}
 
 Lorsque un mot est généré par l'automate, à chaque transition, on peut observer l’événement de la transition si et seulement si cet événement est observable. Étant donné que :
 \begin{enumerate}
