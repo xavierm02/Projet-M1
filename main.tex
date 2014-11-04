@@ -292,4 +292,16 @@ C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 	\item $final-opaque$ : $\sigma = s\oplus \lambda$
 	\item $total-opaque$ : $\sigma = s s_1 \dots s_n \mbox{ avec } s_i = s\oplus(l_1\dots l_n)$
 \end{itemize} 
+
+\section{Non-interf\'erence}
+
+L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soit low. Les labels low sont visibles par tout le monde alors que les labels high sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'un label high dans un run en observant uniquement les labels low.
+
+\begin{mydef}
+  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $P_{L\to L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
+\end{mydef}
+
+Th : Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+
+Th : Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction 'dobservation statique.
 \end{document}
