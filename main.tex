@@ -65,12 +65,12 @@ On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 \subsection{Projection}
 %TODO automate correspondant
 
-Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $P_{\Sigma \to \Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
+Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
 
-$$\forall a \in \Sigma \cup \{\varepsilon\}, \forall u \in \Sigma^*, P_{\Sigma \to \Sigma'}(au)=
+$$\forall a \in \Sigma \cup \{\varepsilon\}, \forall u \in \Sigma^*, \pi_{\Sigma'}(au)=
 \left\{\begin{array}{ll}
-aP_{\Sigma \to \Sigma'}(u) &\text{si } a\in \Sigma'\\
-P_{\Sigma \to \Sigma'}(u) &\text{sinon} \\
+a\pi_{\Sigma'}(u) &\text{si } a\in \Sigma'\\
+\pi_{\Sigma'}(u) &\text{sinon} \\
 \end{array}\right.$$
 
 \section{Diagnosticabilit\'e}
@@ -82,14 +82,14 @@ Un syst\`eme est diagnosticable si, lorsque une faute se produit, on peut la dé
 	\item On repr\'esente le mod\`ele de faute par un langage r\'egulier $L$
 \end{itemize}
 
-On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $P_{\Sigma \to \Sigma_o}(u)$. 
+On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $\pi_{\Sigma_o}(u)$. 
 
 
 \section{R\'eductions}
 
 \subsection{I-diagnosticabilit\'e}
 
-Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L \Sigma^* I w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $P_{\Sigma \to \Sigma_o}(u)$. 
+Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L \Sigma^* I w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $\pi_{\Sigma_o}(u)$. 
 
 Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \Sigma^* I$.
 
@@ -265,7 +265,7 @@ C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soit low. Les labels low sont visibles par tout le monde alors que les labels high sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'un label high dans un run en observant uniquement les labels low.
 
 \begin{mydef}
-  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $P_{L\to L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
+  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
 \end{mydef}
 
 Th : Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
