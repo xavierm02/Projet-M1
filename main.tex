@@ -50,7 +50,7 @@ Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma
 
 \subsection{Produit synchrone}
 
-Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma, \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma, \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
 
 On notera que $L(A\times B) = L(A) \cap L(B)$.
 
@@ -75,58 +75,38 @@ P_{\Sigma \to \Sigma'}(u) &\text{sinon} \\
 
 \section{Diagnosticabilit\'e}
 
-Diagnostiquer un syst\`eme, c'est d\'etecter s'il a fait une faute en un temps born\'e apr\`es la faute. On formalise cette notion de la fa\c{c}on suivante :
+Un syst\`eme est diagnosticable si, lorsque une faute se produit, on peut la détecter en temps fini. On formalise cette notion de la fa\c{c}on suivante :
 \begin{itemize}
-	\item On se donne un alphabet $\Sigma=\Sigma_o\sqcup\Sigma_f$ o\`u $\Sigma_o$ est l'ensemble des \'ev\`enements observables et $\Sigma_f$ et l'ensemble des \'ev\`enements fautifs
+	\item On se donne un alphabet $\Sigma=\Sigma_o\sqcup\Sigma_{no}$ o\`u $\Sigma_o$ est l'ensemble des \'ev\`enements observables et $\Sigma_{no}$ est l'ensemble des \'ev\`enements non observables.
 	\item On repr\'esente le syst\`eme par un automate $\mathcal F$
 	\item On repr\'esente le mod\`ele de faute par un langage r\'egulier $L$
-	\item 
 \end{itemize}
 
-Lorsque un mot est généré par l'automate, à chaque transition, on peut observer l’événement de la transition si et seulement si cet événement est observable. Étant donné que :
-\begin{enumerate}
-\item Un événement fautif observable est trivialement diagnosticable.
-\item Les transitions du système dont l'événement est non fautif et non observable peuvent déjà être modélisées par des $\varepsilon$-transitions.
-\end{enumerate} 
-On peut considérer sans perte de généralité que les observables sont les événements non fautifs, on note $\Sigma_0 = \Sigma \setminus \{f\}$ cet ensemble d'observables.
-\paragraph{}
-Soit $u \in \Sigma^*$, on note $l(u)$ sa longueur. On dit que $G$ est diagnosticable si pour tout mot $u$ généré par $G$, il existe $n \in \mathbb{N}$ tel que il suffit de connaître les $l(P(u)) + n$ premières lettres de $P(u)$ pour savoir si f est l'une des lettres de $u$. Soit $I \subset \Sigma$, on dit que $G$ est I-diagnosticable si pour tout mot $u$ généré par $G$ et se terminant par $\sigma \in I$, il existe $n \in \mathbb{N}$ tel que il suffit de connaître les $l(P(u)) + n$ premières lettres de $P(u)$ pour savoir si f est l'une des lettres de $u$.
-Le système que l'on cherche à diagnostiqueur est modélisé par un automate fini ind\'eterministe avec $\varepsilon$-transitions tel que $F=Q$ et $f\in \Sigma$.
+On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $P_{\Sigma \to \Sigma_o}(u)$. 
 
 
 \section{R\'eductions}
 
 \subsection{I-diagnosticabilit\'e}
 
-TODO
+Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L \Sigma^* I w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $P_{\Sigma \to \Sigma_o}(u)$. 
 
-\subsection{Vivant}
+Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \Sigma^* I$.
 
-TODO
+%\subsection{Vivant}
+
+%TODO
 
 \section{Algorithme de construction du diagnostiqueur}
     Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel.
-        \subsection{Quelques notions}
+        \subsection{Automate de mod\`ele de faute}
    \begin{mydef}{Automate de mod\`ele de faute : }
-                Un automate adapté au modèle de faute que l'on cherche à diagnostiquer. Plus formellement, nous posons un automate $MF = (\Sigma = \Sigma_n \bigsqcup \Sigma_f \bigsqcup \Sigma_r, Q = Q_n \bigsqcup Q_f,q_0,\Delta, F)$,  $Q_n$ est l'ensemble des <<\'etats normaux>> et $Q_f$ l'ensemble des <<\'etats fautifs>>, $\Sigma_n$  l'ensemble des <<\'ev\`enements normaux>>, $\Sigma_f$ l'ensemble des  <<\'ev\`enements fautifs>> et $\Sigma_r$ l'ensemble des <<\'ev\`enements r\'eparatifs>>. $MF$ respecte les propri\'et\'es suivantes, si nous avons une transition a$\xrightarrow{x}$b:
-                \begin{center}
-                \begin{tabular}{|c|c|c|}
-                        \hline
-                        & $a\in Q_n$ & $a\in Q_f$\\
-                        \hline                        
-                        $x\in \Sigma_n$ & $b\in \Sigma_n$&$b\in \Sigma_f$\\
-                        \hline                        
-                        $x\in \Sigma_f$ &$b\in \Sigma_f$&$b\in \Sigma_f$\\
-                        \hline
-                        $x\in \Sigma_r$ & $b\in \Sigma_n$ & $b \in \Sigma_n$\\
-                        \hline
-                \end{tabular}
-                \end{center}
-    \end{mydef}
+ Un automate qui reconnait le langage de faute L. Les états finaux de l'automate sont appelés <<\'etats fautifs>>, les autres <<\'etats normaux>>.
+ \end{mydef}
     
-    \paragraph{Exemple (automate des mod\`ele de fautes): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
+    \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
-    Dans les automates suivants, $ \Sigma_f  = \{f\}$, $ \Sigma_r  = \{r\}$, les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. 
+   Soit $f\in \Sigma$, $L  = \{f\}$, les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. 
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -136,9 +116,9 @@ TODO
                         \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$(\Sigma \backslash \{ f \})^*$} (1);
                         \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$\Sigma^*$} (2);
                 \end{tikzpicture}
-                \caption{Automate de mod\`ele de fautes permanentas}
+                \caption{Automate de mod\`ele de faute simple}
         \end{figure}
-        
+Dans cet exemple, on veut modéliser des réparations, soit $f, r \in \Sigma$, $L  = \{f (\Sigma\backslash \{ r \})^* \}$        
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -154,38 +134,25 @@ TODO
             
     
     \subsection{Construction du diagnostiqueur}
-    Pour construire les diagnostiqueurs de l'automate $A$ avec l'automate de mod\`ele de faute $MF$. Nous allons proc\'eder de la mani\`ere suivante :
+    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $MF$, on proc\'ede de la mani\`ere suivante :
     
     \begin{enumerate}
-            \item Faire le  produit de l'automate $A$ avec l'automate $MF$. Un \'etat de $A\times MF$ est appel\'e un \'etat fautif si et seulement si c'est un produit d'un \'etat fautif de $MF$ avec un autre \'etat de $A$
-            \item Remplacer les \'ev\`enements fautifs par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \varepsilon$-clôture$((A\times MF)[\varepsilon/f])$.
-          \item D\'eterminiser l'automate $C$, on note $D$ l'automate d\'eterminis\'e.
+            \item Faire le produit de l'automate $A$ avec l'automate $MF$. Un \'etat de $A\times MF$ est appel\'e un \'etat fautif si et seulement si c'est un produit d'un \'etat fautif de $MF$ avec un autre \'etat de $A$
+            \item Remplacer les \'ev\`enements de $\Sigma_{no}$ par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \varepsilon$-clôture$((A\times MF)[\varepsilon/f])$.
+          \item D\'eterminiser l'automate $C$ avec l'algorithme des parties, on note $D$ l'automate d\'eterminis\'e. Un état de $D$ appartient à un ensemble isomorphe à $\mathcal{P}(Q)$, on dit que l'état de $D$ correspond à l'ensemble d'états de Q.
             \item Nous discriminons les diff\'erents \'etats de $D$ :
                     \begin{itemize}
                             \item  \'Etats normaux: Tous les \'etats correspondants à un ensemble d'\'etats non-fautifs.
                            \item \'Etats fautifs:  Tous les \'etats correspondants à un ensemble d'\'etats fautifs.
                             \item \'Etats de doute: Tous les \'etats correspondants à un ensemble composé à la fois d'\'etats fautifs et non-fautifs.
                     \end{itemize}  
-                      L'intuition de cette appellation est la suivante : 
-                    \begin{itemize}
-                    \item Si nous arrivons dans un \'etat normal nous sommes s\^ur qu'aucun \'ev\`enenement fautif ne s'est produit dans notre syst\`eme. 
-    \item Si nous arrivons dans un \'etat fautif nous sommes s\^ur qu'un \'ev\`enenement fautif s'est produit dans notre syst\`eme. 
-            \item Si nous arrivons dans un \'etat de doute, nous ne pouvons pas d\'eterminer si \'ev\`enement fautif s'est produit.
-\end{itemize}
+                 
     \end{enumerate} 
-    \subsection{D\'eterminer les \'ev\`enements fautifs}
-        Une fois que nous avons construit le diagnostiqueur $D$ de l'automate $A$ avec le mod\`ele de faute $MF$, l'article de Meera Sampath et Kasim Sinnamohideen propose de regarder les deux ensembles suivants :
-        \begin{itemize}
-             \item Ensemble $\mathcal{N} = $ tous les mots accept\'es par les \'etats normaux.  % "ou un cycle.." peu clair
-             \item Ensemble $\mathcal{F} = $ tous les mots accept\'es par les \'etats fautifs. %idem
-        \end{itemize}
-    Nous pouvons dire que le syst\`eme est non-diagnosticable si et seulement si $\mathcal{N}\cap \mathcal{F}$ ne contient pas  mots infinis.% Pas de projection ?? 
+     
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-Soit $\mathcal A$ un automate fini ind\'eterministe avec $\varepsilon$-transitions et $\mathcal F$ un . un langage r\'egulier suffixe-clos TODO.
-
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport a un mod\`ele de fautes si et seulement si il existe des mots observable a la fois quand une faute a eu lieu et quand aucune faut n'a eu lieu de taille arbitraire. Le langage $\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F)$ est le langage des observations avec fautes. Le langage $\pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage est observations des ex\'ecutions avec faute. Le langage $\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)$ est le langage des ex\'ecutions sans faute. Le langage $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F))$ est le langage des observations d'ex\'ecutions sans faute. Donc $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)) \cap \pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage des observations ambigues. Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est equivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'abscence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate de taille $|\mathcal F|^2 \times |\mathcal A|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|\mathcal F|^2 \times |\mathcal A|^2$ pour d\'ecider si un automate est diagnosticable par rapport \`a un mod\`ele de fautes.
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport a un mod\`ele de fautes si et seulement si il existe des mots qui peuvent être observés qu'une faute se soit produite ou non. Le langage $\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F)$ est le langage des observations avec fautes. Le langage $\pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage est observations des ex\'ecutions avec faute. Le langage $\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)$ est le langage des ex\'ecutions sans faute. Le langage $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F))$ est le langage des observations d'ex\'ecutions sans faute. Donc $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)) \cap \pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage des observations ambiguës. Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate de taille $|\mathcal F|^2 \times |\mathcal A|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|\mathcal F|^2 \times |\mathcal A|^2$ pour d\'ecider si un automate est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 
