@@ -44,7 +44,7 @@ Un automate fini d\'eterministe est un automate fini ind\'eterministe sans $\var
 
 \subsection{Langage reconnu}
 
-Un mot $u_1...u_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tel que $q_0 \overset{u_1}{{\to}} q_1 \overset{u_2}{{\to}} \dots \overset{u_n}{{\to}} q_{n+1}$.
+Un mot $u_1...u_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tel que $q_0 \overset{u_1}{{\to}} q_1 \overset{u_2}{{\to}} \dots \overset{u_n}{{\to}} q_{n+1}$ et $q_{n+1} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
@@ -75,21 +75,21 @@ P_{\Sigma \to \Sigma'}(u) &\text{sinon} \\
 
 \section{Diagnosticabilit\'e}
 
-Un syst\`eme est diagnosticable si, lorsque une faute se produit, on peut la détecter en temps fini. On formalise cette notion de la fa\c{c}on suivante :
+Un syst\`eme extension-clos est diagnosticable si, lorsque une faute se produit, on peut la détecter en temps fini. On formalise cette notion de la fa\c{c}on suivante :
 \begin{itemize}
 	\item On se donne un alphabet $\Sigma=\Sigma_o\sqcup\Sigma_{no}$ o\`u $\Sigma_o$ est l'ensemble des \'ev\`enements observables et $\Sigma_{no}$ est l'ensemble des \'ev\`enements non observables.
 	\item On repr\'esente le syst\`eme par un automate $\mathcal F$
 	\item On repr\'esente le mod\`ele de faute par un langage r\'egulier $L$
 \end{itemize}
 
-On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $P_{\Sigma \to \Sigma_o}(u)$. 
+On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que f est un sous mot de $u$ en observant $P_{\Sigma \to \Sigma_o}(u)$. 
 
 
 \section{R\'eductions}
 
 \subsection{I-diagnosticabilit\'e}
 
-Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L \Sigma^* I w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $P_{\Sigma \to \Sigma_o}(u)$. 
+Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|P_{\Sigma \to \Sigma_o}(w)| \geq n, \forall u \in \Sigma^*f \Sigma^* I w$, on peut savoir que f est un sous mot de $u$ en observant $P_{\Sigma \to \Sigma_o}(u)$. 
 
 Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \Sigma^* I$.
 
@@ -138,7 +138,7 @@ Dans cet exemple, on veut modéliser des réparations, soit $f, r \in \Sigma$, $
     
     \begin{enumerate}
             \item Faire le produit de l'automate $A$ avec l'automate $MF$. Un \'etat de $A\times MF$ est appel\'e un \'etat fautif si et seulement si c'est un produit d'un \'etat fautif de $MF$ avec un autre \'etat de $A$
-            \item Remplacer les \'ev\`enements de $\Sigma_{no}$ par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \varepsilon$-clôture$((A\times MF)[\varepsilon/f])$.
+            \item Remplacer les \'ev\`enements de $\Sigma_{no}$ par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \operatorname{cl}_\varepsilon((A\times MF)[\varepsilon/f])$.
           \item D\'eterminiser l'automate $C$ avec l'algorithme des parties, on note $D$ l'automate d\'eterminis\'e. Un état de $D$ appartient à un ensemble isomorphe à $\mathcal{P}(Q)$, on dit que l'état de $D$ correspond à l'ensemble d'états de Q.
             \item Nous discriminons les diff\'erents \'etats de $D$ :
                     \begin{itemize}
