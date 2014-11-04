@@ -21,35 +21,36 @@
 
 \subsection{Automates}
 
-Un automate fini non déterministe (avec $\varepsilon$-transitions) est un 5-uplet
+Un automate fini indéterministe (avec $\varepsilon$-transitions) est un 5-uplet
 $$A = (Q, \Sigma, \Delta, q_0, F)$$
 o\`u
 \begin{itemize}
 	\item $Q$ est l'ensemble fini des états du système.
 	\item $\Sigma$ est l'ensemble des événements.
 	\item $\Delta \subseteq (Q \times (\Sigma \cup \{\varepsilon\}) \times Q)$ est une relation de transition.
-	\item $q_0 \in Q$ l'états initial.
+	\item $q_0 \in Q$ l'état initial.
 	\item $F$ l'ensemble des \'etats finaux.
 \end{itemize}
 
-\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \overset{l}{\underset{\Delta}{\to}}q$ pour $(p,l,q) \in \Delta$.
+\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \overset{l}{{\to}}q$ pour $(p,l,q) \in \Delta$.
 
-On notera \'egalement $q_0 \overset{l_0}{\underset{\Delta}{\to}} \dots \overset{l_n}{\underset{\Delta}{\to}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k \overset{l_k}{\underset{\Delta}{\to}} q_{k+1}$.
+On notera \'egalement $q_0 \overset{l_0}{{\to}} \dots \overset{l_n}{{\to}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k \overset{l_k}{{\to}} q_{k+1}$.
 
 
 
-Un automate fini non d\'eterministe sans $\varepsilon$-transitions est un automate fini non d\'eterministe tel que $\Delta \subseteq (Q\times \Sigma \times Q)$.
+On dit qu'un automate fini ind\'eterministe est sans $\varepsilon$-transitions lorsque qu'il est tel que  $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
-Un automate fini d\'eterministe est un automate fini non-d\'eterministe sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{\underset{\Delta}{\to}}q \land p\overset{l}{\underset{\Delta}{\to}}q' \implies q=q'$
+Un automate fini d\'eterministe est un automate fini ind\'eterministe sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$
 
 \subsection{Langage reconnu}
 
-Le langage $L(A)$ reconnu par un automate $A$ est d\'efini par... TODO
+Un mot $u_1...u_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tel que $q_0 \overset{u_1}{{\to}} q_1 \overset{u_2}{{\to}} \dots \overset{u_n}{{\to}} q_{n+1}$.
 
+Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
 \subsection{Produit synchrone}
 
-Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma, \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma, \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{\underset{\Delta''}{\to}}(q,q') \iff p\overset{l}{\underset{\Delta}{\to}}q \land p'\overset{l}{\underset{\Delta'}{\to}}q'$.
+Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma, \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma, \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
 
 On notera que $L(A\times B) = L(A) \cap L(B)$.
 
@@ -57,23 +58,20 @@ On notera que $L(A\times B) = L(A) \cap L(B)$.
 
 On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$, l'$\varepsilon$-clôture \`a gauche de l'automate $A$.
 
-$\Delta'$ est d\'efinie par $p \overset{l}{\underset{\Delta'}{\to}} r \iff \exists q_1,\dots,q_n \in Q, p \overset{\varepsilon}{\underset{\Delta}{\to}} q_1 \overset{\varepsilon}{\underset{\Delta}{\to}} \dots \overset{\varepsilon}{\underset{\Delta}{\to}} q_n \overset{l}{\underset{\Delta}{\to}} r$.
+$\Delta'$ est d\'efinie par $p \overset{l}{{\to}} r$ si et seulement si $\exists q_1,\dots,q_n \in Q,$ tels que dans l'automate $A$ on a  $p \overset{\varepsilon}{{\to}} q_1 \overset{\varepsilon}{{\to}} \dots \overset{\varepsilon}{{\to}} q_n \overset{l}{{\to}} r$.
 
 On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
-On d\'efinit le langage $L(A)$ reconnu par un automate $A$ comme ... TODO?
-
 \subsection{Projection}
-TODO automate correspondant
+%TODO automate correspondant
 
 Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $P_{\Sigma \to \Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
 
-$$P_{\Sigma \to \Sigma'}(\varepsilon) = \varepsilon$$
-$$\forall a \in \Sigma, P_{\Sigma \to \Sigma'}(a)=\left\{\begin{array}{ll}
-a &\text{if } a\in \Sigma'\\
-\varepsilon &\text{if } a\not\in \Sigma'\\
+$$\forall a \in \Sigma \cup \{\varepsilon\}, \forall u \in \Sigma^*, P_{\Sigma \to \Sigma'}(au)=
+\left\{\begin{array}{ll}
+aP_{\Sigma \to \Sigma'}(u) &\text{si } a\in \Sigma'\\
+P_{\Sigma \to \Sigma'}(u) &\text{sinon} \\
 \end{array}\right.$$
-$$\forall a \in \Sigma, \forall u \in \Sigma^+, P_{\Sigma \to \Sigma'}(au)=P_{\Sigma \to \Sigma'}(a)P_{\Sigma \to \Sigma'}(u)$$
 
 \section{Diagnosticabilit\'e}
 
@@ -93,7 +91,7 @@ Lorsque un mot est généré par l'automate, à chaque transition, on peut obser
 On peut considérer sans perte de généralité que les observables sont les événements non fautifs, on note $\Sigma_0 = \Sigma \setminus \{f\}$ cet ensemble d'observables.
 \paragraph{}
 Soit $u \in \Sigma^*$, on note $l(u)$ sa longueur. On dit que $G$ est diagnosticable si pour tout mot $u$ généré par $G$, il existe $n \in \mathbb{N}$ tel que il suffit de connaître les $l(P(u)) + n$ premières lettres de $P(u)$ pour savoir si f est l'une des lettres de $u$. Soit $I \subset \Sigma$, on dit que $G$ est I-diagnosticable si pour tout mot $u$ généré par $G$ et se terminant par $\sigma \in I$, il existe $n \in \mathbb{N}$ tel que il suffit de connaître les $l(P(u)) + n$ premières lettres de $P(u)$ pour savoir si f est l'une des lettres de $u$.
-Le système que l'on cherche à diagnostiqueur est modélisé par un automate fini non d\'eterministe avec $\varepsilon$-transitions tel que $F=Q$ et $f\in \Sigma$.
+Le système que l'on cherche à diagnostiqueur est modélisé par un automate fini ind\'eterministe avec $\varepsilon$-transitions tel que $F=Q$ et $f\in \Sigma$.
 
 
 \section{R\'eductions}
@@ -185,7 +183,7 @@ TODO
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-Soit $\mathcal A$ un automate fini non-d\'eterministe avec $\varepsilon$-transitions et $\mathcal F$ un . un langage r\'egulier suffixe-clos TODO.
+Soit $\mathcal A$ un automate fini ind\'eterministe avec $\varepsilon$-transitions et $\mathcal F$ un . un langage r\'egulier suffixe-clos TODO.
 
 L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport a un mod\`ele de fautes si et seulement si il existe des mots observable a la fois quand une faute a eu lieu et quand aucune faut n'a eu lieu de taille arbitraire. Le langage $\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F)$ est le langage des observations avec fautes. Le langage $\pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage est observations des ex\'ecutions avec faute. Le langage $\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)$ est le langage des ex\'ecutions sans faute. Le langage $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F))$ est le langage des observations d'ex\'ecutions sans faute. Donc $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)) \cap \pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage des observations ambigues. Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est equivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'abscence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate de taille $|\mathcal F|^2 \times |\mathcal A|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|\mathcal F|^2 \times |\mathcal A|^2$ pour d\'ecider si un automate est diagnosticable par rapport \`a un mod\`ele de fautes.
 
