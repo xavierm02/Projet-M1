@@ -156,4 +156,119 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport a un m
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 
+
+\section{D\'efinitions de l'opacit\'e}
+
+\subsection{Quelques d\'efinitions de base}
+
+Nous allons d'abord donner quelques d\'efinition sur le syst\`eme de transition d'\'etats \'etiquett\'e afin d'introduire les conceptions de opacit\'e.
+
+\subsubsection{Syst\`eme de transition d'\'etats \'etiquett\'e (LTS)}
+
+Un syst\`eme de transition d'\'etats \'etiquett\'e LTS est un quadruplet 
+
+$$LTS = (S,L,\Delta,S_0)$$
+
+avec
+\begin{itemize}
+	\item $S$ : un ensemble d'\'etats (potentiellement infini)
+	\item $L$ : un ensemble de labels(potentiellement infini)
+	\item $\Delta \subseteq S\times L \times S$ : une relation de transition
+	\item $S_0$ : un ensemble fini non vide des \'etats initiaux 
+\end{itemize}
+
+Remarque : dans la suite nous consid\'erons que des syst\`eme de transition d'\'etats \'etiquett\'e d\'eterministe.
+
+\subsubsection{Run}
+
+Un $Run$ d'un LTS est un couple $(s_0,\lambda)$ avec :
+
+\begin{itemize}
+	\item $s_0 \in S_0$
+	\item $\lambda = l_1 \dots l_n$ : une s\'equence finie des \'etiquettes telle qu'il existe $s_1,s_2,\dots ,s_n \in S$ tels que $\forall i \in \{1, \dots n\}, (s_{i-1},l_i,s_i) \in \Delta$ 
+\end{itemize}
+
+Notons $s_n$ par $s\oplus \lambda$, remarquons que dans la sous-section pr\'ec\'edente nous avons fait l'hypoth\`ese que le $LTS$ est d\'eterministe, donc $s\oplus \lambda$ est bien d\'efini.
+
+L'ensemble des tous les $Run$ est not\'e par $Run(LTS)$.
+
+Nous notons le langage g\'en\'er\'e par $LTS$ par 
+
+$$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lambda) \in Run(LTS)\}$$
+
+
+\subsection{Observabilit\'e et l'opacit\'e}
+
+Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats \'etiquett\'e, et $\Sigma_{obs}$ est un ensemble des \'el\'ements $observables$. Remarque nous notons que $\Sigma_{obs}^{\varepsilon} = \Sigma_{obs} \cup \{\varepsilon\}$
+
+Nous allons maintenant mod\'eliser les diff\'erentes capacit\'es d'observation sur le syst\`eme qui est mod\'elis\'e par un LTS. Nous commen\c cons par d\'efinir les diff\'erents fonctions d'observations
+
+\subsubsection{Diff\'erents fonctions d'observation et leur capacit\'e d'observation}
+
+Nous d\'efinissons toutes les fonctions $\Omega : Run(LTS) \rightarrow \Sigma_{obs}^*$ comme les fonctions   
+ d'observation.
+ 
+Il y a plusieurs types de capacit\'e d'observation : 
+
+
+
+\begin{itemize}
+	\item statique : il existe une <<fonction d'observation>> sur les \'etiquette $\Omega_{etiq} : L \rightarrow \Sigma_{obs}^{\varepsilon}$ telle que 
+	
+	$$\forall (s,\lambda)= (s,l_1\dots l_n) \in Run(LTS), \Omega(s,\lambda) = \Omega_{etiq}(l_1)\circ\Omega_{etiq}(l_2)\circ\dots\circ\Omega_{etiq}(l_n)$$
+	\item $dynamique/orwellian/m-orwellian(m\geq 1)$ :
+		
+		Il existe une <<fonction d'observation>> sur les \'etiquette $\Omega_{etiq} : L\times L^* \rightarrow \Sigma_{obs}^{\varepsilon}$ telle que 
+	
+	$$\forall (s,\lambda)= (s,l_1\dots l_n) \in Run(LTS), \Omega(s,\lambda) = \Omega_{etiq}(k_1)\circ\Omega_{etiq}(k_2)\circ\dots\circ\Omega_{etiq}(k_n)$$
+	
+	Ce sont les diff\'erents choix de $(k_1,\dots, k_n)$ qui d\'efinissent la capacit\'e d'observation.
+	
+	\begin{itemize}
+		\item Dynamique : $k_i = l_1 \dots l_i$
+		\item Orwellian : $k_i = \lambda$
+		\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$		
+	\end{itemize}
+\end{itemize}
+
+	Remarque : la notion $statique$ et $orwellian$ se r\'eduisent en cas particulier de $m-orwellian$, $statique$ est $1-orwellian$ et $orwellian$ est $\infty-orwellian$.
+
+\subsubsection{Pr\'edicat $Prop$}	
+	Nous d\'efinissons un pr\'edicat $Prop$ sur $Run(LTS)$. Notons $\Sigma_{Prop}$ ensemble des \'el\'ements de $Run(LTS)$ tel que $Prop$ est vrais.
+	
+\subsubsection{Diff\'erents types d'Opacit\'e}
+
+\begin{mydef}
+	Soit $\Omega$ une fonction d'observation et $Prop$ un pr\'edicat sur $Run(LTS)$. Nous disons que $Prop$ est opaque par rapport \`a $\Omega$ si et seulement si
+	
+	$$\forall (s,\lambda) \in \Sigma_{Prop}, \exists (s',\lambda')\not\in \Sigma_{Prop} \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$$
+	
+	ou nous pouvons voir cette d\'efinition en terme d'ensembles :
+	
+	$$\Omega(Run(LTS)\cap \Sigma_{Prop})\subseteq \Omega(Run(LTS)-\Sigma_{Prop})$$
+\end{mydef}
+
+Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les fonction d'observation. Nous disons que $Prop$ et $init-opaque/final-opaque/total-opaque$ s'il existe un pr\'edicat $Prop_2$ sur $S$ l'ensemble des \'etats de $LTS$ tel que :
+
+$$\forall (s,\lambda) \in Run(LTS), Prop(s,lambda) = Prop_2(\sigma)$$
+
+C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
+
+\begin{itemize}
+	\item $initial-opaque$ : $\sigma = s$
+	\item $final-opaque$ : $\sigma = s\oplus \lambda$
+	\item $total-opaque$ : $\sigma = s s_1 \dots s_n \mbox{ avec } s_i = s\oplus(l_1\dots l_n)$
+\end{itemize} 
+
+\section{Non-interf\'erence}
+
+L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soit low. Les labels low sont visibles par tout le monde alors que les labels high sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'un label high dans un run en observant uniquement les labels low.
+
+\begin{mydef}
+  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $P_{L\to L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
+\end{mydef}
+
+Th : Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+
+Th : Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction 'dobservation statique.
 \end{document}
