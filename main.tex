@@ -44,7 +44,7 @@ Un automate fini d\'eterministe est un automate fini ind\'eterministe sans $\var
 
 \subsection{Langage reconnu}
 
-Un mot $u_1...u_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tel que $q_0 \overset{u_1}{{\to}} q_1 \overset{u_2}{{\to}} \dots \overset{u_n}{{\to}} q_{n+1}$.
+Un mot $u_1...u_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tel que $q_0 \overset{u_1}{{\to}} q_1 \overset{u_2}{{\to}} \dots \overset{u_n}{{\to}} q_{n+1}$ et $q_{n+1} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
@@ -75,21 +75,23 @@ a\pi_{\Sigma'}(u) &\text{si } a\in \Sigma'\\
 
 \section{Diagnosticabilit\'e}
 
-Un syst\`eme est diagnosticable si, lorsque une faute se produit, on peut la détecter en temps fini. On formalise cette notion de la fa\c{c}on suivante :
+Un syst\`eme extension-clos est diagnosticable si, lorsque une faute se produit, on peut la détecter en temps fini. On formalise cette notion de la fa\c{c}on suivante :
 \begin{itemize}
 	\item On se donne un alphabet $\Sigma=\Sigma_o\sqcup\Sigma_{no}$ o\`u $\Sigma_o$ est l'ensemble des \'ev\`enements observables et $\Sigma_{no}$ est l'ensemble des \'ev\`enements non observables.
 	\item On repr\'esente le syst\`eme par un automate $\mathcal F$
 	\item On repr\'esente le mod\`ele de faute par un langage r\'egulier $L$
 \end{itemize}
 
-On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $\pi_{\Sigma_o}(u)$. 
+On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall  f \in L, \forall w \in \Sigma^*$ tel que $||\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que f est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
 
 
 \section{R\'eductions}
 
 \subsection{I-diagnosticabilit\'e}
 
-Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* L \Sigma^* I w$, on peut savoir qu'il existe un sous mot de $L$ dans $u$ à partir de $\pi_{\Sigma_o}(u)$. 
+
+Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^*f \Sigma^* I w$, on peut savoir que f est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
+
 
 Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \Sigma^* I$.
 
@@ -138,7 +140,7 @@ Dans cet exemple, on veut modéliser des réparations, soit $f, r \in \Sigma$, $
     
     \begin{enumerate}
             \item Faire le produit de l'automate $A$ avec l'automate $MF$. Un \'etat de $A\times MF$ est appel\'e un \'etat fautif si et seulement si c'est un produit d'un \'etat fautif de $MF$ avec un autre \'etat de $A$
-            \item Remplacer les \'ev\`enements de $\Sigma_{no}$ par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \varepsilon$-clôture$((A\times MF)[\varepsilon/f])$.
+            \item Remplacer les \'ev\`enements de $\Sigma_{no}$ par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \operatorname{cl}_\varepsilon((A\times MF)[\varepsilon/f])$.
           \item D\'eterminiser l'automate $C$ avec l'algorithme des parties, on note $D$ l'automate d\'eterminis\'e. Un état de $D$ appartient à un ensemble isomorphe à $\mathcal{P}(Q)$, on dit que l'état de $D$ correspond à l'ensemble d'états de Q.
             \item Nous discriminons les diff\'erents \'etats de $D$ :
                     \begin{itemize}
@@ -152,7 +154,16 @@ Dans cet exemple, on veut modéliser des réparations, soit $f, r \in \Sigma$, $
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport a un mod\`ele de fautes si et seulement si il existe des mots qui peuvent être observés qu'une faute se soit produite ou non. Le langage $\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F)$ est le langage des observations avec fautes. Le langage $\pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage est observations des ex\'ecutions avec faute. Le langage $\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)$ est le langage des ex\'ecutions sans faute. Le langage $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F))$ est le langage des observations d'ex\'ecutions sans faute. Donc $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)) \cap \pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage des observations ambiguës. Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate de taille $|\mathcal F|^2 \times |\mathcal A|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|\mathcal F|^2 \times |\mathcal A|^2$ pour d\'ecider si un automate est diagnosticable par rapport \`a un mod\`ele de fautes.
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si il existe des mots qui peuvent être observés qu'une faute se soit produite ou non.
+
+\begin{itemize}
+  \item $\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F)$ est le langage des observations avec fautes.
+  \item $\pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage est observations des ex\'ecutions avec faute.
+  \item $\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)$ est le langage des ex\'ecutions sans faute.
+  \item $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F))$ est le langage des observations d'ex\'ecutions sans faute.
+  \item Donc $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)) \cap \pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage des observations ambiguës.
+\end{itemize}
+Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate de taille $|\mathcal F|^2 \times |\mathcal A|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|\mathcal F|^2 \times |\mathcal A|^2$ pour d\'ecider si un automate est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 
@@ -161,7 +172,7 @@ Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale p
 
 \subsection{Quelques d\'efinitions de base}
 
-Nous allons d'abord donner quelques d\'efinition sur le syst\`eme de transition d'\'etats \'etiquett\'e afin d'introduire les conceptions de opacit\'e.
+Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquett\'e afin d'introduire les conceptions de opacit\'e.
 
 \subsubsection{Syst\`eme de transition d'\'etats \'etiquett\'e (LTS)}
 
@@ -188,7 +199,7 @@ Un $Run$ d'un LTS est un couple $(s_0,\lambda)$ avec :
 	\item $\lambda = l_1 \dots l_n$ : une s\'equence finie des \'etiquettes telle qu'il existe $s_1,s_2,\dots ,s_n \in S$ tels que $\forall i \in \{1, \dots n\}, (s_{i-1},l_i,s_i) \in \Delta$ 
 \end{itemize}
 
-Notons $s_n$ par $s\oplus \lambda$, remarquons que dans la sous-section pr\'ec\'edente nous avons fait l'hypoth\`ese que le $LTS$ est d\'eterministe, donc $s\oplus \lambda$ est bien d\'efini.
+Notons $s_n$ par $s_0\oplus \lambda$, remarquons que dans la sous-section pr\'ec\'edente nous avons fait l'hypoth\`ese que le $LTS$ est d\'eterministe, donc $s_0\oplus \lambda$ est bien d\'efini.
 
 L'ensemble des tous les $Run$ est not\'e par $Run(LTS)$.
 
@@ -197,7 +208,7 @@ Nous notons le langage g\'en\'er\'e par $LTS$ par
 $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lambda) \in Run(LTS)\}$$
 
 
-\subsection{Observabilit\'e et l'opacit\'e}
+\subsection{Observabilit\'e et opacit\'e}
 
 Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats \'etiquett\'e, et $\Sigma_{obs}$ est un ensemble des \'el\'ements $observables$. Remarque nous notons que $\Sigma_{obs}^{\varepsilon} = \Sigma_{obs} \cup \{\varepsilon\}$
 
