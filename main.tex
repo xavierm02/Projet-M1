@@ -211,46 +211,43 @@ Nous d\'efinissons toutes les fonctions $\Omega : Run(LTS) \rightarrow \Sigma_{o
 Il y a plusieurs types de capacit\'e d'observation : 
 
 
-
-\begin{itemize}
-	\item statique : il existe une <<fonction d'observation>> sur les \'etiquette $\Omega_{etiq} : L \rightarrow \Sigma_{obs}^{\varepsilon}$ telle que 
-	
-	$$\forall (s,\lambda)= (s,l_1\dots l_n) \in Run(LTS), \Omega(s,\lambda) = \Omega_{etiq}(l_1)\circ\Omega_{etiq}(l_2)\circ\dots\circ\Omega_{etiq}(l_n)$$
-	\item $dynamique/orwellian/m-orwellian(m\geq 1)$ :
+$statique/dynamique/orwellian/m-orwellian(m\geq 1)$ :
 		
-		Il existe une <<fonction d'observation>> sur les \'etiquette $\Omega_{etiq} : L\times L^* \rightarrow \Sigma_{obs}^{\varepsilon}$ telle que 
+Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiquettes $\Omega_{etiq} : \Sigma^* \rightarrow \Sigma_{obs}^{\varepsilon}$ telle que 
 	
 	$$\forall (s,\lambda)= (s,l_1\dots l_n) \in Run(LTS), \Omega(s,\lambda) = \Omega_{etiq}(k_1)\circ\Omega_{etiq}(k_2)\circ\dots\circ\Omega_{etiq}(k_n)$$
 	
 	Ce sont les diff\'erents choix de $(k_1,\dots, k_n)$ qui d\'efinissent la capacit\'e d'observation.
 	
-	\begin{itemize}
-		\item Dynamique : $k_i = l_1 \dots l_i$
-		\item Orwellian : $k_i = \lambda$
-		\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$		
-	\end{itemize}
+
+
+
+\begin{itemize}
+        \item Statique : $k_i = l_i$ 
+	\item Dynamique : $k_i = l_1 \dots l_i$
+	\item Orwellian : $k_i = \lambda$
+	\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$		
+
 \end{itemize}
 
 	Remarque : la notion $statique$ et $orwellian$ se r\'eduisent en cas particulier de $m-orwellian$, $statique$ est $1-orwellian$ et $orwellian$ est $\infty-orwellian$.
 
-\subsubsection{Pr\'edicat $Prop$}	
-	Nous d\'efinissons un pr\'edicat $Prop$ sur $Run(LTS)$. Notons $\Sigma_{Prop}$ ensemble des \'el\'ements de $Run(LTS)$ tel que $Prop$ est vrais.
 	
 \subsubsection{Diff\'erents types d'Opacit\'e}
 
 \begin{mydef}
-	Soit $\Omega$ une fonction d'observation et $Prop$ un pr\'edicat sur $Run(LTS)$. Nous disons que $Prop$ est opaque par rapport \`a $\Omega$ si et seulement si
+	Soit $\Omega$ une fonction d'observation et $Secret$ un sous-ensemble de $Run(LTS)$. Nous disons que $Secret$ est opaque par rapport \`a $\Omega$ si et seulement si
 	
-	$$\forall (s,\lambda) \in \Sigma_{Prop}, \exists (s',\lambda')\not\in \Sigma_{Prop} \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$$
+	$$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$$
 	
 	ou nous pouvons voir cette d\'efinition en terme d'ensembles :
 	
-	$$\Omega(Run(LTS)\cap \Sigma_{Prop})\subseteq \Omega(Run(LTS)-\Sigma_{Prop})$$
+	$$\Omega(Secret)\subseteq \Omega(Run(LTS)-Secret)$$
 \end{mydef}
 
-Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les fonction d'observation. Nous disons que $Prop$ et $init-opaque/final-opaque/total-opaque$ s'il existe un pr\'edicat $Prop_2$ sur $S$ l'ensemble des \'etats de $LTS$ tel que :
+Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les fonction d'observation. Nous disons que $Secret$ est $init-opaque/final-opaque/total-opaque$ s'il existe un sous-ensemble  $Secret'$ de l'ensemble des \'etats de $LTS$ tel que :
 
-$$\forall (s,\lambda) \in Run(LTS), Prop(s,lambda) = Prop_2(\sigma)$$
+$$\forall (s,\lambda) \in Run(LTS), (s,lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
 
 C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
