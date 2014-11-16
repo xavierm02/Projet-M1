@@ -97,8 +97,8 @@ Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \
 
 %TODO
 
-\section{Algorithme de construction du diagnostiqueur}
-    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel.
+\section{Algorithme de construction d'un diagnostiqueur}
+    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. [TODO ref]
         \subsection{Automate de mod\`ele de faute}
    \begin{mydef}{Automate de mod\`ele de faute : }
 C'est un automate qui reconnait le langage de faute L. Les états finaux de l'automate de faute sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
@@ -106,7 +106,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
     \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
-   Soit $f\in \Sigma$, $L  = \Sigma^*\{f\}\Sigma^*$, les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. 
+   Dans la figure 1 [TODO vraie ref] $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -118,8 +118,9 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
                 \end{tikzpicture}
                 \caption{Automate de mod\`ele de faute simple}
         \end{figure}
+        
     
-    \subsection{Construction du diagnostiqueur}
+    \subsection{Construction d'un diagnostiqueur}
     Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $L$, on proc\'ede de la mani\`ere suivante :
     
 \begin{enumerate}
@@ -136,16 +137,16 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si il existe des mots qui peuvent être observés qu'une faute se soit produite ou non.
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faut n'est ambigu.
 
 \begin{itemize}
-  \item $\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F)$ est le langage des observations avec fautes.
-  \item $\pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage est observations des ex\'ecutions avec faute.
-  \item $\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)$ est le langage des ex\'ecutions sans faute.
-  \item $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F))$ est le langage des observations d'ex\'ecutions sans faute.
-  \item Donc $\pi_{\Sigma_o}(\mathcal L(\mathcal A) \setminus \mathcal L(\mathcal F)) \cap \pi_{\Sigma_o}(\mathcal L (\mathcal A) \cap \mathcal L(\mathcal F))$ est le langage des observations ambiguës.
+  \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
+  \item $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions avec faute.
+  \item $\mathcal L(A) \setminus \mathcal L(L)$ est le langage des ex\'ecutions sans faute.
+  \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
+  \item Donc $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{itemize}
-Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate de taille $|\mathcal F|^2 \times |\mathcal A|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|\mathcal F|^2 \times |\mathcal A|^2$ pour d\'ecider si un automate est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 
