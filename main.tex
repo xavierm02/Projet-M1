@@ -78,9 +78,9 @@ a &\text{si } a\in \Sigma'\\
 
 \section{Diagnosticabilit\'e}
 
-\'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute, un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
+\'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute (repr\'esent\'e par un automate), un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
-TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que f est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
+TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que $f$ est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
 
 
 \section{R\'eductions}
@@ -101,12 +101,12 @@ Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \
     Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel.
         \subsection{Automate de mod\`ele de faute}
    \begin{mydef}{Automate de mod\`ele de faute : }
- Un automate qui reconnait le langage de faute L. Les états finaux de l'automate sont appelés <<\'etats fautifs>>, les autres <<\'etats normaux>>.
+C'est un automate qui reconnait le langage de faute L. Les états finaux de l'automate de faute sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
  \end{mydef}
     
     \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
-   Soit $f\in \Sigma$, $L  = \{f\}$, les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. 
+   Soit $f\in \Sigma$, $L  = \Sigma^*\{f\}\Sigma^*$, les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. 
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -118,36 +118,20 @@ Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \
                 \end{tikzpicture}
                 \caption{Automate de mod\`ele de faute simple}
         \end{figure}
-Dans cet exemple, on veut modéliser des réparations, soit $f, r \in \Sigma$, $L  = \{f (\Sigma\backslash \{ r \})^* \}$        
-        \begin{figure}[H]
-                \centering
-                \begin{tikzpicture}
-                        \node[draw,circle] (1) at (0,0) {1};
-                        \node[draw,circle,fill=gray](2) at (3,0){2};
-                        \draw[->,>=latex] (1) to[bend right=30] node[pos=0.5,below]{$f$}(2);
-                        \draw[->,>=latex] (2) to[bend right=30] node[pos=0.5,above]{$r$}(1);
-                        \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$(\Sigma \backslash \{ f \})^*$} (1);
-                        \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$(\Sigma\backslash \{ r \})^*$} (2);
-                \end{tikzpicture}
-                \caption{Automate de mod\`ele de fautes avec r\'eparations} 
-    \end{figure}
-            
     
     \subsection{Construction du diagnostiqueur}
-    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $MF$, on proc\'ede de la mani\`ere suivante :
+    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $L$, on proc\'ede de la mani\`ere suivante :
     
-    \begin{enumerate}
-            \item Faire le produit de l'automate $A$ avec l'automate $MF$. Un \'etat de $A\times MF$ est appel\'e un \'etat fautif si et seulement si c'est un produit d'un \'etat fautif de $MF$ avec un autre \'etat de $A$
-            \item Remplacer les \'ev\`enements de $\Sigma_{no}$ par des $\varepsilon$-transitions et faire l'$\epsilon$-cl\^oture, $C = \operatorname{cl}_\varepsilon((A\times MF)[\varepsilon/f])$.
-          \item D\'eterminiser l'automate $C$ avec l'algorithme des parties, on note $D$ l'automate d\'eterminis\'e. Un état de $D$ appartient à un ensemble isomorphe à $\mathcal{P}(Q)$, on dit que l'état de $D$ correspond à l'ensemble d'états de Q.
-            \item Nous discriminons les diff\'erents \'etats de $D$ :
-                    \begin{itemize}
-                            \item  \'Etats normaux: Tous les \'etats correspondants à un ensemble d'\'etats non-fautifs.
-                           \item \'Etats fautifs:  Tous les \'etats correspondants à un ensemble d'\'etats fautifs.
-                            \item \'Etats de doute: Tous les \'etats correspondants à un ensemble composé à la fois d'\'etats fautifs et non-fautifs.
-                    \end{itemize}  
-                 
-    \end{enumerate} 
+\begin{enumerate}
+  \item Construire $B=A\times F$, le produit synchrone de $B$ et $F$.
+  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (TODO definir proprement $[\varepsilon/no]$)
+  \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. Un \'etat $q\subseteq Q$ de $D$ est l'ensemble des \'etats dans lesquels on pourrait se trouver si on avait lu le m\^eme mot dans $C$. On distinguera trois cas :
+  \begin{itemize}
+    \item Si tous les \'etats dans $q\subseteq Q$ sont non-fautifs, on dira que $q$ est normal.
+    \item Si tous les \'etats dans $q\subseteq Q$ sont fautifs, on dira que $q$ est fautif.
+    \item Si $q\subseteq Q$ contient des \'etats fautifs et des \'etats non-fautifs, on dira que $q$ est un \'etat de doute.
+  \end{itemize}
+\end{enumerate} 
      
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
