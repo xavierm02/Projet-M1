@@ -13,17 +13,21 @@
 \newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
 \begin{document}
 
-    \title{Diagnosability}
+    \title{STUFF}
 
     \author{François Godi, Xavier Montillet, Chen Qian}
+
+\maketitle
+
+\begin{abstract}
+TODO
+\end{abstract}
 
 \section{Pr\'erequis}
 
 \subsection{Automates}
 
-Un automate fini indéterministe (avec $\varepsilon$-transitions) est un 5-uplet
-$$A = (Q, \Sigma, \Delta, q_0, F)$$
-o\`u
+Un automate fini (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
 \begin{itemize}
 	\item $Q$ est l'ensemble fini des états du système.
 	\item $\Sigma$ est l'ensemble des événements.
@@ -32,33 +36,30 @@ o\`u
 	\item $F$ l'ensemble des \'etats finaux.
 \end{itemize}
 
-\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \overset{l}{{\to}}q$ pour $(p,l,q) \in \Delta$.
-
-On notera \'egalement $q_0 \overset{l_0}{{\to}} \dots \overset{l_n}{{\to}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k \overset{l_k}{{\to}} q_{k+1}$.
-
+\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \underset{\Delta}{\overset{l}{{\to}}}q$ pour $(p,l,q) \in \Delta$. On notera \'egalement $q_0 \underset{\Delta}{\overset{l_0}{{\to}}} \dots \underset{\Delta}{\overset{l_n}{{\to}}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k 
+\underset{\Delta}{\overset{l_k}{{\to}}} q_{k+1}$. Pour simplifier, le $\Delta$ sera omis lorsqu'il est \'evident.
 
 
-On dit qu'un automate fini ind\'eterministe est sans $\varepsilon$-transitions lorsque qu'il est tel que  $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
-Un automate fini d\'eterministe est un automate fini ind\'eterministe sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$
+On dit qu'un automate fini est sans $\varepsilon$-transitions si $\Delta \subseteq (Q\times \Sigma \times Q)$.
+
+Un automate fini d\'eterministe est un automate fini sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$
 
 \subsection{Langage reconnu}
 
-Un mot $u_1...u_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tel que $q_0 \overset{u_1}{{\to}} q_1 \overset{u_2}{{\to}} \dots \overset{u_n}{{\to}} q_{n+1}$ et $q_{n+1} \in F$.
+Un mot $l_1...l_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n+1}$ et $q_{n+1} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
 \subsection{Produit synchrone}
 
-Soit $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
 
 On notera que $L(A\times B) = L(A) \cap L(B)$.
 
 \subsection{$\varepsilon$-clôture}
 
-On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$, l'$\varepsilon$-clôture \`a gauche de l'automate $A$.
-
-$\Delta'$ est d\'efinie par $p \overset{l}{{\to}} r$ si et seulement si $\exists q_1,\dots,q_n \in Q,$ tels que dans l'automate $A$ on a  $p \overset{\varepsilon}{{\to}} q_1 \overset{\varepsilon}{{\to}} \dots \overset{\varepsilon}{{\to}} q_n \overset{l}{{\to}} r$.
+On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{\varepsilon}{{\to}}} q_n \underset{\Delta}{\overset{l}{{\to}}} r$.
 
 On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
@@ -67,22 +68,19 @@ On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
 Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
 
-$$\forall a \in \Sigma \cup \{\varepsilon\}, \forall u \in \Sigma^*, \pi_{\Sigma'}(au)=
-\left\{\begin{array}{ll}
-a\pi_{\Sigma'}(u) &\text{si } a\in \Sigma'\\
-\pi_{\Sigma'}(u) &\text{sinon} \\
+$$\forall u,v \in \Sigma^*, \pi_{\Sigma'}(uv)=\pi_{\Sigma'}(u)\pi_{\Sigma'}(v)$$
+$$\pi_{\Sigma'}(\varepsilon)=\varepsilon$$
+
+$$\forall a\in \Sigma,\pi_{\Sigma'}(a)=\left\{\begin{array}{ll}
+a &\text{si } a\in \Sigma'\\
+\varepsilon &\text{sinon} \\
 \end{array}\right.$$
 
 \section{Diagnosticabilit\'e}
 
-Un syst\`eme extension-clos est diagnosticable si, lorsque une faute se produit, on peut la détecter en temps fini. On formalise cette notion de la fa\c{c}on suivante :
-\begin{itemize}
-	\item On se donne un alphabet $\Sigma=\Sigma_o\sqcup\Sigma_{no}$ o\`u $\Sigma_o$ est l'ensemble des \'ev\`enements observables et $\Sigma_{no}$ est l'ensemble des \'ev\`enements non observables.
-	\item On repr\'esente le syst\`eme par un automate $\mathcal F$
-	\item On repr\'esente le mod\`ele de faute par un langage r\'egulier $L$
-\end{itemize}
+\'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute, un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
-On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n, \forall  f \in L, \forall w \in \Sigma^*$ tel que $||\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que f est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
+TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que f est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
 
 
 \section{R\'eductions}
