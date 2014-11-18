@@ -11,6 +11,8 @@
 \usepackage{float}
 \newtheorem {mydef} {D\'efinition}
 \newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
+\usetikzlibrary{arrows}
+
 \begin{document}
 
     \title{STUFF}
@@ -139,7 +141,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
 
 L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faut n'est ambigu.
 
-\begin{itemize}
+\begin{itemize} 
   \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
   \item $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions avec faute.
   \item $\mathcal L(A) \setminus \mathcal L(L)$ est le langage des ex\'ecutions sans faute.
@@ -149,6 +151,9 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un
 Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
+\subsection{Un bilan de cette construction}
+	Nous cherchons \`a diagnostiquer un langage fautif dans un syst\`eme S.
+		
 
 
 \section{D\'efinitions de l'opacit\'e}
@@ -239,6 +244,25 @@ Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiqu
 	$$\Omega(Secret)\subseteq \Omega(Run(LTS)-Secret)$$
 \end{mydef}
 
+\subsubsection{Exemples des syst\`eme opaque et non-opaque}
+		\begin{figure}[H]
+                \centering
+                \begin{tikzpicture}
+                        \node[draw,circle] (0) at (0,0) {0};
+                        \node[draw,circle] (1) at (3,2) {1};
+                        \node[draw,circle] (2) at (3,-2) {2};
+                        \node[draw,circle] (3) at (6,1) {3};
+                        \node[draw,circle] (4) at (6,3) {4};
+                        \node[draw,circle] (5) at (6,-2) {5};
+                        \draw[->,>=latex,line width = 1mm] (0)->(1) node[midway,above]{$h$};
+                        \draw[->,>=latex] (0)->(2) node[midway,above]{$p$};
+                        \draw[->,>=latex] (1)->(3) node[midway,above]{$a$};
+                        \draw[->,>=latex] (1)->(4) node[midway,above]{$b$};
+                        \draw[->,>=latex] (2)->(5) node[midway,above]{$a$};
+                \end{tikzpicture}
+                \caption{$\Sigma = \{h,p,a,b\}$,$\Sigma_o = {a,b}$, Le langage que nous cherchons \`a rendre opaque est $L = \Sigma^*.h.\Sigma^*$}
+		\end{figure}		
+		
 Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les fonction d'observation. Nous disons que $Secret$ est $init-opaque/final-opaque/total-opaque$ s'il existe un sous-ensemble  $Secret'$ de l'ensemble des \'etats de $LTS$ tel que :
 
 $$\forall (s,\lambda) \in Run(LTS), (s,lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
