@@ -9,7 +9,8 @@
 \usepackage{stmaryrd}
 \usepackage{tikz}
 \usepackage{float}
-\newtheorem {mydef} {D\'efinition}
+\newtheorem{mydef}{D\'efinition}
+\newtheorem{myth}{Th\'eor\`eme}
 \newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
 \usetikzlibrary{arrows}
 \bibliographystyle{plain}
@@ -106,7 +107,7 @@ Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \
 %TODO
 
 \section{Algorithme de construction d'un diagnostiqueur}
-    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. [TODO ref]
+    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
         \subsection{Automate de mod\`ele de faute}
    \begin{mydef}{Automate de mod\`ele de faute : }
 C'est un automate qui reconnait le langage de faute L. Les états finaux de l'automate de faute sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
