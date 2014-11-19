@@ -416,11 +416,29 @@ L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soi
 
 \begin{myth}
 Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+\label{opacity2noninterf}
 \end{myth}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[draw,circle] (0) at (0,0) {$q_0$};
+    \node[draw,circle] (1) at (2,0) {$q_1$};
+    \node[draw,rectangle] (2) at (0,-2) {$A-L$};
+    \node[draw,rectangle] (3) at (2,-2) {$L$};
+    \draw[->,>=latex] (0)->(1) node[midway,above]{$a$};
+    \draw[->,>=latex] (0)->(2) node[midway,left]{$a$};
+    \draw[->,>=latex] (1)->(3) node[midway,left]{$h$};
+    
+  \end{tikzpicture}
+  \caption{Id\'ee de la preuve du th\'eor\`eme~\ref{opacity2noninterf}}
+\end{figure}
 
 \begin{myth}
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction 'dobservation statique.
 \end{myth}
+
+
 \section{Conclusion}
 
 Dans un premier temps, nous avons présenté le problème du diagnostique d'un langage rationnel sur un $LTS$. Pour le résoudre on a montré comment construire un diagnostiqueur à partir d'un tel modèle de faute et du $LTS$. Mais on ne peut pas toujours se fier au diagnostiqueur : il existe des LTS où des fautes ne peuvent être diagnostiquées. On a donc présenté ensuite un algorithme polynomial pour décider de la diagnosticabilité. Ensuite, nous avons présenté le problème de l'opacité  qui est le dual de la diagnosticabilité. Après avoir présenté plusieurs modèles d'observateurs plus ou moins puissants, on a montré que le problème de la diagnosticabilité peut se réduire à celui de l'opacité lorsque l'observateur est statique. L'opacité est donc un modèle très général pour modéliser les propriétés de sécurités de systèmes complexes.
