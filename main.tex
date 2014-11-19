@@ -106,7 +106,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
     \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
-   Dans la figure 1 [TODO vraie ref] $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
+   Dans la figure \ref{modele de fautes} $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -117,6 +117,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
                         \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$\Sigma^*$} (2);
                 \end{tikzpicture}
                 \caption{Automate de mod\`ele de faute simple}
+                \label{modele de fautes}
         \end{figure}
         
     
@@ -125,7 +126,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
 \begin{enumerate}
   \item Construire $B=A\times F$, le produit synchrone de $B$ et $F$.
-  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (TODO definir proprement $[\varepsilon/no]$)
+  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (Nous d\'efinission $B[\varepsilon/no]$ comme l'automate dans lequel nous avons remplac\'e toutes les lettres non-bservables dans $\Sigma_{no}$ par $\varepsilon$)
   \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. Un \'etat $q\subseteq Q$ de $D$ est l'ensemble des \'etats dans lesquels on pourrait se trouver si on avait lu le m\^eme mot dans $C$. On distinguera trois cas :
   \begin{itemize}
     \item Si tous les \'etats dans $q\subseteq Q$ sont non-fautifs, on dira que $q$ est normal.
