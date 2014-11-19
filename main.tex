@@ -362,10 +362,10 @@ Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiqu
 
 
 \begin{itemize}
-        \item Statique : $k_i = l_i$ 
-	\item Dynamique : $k_i = l_1 \dots l_i$
-	\item Orwellian : $k_i = \lambda$
-	\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$
+        \item Statique : $k_i = l_i$ qui modélise un observateur sans mémoire.
+	\item Dynamique : $k_i = l_1 \dots l_i$ qui modélise un observateur qui ne connaît que le passé.
+	\item Orwellian : $k_i = \lambda$ qui modélise un observateur omniscient avec une mémoire infinie.
+	\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$ qui modélise un observateur qui connaît le passé proche et le futur proche.
 \end{itemize}
 
 	Remarque : la notion $statique$ et $orwellian$ se r\'eduisent en cas particulier de $m-orwellian$, $statique$ est $1-orwellian$ et $orwellian$ est $\infty-orwellian$.
@@ -429,10 +429,7 @@ Th : Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d
 \end{myth}
 \section{Conclusion}
 
-Dans un premier temps, nous avons présenté le problème du diagnostique d'un langage rationnel sur un $LTS$. On a montré comment construire un diagnostiqueur à partir d'un tel modèle de faute et du $LTS$. Mais on ne peut pas toujours se fier au diagnostiqueur : il existe des LTS où des fautes ne peuvent être diagnostiquées, on a donc présenté ensuite l'algorithme polynomial qui permet de décider de la diagnosticabilité. 
-
-Ensuite, nous avons présenté le problème de l'opacité  qui est le dual de la diagnosticabilité. Après avoir présenté plusieurs modèles d'observateurs plus ou moins puissants, on a montré que le problème de la diagnosticabilité peut se réduire à celui de l'opacité lorsque l'observateur est statique. L'opacité est donc un modèle très général pour modéliser les propriétés de sécurités de systèmes complexes.
-
+Dans cet article on voulait montrer que l'on pouvait modéliser formellement la sécurité de systèmes complexes. Dans un premier temps, nous avons présenté le problème du diagnostique d'un langage rationnel sur un automate vivant. Tous les systèmes ne sont pas diagnosticables mais la diagnosticabilité est décidable, on présente un algorithme polynomial. Dans un second temps, nous avons présenté le problème de l'opacité  pour un observateur d'un langage dans un système. Dans la réalité, les observateurs peuvent se souvenir de toutes leurs observations pour percer le secret dans certains contextes tandis que leur mémoire est très limitée dans d'autres. Pour rendre compte de ce phénomène nous avons présenté plusieurs types d'observateurs plus ou moins puissants. On présente finalement le problème de la non interférence qui est équivalent à celui de l'opacité. Il existe néanmoins des problèmes concrets qui ne se réduisent pas a priori aux modèles que nous avons présenté : Comment modéliser la réparation d'une panne dans le diagnostique ? Comment obtenir des garanties probabilistes sur la diagnosticabilité et l'opacité ?
 
 \bibliography{bibliography}
 \end{document}
