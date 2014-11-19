@@ -9,7 +9,8 @@
 \usepackage{stmaryrd}
 \usepackage{tikz}
 \usepackage{float}
-\newtheorem {mydef} {D\'efinition}
+\newtheorem{mydef}{D\'efinition}
+\newtheorem{myth}{Th\'eor\`eme}
 \newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
 \usetikzlibrary{arrows}
 \bibliographystyle{plain}
@@ -106,7 +107,7 @@ Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \
 %TODO
 
 \section{Algorithme de construction d'un diagnostiqueur}
-    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. [TODO ref]
+    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
         \subsection{Automate de mod\`ele de faute}
    \begin{mydef}{Automate de mod\`ele de faute : }
 C'est un automate qui reconnait le langage de faute L. Les états finaux de l'automate de faute sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
@@ -114,7 +115,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
     \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
-   Dans la figure 1 [TODO vraie ref] $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
+   Dans la figure~\ref{modele de fautes} $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -124,6 +125,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
                         \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$(\Sigma \backslash \{ f \})^*$} (1);
                         \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$\Sigma^*$} (2);
                 \end{tikzpicture}
+                \label{modele de fautes}
                 \caption{Automate de mod\`ele de faute simple}
         \end{figure}
         
@@ -363,8 +365,7 @@ Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiqu
         \item Statique : $k_i = l_i$ 
 	\item Dynamique : $k_i = l_1 \dots l_i$
 	\item Orwellian : $k_i = \lambda$
-	\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$		
-
+	\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$
 \end{itemize}
 
 	Remarque : la notion $statique$ et $orwellian$ se r\'eduisent en cas particulier de $m-orwellian$, $statique$ est $1-orwellian$ et $orwellian$ est $\infty-orwellian$.
@@ -420,10 +421,12 @@ L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soi
 \begin{mydef}
   Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
 \end{mydef}
-
-Th : Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
-
+\begin{myth}
+Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+\end{myth}
+\begin{myth}
 Th : Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction 'dobservation statique.
+\end{myth}
 \section{Conclusion}
 
 Dans un premier temps, nous avons présenté le problème du diagnostique d'un langage rationnel sur un $LTS$. On a montré comment construire un diagnostiqueur à partir d'un tel modèle de faute et du $LTS$. Mais on ne peut pas toujours se fier au diagnostiqueur : il existe des LTS où des fautes ne peuvent être diagnostiquées, on a donc présenté ensuite l'algorithme polynomial qui permet de décider de la diagnosticabilité. 
