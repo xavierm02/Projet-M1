@@ -23,6 +23,10 @@
 TODO
 \end{abstract}
 
+\section*{Introduction}
+
+De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur suret\'e. On les mod\'elise donc par des automates afin d'en prouver certaines propri\'et\'es. Ce rapport d\'ecrit les propri\'et\'es de diagnosticabilit\'e qui expriment la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partire d'une information partielle sur son \'etat, les propri\'et\'es de non-interf\'erence qui mod\'elisent le fait que les actions de certains utilisateurs du syst\`eme sont cach\'ees aux autres, et les propri\'et\'es d'opacit\'e qui permettent d'unifier les deux notions pr\'ec\'edentes.
+
 \section{Pr\'erequis}
 
 \subsection{Automates}
@@ -78,7 +82,7 @@ a &\text{si } a\in \Sigma'\\
 
 \section{Diagnosticabilit\'e}
 
-\'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute (repr\'esent\'e par un automate), un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
+\'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute (repr\'esent\'e par un automate fini d\'eterministe), un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
 TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que $f$ est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
 
@@ -146,7 +150,7 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
   \item Donc $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{itemize}
-Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ (car le mod\`ele de faute $L$ est d\'eterministe) reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 
