@@ -135,7 +135,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
 \begin{enumerate}
   \item Construire $B=A\times F$, le produit synchrone de $B$ et $F$.
-  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (TODO definir proprement $[\varepsilon/no]$)
+  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (Nous d\'efinission $B[\varepsilon/no]$ comme l'automate dans lequel nous avons remplac\'e tous les $no \in \Sigma_{no}$ par $\varepsilon$)
   \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. Un \'etat $q\subseteq Q$ de $D$ est l'ensemble des \'etats dans lesquels on pourrait se trouver si on avait lu le m\^eme mot dans $C$. On distinguera trois cas :
   \begin{itemize}
     \item Si tous les \'etats dans $q\subseteq Q$ sont non-fautifs, on dira que $q$ est normal.
