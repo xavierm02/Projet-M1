@@ -12,8 +12,10 @@
 \newtheorem {mydef} {D\'efinition}
 \newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
 \usetikzlibrary{arrows}
+\bibliographystyle{plain}
 
 \begin{document}
+
 
     \title{Bibliographie sur l'opacit\'e}
 
@@ -82,7 +84,7 @@ a &\text{si } a\in \Sigma'\\
 
 \'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute (repr\'esent\'e par un automate), un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
-TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que $f$ est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
+TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que $f$ est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$.~\cite{SamSRST96} 
 
 
 \section{R\'eductions}
@@ -308,7 +310,7 @@ avec
 
 Remarque : dans la suite nous consid\'erons que des syst\`eme de transition d'\'etats \'etiquett\'e d\'eterministe.
 
-\subsubsection{Run}
+\subsubsection{Run}	
 
 Un $Run$ d'un LTS est un couple $(s_0,\lambda)$ avec :
 
@@ -327,6 +329,8 @@ $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lamb
 
 
 \subsection{Observabilit\'e et opacit\'e}
+
+Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan a propos\'e dans leur article ~\cite{BryansKMR08}
 
 Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats \'etiquett\'e, et $\Sigma_{obs}$ est un ensemble des \'el\'ements $observables$. Remarque nous notons que $\Sigma_{obs}^{\varepsilon} = \Sigma_{obs} \cup \{\varepsilon\}$
 
@@ -407,7 +411,7 @@ C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
 \section{Non-interf\'erence}
 
-L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soit low. Les labels low sont visibles par tout le monde alors que les labels high sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'un label high dans un run en observant uniquement les labels low.
+L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soit low. Les labels low sont visibles par tout le monde alors que les labels high sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'un label high dans un run en observant uniquement les labels low.~\cite{GorrieriV10}
 
 \begin{mydef}
   Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
@@ -416,8 +420,12 @@ L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soi
 Th : Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
 
 Th : Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction 'dobservation statique.
-
 \section{Conclusion}
 
 TODO
+
+\bibliography{bibliography}
+
 \end{document}
+
+
