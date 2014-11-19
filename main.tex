@@ -24,13 +24,13 @@
 
 \maketitle
 
-\begin{abstract}
-TODO
-\end{abstract}
+%\begin{abstract}
+%TODO
+%\end{abstract}
 
 \section*{Introduction}
 
-De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur suret\'e. On les mod\'elise donc par des automates afin d'en prouver certaines propri\'et\'es. Ce rapport d\'ecrit les propri\'et\'es de diagnosticabilit\'e qui expriment la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partire d'une information partielle sur son \'etat, les propri\'et\'es de non-interf\'erence qui mod\'elisent le fait que les actions de certains utilisateurs du syst\`eme sont cach\'ees aux autres, et les propri\'et\'es d'opacit\'e qui permettent d'unifier les deux notions pr\'ec\'edentes.
+De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur suret\'e. On les mod\'elise donc par des automates afin d'en prouver certaines propri\'et\'es. Ce rapport d\'ecrit les propri\'et\'es de diagnosticabilit\'e qui expriment la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partire d'une information partielle sur son \'etat, les propri\'et\'es de non-interf\'erence qui mod\'elisent le fait que les actions de certains utilisateurs du syst\`eme sont cach\'ees aux autres, et les propri\'et\'es d'opacit\'e qui expriment l'impossibilit\'e d'\^etre s\^ur qu'une ex\'ecution est dans un langage donn\'e.
 
 \section{Pr\'erequis}
 
@@ -89,22 +89,13 @@ a &\text{si } a\in \Sigma'\\
 
 \'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute (repr\'esent\'e par un automate fini d\'eterministe), un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
-TODO On dit que le système $\mathcal F$ est diagnosticable si et seulement si $\exists n \in \mathbb N, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^* f w$, on peut savoir que $f$ est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$.~\cite{SamSRST96} 
+On dit que le système $\mathcal F$ est diagnosticable~\cite{SamSRST96}  si et seulement si $$\begin{array}{l}
+\exists n \in \mathbb N, \forall w \in \mathcal L(L),\\
+\forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(x)\right|\ge n \land wx \in \mathcal L(A)\right) \implies\\
+\forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in \mathcal L(A)
+\end{array}$$
 
-
-\section{R\'eductions}
-
-\subsection{I-diagnosticabilit\'e}
-
-
-Soit $I \subset \Sigma$, On dit que le système $\mathcal F$ est I-diagnosticable si et seulement si $\exists n, \forall  f \in L, \forall w \in \Sigma^*$ tel que $|\pi_{\Sigma_o}(w)| \geq n, \forall u \in \Sigma^*f \Sigma^* I w$, on peut savoir que f est un sous mot de $u$ en observant $|\pi_{\Sigma_o}(u)$. 
-
-
-Cela revient à étudier la diagnosticabilité avec le langage de fautes $L'=L \Sigma^* I$.
-
-%\subsection{Vivant}
-
-%TODO
+Intuitivemenent, il existe une borne $n$ telle que pour toute ex\'ecution $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($u$), alors tous les mots $v$ qui r\'esultent en la m\^eme observation contiennent une faute, ce qui veut dire que l'on peut affirmer sans se tromper qu'une faute a eu lieu.
 
 \section{Algorithme de construction d'un diagnostiqueur}
     Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
@@ -115,7 +106,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
     \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
-   Dans la figure~\ref{modele de fautes} $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
+   Dans la figure \ref{modele de fautes} $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -125,8 +116,8 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
                         \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$(\Sigma \backslash \{ f \})^*$} (1);
                         \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$\Sigma^*$} (2);
                 \end{tikzpicture}
-                \label{modele de fautes}
                 \caption{Automate de mod\`ele de faute simple}
+                \label{modele de fautes}
         \end{figure}
         
     
@@ -135,7 +126,7 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
     
 \begin{enumerate}
   \item Construire $B=A\times F$, le produit synchrone de $B$ et $F$.
-  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (TODO definir proprement $[\varepsilon/no]$)
+  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (Nous d\'efinission $B[\varepsilon/no]$ comme l'automate dans lequel nous avons remplac\'e toutes les lettres non-bservables dans $\Sigma_{no}$ par $\varepsilon$)
   \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. Un \'etat $q\subseteq Q$ de $D$ est l'ensemble des \'etats dans lesquels on pourrait se trouver si on avait lu le m\^eme mot dans $C$. On distinguera trois cas :
   \begin{itemize}
     \item Si tous les \'etats dans $q\subseteq Q$ sont non-fautifs, on dira que $q$ est normal.
@@ -357,18 +348,17 @@ Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiqu
 	$$\forall (s,\lambda)= (s,l_1\dots l_n) \in Run(LTS), \Omega(s,\lambda) = \Omega_{etiq}(k_1)\circ\Omega_{etiq}(k_2)\circ\dots\circ\Omega_{etiq}(k_n)$$
 	
 	Ce sont les diff\'erents choix de $(k_1,\dots, k_n)$ qui d\'efinissent la capacit\'e d'observation.
-	
-
 
 
 \begin{itemize}
         \item Statique : $k_i = l_i$ qui modélise un observateur sans mémoire.
 	\item Dynamique : $k_i = l_1 \dots l_i$ qui modélise un observateur qui ne connaît que le passé.
-	\item Orwellian : $k_i = \lambda$ qui modélise un observateur omniscient avec une mémoire infinie.
-	\item m-orwellian : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$ qui modélise un observateur qui connaît le passé proche et le futur proche.
+	\item Orwellien : $k_i = \lambda$ qui modélise un observateur omniscient avec une mémoire infinie.
+	\item m-Orwellien : $k_i = l_{max(1,i-m+1)} \dots l_{min(n,i+m-1)}$ qui modélise un observateur qui connaît le passé proche et le futur proche.
+
 \end{itemize}
 
-	Remarque : la notion $statique$ et $orwellian$ se r\'eduisent en cas particulier de $m-orwellian$, $statique$ est $1-orwellian$ et $orwellian$ est $\infty-orwellian$.
+	Remarque : les observateurs $statiques$ et $orwelliens$ sont des cas particuliers de $m-orwellien$ : $statique$ est $1-orwellien$ et $orwellien$ est $\infty-orwellien$.
 
 	
 \subsubsection{Diff\'erents types d'Opacit\'e}
@@ -421,11 +411,13 @@ L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soi
 \begin{mydef}
   Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
 \end{mydef}
-\begin{myth}
-Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peit se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+
+\begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
+Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peut se r\'eduire \`a un probl\`eme  de non-interf\'erence.
 \end{myth}
-\begin{myth}
-Th : Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction 'dobservation statique.
+
+\begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
+Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
 \end{myth}
 \section{Conclusion}
 
