@@ -25,25 +25,27 @@
 \maketitle
 
 %\begin{abstract}
-%TODO
+%TODO 
 %\end{abstract}
 
 \section*{Introduction}
 
-De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur suret\'e. On les mod\'elise donc par des automates afin d'en prouver certaines propri\'et\'es. Ce rapport d\'ecrit les propri\'et\'es de diagnosticabilit\'e qui expriment la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partire d'une information partielle sur son \'etat, les propri\'et\'es de non-interf\'erence qui mod\'elisent le fait que les actions de certains utilisateurs du syst\`eme sont cach\'ees aux autres, et les propri\'et\'es d'opacit\'e qui expriment l'impossibilit\'e d'\^etre s\^ur qu'une ex\'ecution est dans un langage donn\'e.
+De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur sûret\'e. On les mod\'elise donc formellement pour prouver des propriétés.  Ce rapport d\'ecrit les propri\'et\'es de diagnosticabilit\'e qui expriment la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partir d'une information partielle sur son \'etat, les propri\'et\'es de non-interf\'erence qui mod\'elisent le fait que les actions de certains utilisateurs du syst\`eme sont cach\'ees aux autres, et les propri\'et\'es d'opacit\'e qui expriment l'impossibilit\'e d'\^etre s\^ur qu'une ex\'ecution est dans un langage donn\'e.
 
-\section{Pr\'erequis}
+\section{Définitions}
 
 \subsection{Automates}
 
-Un automate fini (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
+Un automate (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
 \begin{itemize}
-	\item $Q$ est l'ensemble fini des états du système.
+	\item $Q$ est l'ensemble des états du système.
 	\item $\Sigma$ est l'ensemble des événements.
 	\item $\Delta \subseteq (Q \times (\Sigma \cup \{\varepsilon\}) \times Q)$ est une relation de transition.
 	\item $q_0 \in Q$ l'état initial.
-	\item $F$ l'ensemble des \'etats finaux.
+	\item $F \subset Q$ l'ensemble des \'etats finaux.
 \end{itemize}
+
+Un automate fini est un automate tel que $Q$ est fini.
 
 \'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \underset{\Delta}{\overset{l}{{\to}}}q$ pour $(p,l,q) \in \Delta$. On notera \'egalement $q_0 \underset{\Delta}{\overset{l_0}{{\to}}} \dots \underset{\Delta}{\overset{l_n}{{\to}}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k 
 \underset{\Delta}{\overset{l_k}{{\to}}} q_{k+1}$. Pour simplifier, le $\Delta$ sera omis lorsqu'il est \'evident.
@@ -60,6 +62,12 @@ Un mot $l_1...l_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $n 
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
+%TODO : epsilon transition
+
+\subsection{Langage extension clos}
+
+%TODO
+
 \subsection{Produit synchrone}
 
 Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
@@ -68,7 +76,7 @@ On notera que $L(A\times B) = L(A) \cap L(B)$.
 
 \subsection{$\varepsilon$-clôture}
 
-On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{\varepsilon}{{\to}}} q_n \underset{\Delta}{\overset{l}{{\to}}} r$.
+On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{\varepsilon}{{\to}}} q_n$.
 
 On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
@@ -79,30 +87,13 @@ Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\
 
 $$\forall u,v \in \Sigma^*, \pi_{\Sigma'}(uv)=\pi_{\Sigma'}(u)\pi_{\Sigma'}(v)$$
 $$\pi_{\Sigma'}(\varepsilon)=\varepsilon$$
-
 $$\forall a\in \Sigma,\pi_{\Sigma'}(a)=\left\{\begin{array}{ll}
 a &\text{si } a\in \Sigma'\\
 \varepsilon &\text{sinon} \\
 \end{array}\right.$$
 
-\section{Diagnosticabilit\'e}
-
-\'Etant donn\'e un langage $L$ extension-clos appel\'e mod\`ele de faute (repr\'esent\'e par un automate fini d\'eterministe), un automate $A$ appel\'e syst\`eme et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On appelera les \'el\'ements de $\Sigma$ des \'ev\`enements et on dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
-
-On dit que le système $\mathcal F$ est diagnosticable~\cite{SamSRST96}  si et seulement si $$\begin{array}{l}
-\exists n \in \mathbb N, \forall w \in \mathcal L(L),\\
-\forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(x)\right|\ge n \land wx \in \mathcal L(A)\right) \implies\\
-\forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in \mathcal L(A)
-\end{array}$$
-
-Intuitivemenent, il existe une borne $n$ telle que pour toute ex\'ecution $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($u$), alors tous les mots $v$ qui r\'esultent en la m\^eme observation contiennent une faute, ce qui veut dire que l'on peut affirmer sans se tromper qu'une faute a eu lieu.
-
-\section{Algorithme de construction d'un diagnostiqueur}
-    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
-        \subsection{Automate de mod\`ele de faute}
-   \begin{mydef}{Automate de mod\`ele de faute : }
-C'est un automate qui reconnait le langage de faute L. Les états finaux de l'automate de faute sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
- \end{mydef}
+\subsection{Automate de modèle de fautes}
+Un automate de modèle de faute est un automate qui reconnait un langage L extension-clos appelé langage de faute. Les états finaux de cet automate sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
     
     \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
     
@@ -121,48 +112,66 @@ C'est un automate qui reconnait le langage de faute L. Les états finaux de l'au
         \end{figure}
         
     
-    \subsection{Construction d'un diagnostiqueur}
-    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $L$, on proc\'ede de la mani\`ere suivante :
+
+\section{Diagnosticabilit\'e}
+
+Soit un automate fini d\'eterministe $A$ appel\'e syst\`eme, un modèle de faute qui reconnait le langage de faute $L$ et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
+
+On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et seulement si $$\begin{array}{l}
+\exists n \in \mathbb N, \forall w \in L,\\
+\forall x \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(x)\right|\ge n \land wx \in \mathcal L(A)\right) \implies\\
+\forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wx) \implies v \in L
+\end{array}$$
+
+Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($x$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
+
+\section{Algorithme de construction d'un diagnostiqueur}
+    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
+
+    \paragraph{}
+    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $F$, on proc\'ede de la mani\`ere suivante :
     
 \begin{enumerate}
   \item Construire $B=A\times F$, le produit synchrone de $B$ et $F$.
-  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (Nous d\'efinission $B[\varepsilon/no]$ comme l'automate dans lequel nous avons remplac\'e toutes les lettres non-bservables dans $\Sigma_{no}$ par $\varepsilon$)
-  \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. Un \'etat $q\subseteq Q$ de $D$ est l'ensemble des \'etats dans lesquels on pourrait se trouver si on avait lu le m\^eme mot dans $C$. On distinguera trois cas :
+  \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (Nous d\'efinission $B[\varepsilon/no]$ comme l'automate dans lequel nous avons remplac\'e toutes les lettres non-observables dans $\Sigma_{no}$ par $\varepsilon$)
+  \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. On note $Q_D \subset \mathcal{P}(C)$ l'ensemble des états de $D$. Soit $q \in Q_D$, comme $q \subset C$ on peut distinguer trois cas :
   \begin{itemize}
     \item Si tous les \'etats dans $q\subseteq Q$ sont non-fautifs, on dira que $q$ est normal.
     \item Si tous les \'etats dans $q\subseteq Q$ sont fautifs, on dira que $q$ est fautif.
-    \item Si $q\subseteq Q$ contient des \'etats fautifs et des \'etats non-fautifs, on dira que $q$ est un \'etat de doute.
+    \item Si $q\subseteq Q$ contient des \'etats fautifs et des \'etats non-fautifs, on dira que $q$ est un \'etat ambigu.
   \end{itemize}
 \end{enumerate} 
+
+%TODO intuition et/ou exemple : comment fonctionne le diagnostiqueur
      
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faut n'est ambigu.
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu.
 
 \begin{enumerate} 
   \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
   \item $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions avec faute.
   \item $\mathcal L(A) \setminus \mathcal L(L)$ est le langage des ex\'ecutions sans faute.
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
-  \item Donc $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
+  \item Donc $\mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{enumerate}
-Il suffit donc de v\'erifier que ce langage ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate le repr\'esentant. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que $$\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
 
-Soit $A$ l'automate \`a diagnostiquer (\`a gauche) et $L$ l'automate de mod\`ele de fautes permanentes  (\`a droite) repr\'esent\'e ci dessous:
+Soit $A$ l'automate \`a diagnostiquer (\`a gauche) et $F$ l'automate de mod\`ele de fautes  (\`a droite) repr\'esent\'es ci dessous avec leurs états finaux grisés :
 
 \begin{figure}[H]
 	\centering
     	\begin{tikzpicture}
-        	\node[draw,circle] (0) at (0,0) {0};
-            \node[draw,circle] (1) at (1.25,1) {1};
-            \node[draw,circle] (2) at (2.25,1) {2};
-            \node[draw,circle] (3) at (3.25,1) {3};
-            \node[draw,circle] (4) at (1.25,-1) {4};
-            \node[draw,circle] (5) at (2.25,-1) {5};
+        	\node[draw,circle,fill=gray] (0) at (0,0) {0};
+            \node[draw,circle,fill=gray] (1) at (1.25,1) {1};
+            \node[draw,circle,fill=gray] (2) at (2.25,1) {2};
+            \node[draw,circle,fill=gray] (3) at (3.25,1) {3};
+            \node[draw,circle,fill=gray] (4) at (1.25,-1) {4};
+            \node[draw,circle,fill=gray] (5) at (2.25,-1) {5};
             \draw[->,>=latex] (0) -> (1) node[midway,above]{$f$};
             \draw[->,>=latex] (1) -> (2) node[midway,above]{$a$};
             \draw[->,>=latex] (2) -> (3) node[midway,above]{$b$};
@@ -180,7 +189,7 @@ Soit $A$ l'automate \`a diagnostiquer (\`a gauche) et $L$ l'automate de mod\`ele
         \end{tikzpicture}
 \end{figure}
 
-Etape 2 : Nous faisons le produit synchrone sur les deux automates(\`a gauche), puis la projection sur l'alphabet observable(\`a droite) a fin de faciliter les \'etapes suivants nous avons renomm\'e les \'etats dans l'automate projet\'e. 
+Etape 2 : Nous faisons le produit synchrone sur les deux automates (\`a gauche), puis la projection sur l'alphabet observable(\`a droite) à fin de faciliter les \'etapes suivantes nous avons renomm\'e les \'etats dans l'automate projet\'e. 
 
 
 
@@ -244,7 +253,7 @@ Etape 3 : Nous construisons l'automate compl\'ementaire de l'automate de mod\`el
         \end{tikzpicture}
 \end{figure}
 
-Etape 4 : Nous renomme les \'etats de l'automate qui reconna\^it $\mathcal L(A) \setminus \mathcal L(L)$(\`a gauche), et nous faisons le produit synchrone de cet automate avec le deuxi\`eme automate dans l'\'etape 2 qui reconna\^it le langage $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$.
+Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A) \setminus \mathcal L(L)$(\`a gauche) et nous faisons le produit synchrone de cet automate avec l'automate de l'\'etape 2 qui reconna\^it le langage $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$.
 
 \begin{figure}[H]
 	\centering
@@ -277,9 +286,9 @@ Etape 4 : Nous renomme les \'etats de l'automate qui reconna\^it $\mathcal L(A) 
         	\draw [->,>=latex] (4) edge[in=100,out=80,loop] node[above] {$a,b$} (5);
 	\end{tikzpicture}
 	
-	Dans le dernier automate nous voyons qu'il y a un cycle infini qui est $(5,2) \xrightarrow{a,b} (5,2) \xrightarrow{a,b} \dots $.
+	Dans ce dernier automate on peut voir qu'il y a un cycle : $(5,2) \xrightarrow{a,b} (5,2) \xrightarrow{a,b} \dots $.
 	
-	Donc l'automate \`a diagnostiquer n'est pas diagnosticable.
+	Donc l'automate $A$ que l'on voulait diagnostiquer n'est pas diagnosticable.
 \end{figure}
 
 
@@ -289,7 +298,7 @@ Etape 4 : Nous renomme les \'etats de l'automate qui reconna\^it $\mathcal L(A) 
 
 \subsection{Quelques d\'efinitions de base}
 
-Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquett\'e afin d'introduire les conceptions de opacit\'e.
+Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire les conceptions de opacit\'e.
 
 \subsubsection{Syst\`eme de transition d'\'etats \'etiquett\'e (LTS)}
 
@@ -300,12 +309,12 @@ $$LTS = (S,L,\Delta,S_0)$$
 avec
 \begin{itemize}
 	\item $S$ : un ensemble d'\'etats (potentiellement infini)
-	\item $L$ : un ensemble de labels(potentiellement infini)
+	\item $L$ : un ensemble d'étiquettes(potentiellement infini)
 	\item $\Delta \subseteq S\times L \times S$ : une relation de transition
 	\item $S_0$ : un ensemble fini non vide des \'etats initiaux 
 \end{itemize}
 
-Remarque : dans la suite nous consid\'erons que des syst\`eme de transition d'\'etats \'etiquett\'e d\'eterministe.
+Remarque : dans la suite nous ne consid\'erons que des syst\`eme de transition d'\'etats \'etiquet\'es d\'eterministes.
 
 \subsubsection{Run}	
 
@@ -313,7 +322,7 @@ Un $Run$ d'un LTS est un couple $(s_0,\lambda)$ avec :
 
 \begin{itemize}
 	\item $s_0 \in S_0$
-	\item $\lambda = l_1 \dots l_n$ : une s\'equence finie des \'etiquettes telle qu'il existe $s_1,s_2,\dots ,s_n \in S$ tels que $\forall i \in \{1, \dots n\}, (s_{i-1},l_i,s_i) \in \Delta$ 
+	\item $\lambda = l_1 \dots l_n$ : une s\'equence finie d'\'etiquettes telle qu'il existe $s_1,s_2,\dots ,s_n \in S$ tels que $\forall i \in \{1, \dots n\}, (s_{i-1},l_i,s_i) \in \Delta$ 
 \end{itemize}
 
 Notons $s_n$ par $s_0\oplus \lambda$, remarquons que dans la sous-section pr\'ec\'edente nous avons fait l'hypoth\`ese que le $LTS$ est d\'eterministe, donc $s_0\oplus \lambda$ est bien d\'efini.
@@ -327,15 +336,15 @@ $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lamb
 
 \subsection{Observabilit\'e et opacit\'e}
 
-Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan a propos\'e dans leur article ~\cite{BryansKMR08}
+Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan aont propos\'e dans leur article ~\cite{BryansKMR08}
 
-Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats \'etiquett\'e, et $\Sigma_{obs}$ est un ensemble des \'el\'ements $observables$. Remarque nous notons que $\Sigma_{obs}^{\varepsilon} = \Sigma_{obs} \cup \{\varepsilon\}$
+Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats \'etiquett\'e, et $\L_{obs}$ est un ensemble d'\étiquettes $observables$. Remarque nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
 
 Nous allons maintenant mod\'eliser les diff\'erentes capacit\'es d'observation sur le syst\`eme qui est mod\'elis\'e par un LTS. Nous commen\c cons par d\'efinir les diff\'erents fonctions d'observations
 
 \subsubsection{Diff\'erents fonctions d'observation et leur capacit\'e d'observation}
 
-Nous d\'efinissons toutes les fonctions $\Omega : Run(LTS) \rightarrow \Sigma_{obs}^*$ comme les fonctions   
+Nous d\'efinissons toutes les fonctions $\Omega : Run(LTS) \rightarrow L_{obs}^*$ comme les fonctions   
  d'observation.
  
 Il y a plusieurs types de capacit\'e d'observation : 
@@ -343,7 +352,7 @@ Il y a plusieurs types de capacit\'e d'observation :
 
 $statique/dynamique/orwellian/m-orwellian(m\geq 1)$ :
 		
-Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiquettes $\Omega_{etiq} : \Sigma^* \rightarrow \Sigma_{obs}^{\varepsilon}$ telle que 
+Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiquettes $\Omega_{etiq} : L^* \rightarrow L_{obs}^{\varepsilon}$ telle que 
 	
 	$$\forall (s,\lambda)= (s,l_1\dots l_n) \in Run(LTS), \Omega(s,\lambda) = \Omega_{etiq}(k_1)\circ\Omega_{etiq}(k_2)\circ\dots\circ\Omega_{etiq}(k_n)$$
 	
@@ -389,12 +398,12 @@ Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiqu
                         \draw[->,>=latex] (1)->(4) node[midway,above]{$b$};
                         \draw[->,>=latex] (2)->(5) node[midway,above]{$a$};
                 \end{tikzpicture}
-                \caption{$\Sigma = \{h,p,a,b\}$,$\Sigma_o = {a,b}$, Le langage que nous cherchons \`a rendre opaque est $L = \Sigma^*.h.\Sigma^*$}
+                \caption{$L = \{h,p,a,b\}$,$L_o = {a,b}$, Le langage que nous cherchons \`a rendre opaque est $L = L^*.h.L^*$}
 		\end{figure}		
 		
 Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les fonction d'observation. Nous disons que $Secret$ est $init-opaque/final-opaque/total-opaque$ s'il existe un sous-ensemble  $Secret'$ de l'ensemble des \'etats de $LTS$ tel que :
 
-$$\forall (s,\lambda) \in Run(LTS), (s,lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
+$$\forall (s,\lambda) \in Run(LTS), (s, \lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
 
 C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
@@ -406,11 +415,13 @@ C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
 \section{Non-interf\'erence}
 
-L'id\'ee de base de la non-interf\'erence est que les labels sont soit high, soit low. Les labels low sont visibles par tout le monde alors que les labels high sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'un label high dans un run en observant uniquement les labels low.~\cite{GorrieriV10}
+La non-interférence permet de garantir que des actions/informations  confidentielles dans un système ne sont pas observables par des utilisateurs qui n'ont pas un niveau d'accréditation suffisant pour en avoir le droit. 
 
 \begin{mydef}
   Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
 \end{mydef}
+
+Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors que les étiquettes \emph{high} sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'une étiquette high dans un run en observant uniquement les étiquettes low.~\cite{GorrieriV10}
 
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peut se r\'eduire \`a un probl\`eme  de non-interf\'erence.
@@ -419,9 +430,12 @@ Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
 \end{myth}
+
+%TODO : Quelques lignes en plus pour l'intuition des preuves
+
 \section{Conclusion}
 
-Dans cet article on voulait montrer que l'on pouvait modéliser formellement la sécurité de systèmes complexes. Dans un premier temps, nous avons présenté le problème du diagnostique d'un langage rationnel sur un automate vivant. Tous les systèmes ne sont pas diagnosticables mais la diagnosticabilité est décidable, on présente un algorithme polynomial. Dans un second temps, nous avons présenté le problème de l'opacité  pour un observateur d'un langage dans un système. Dans la réalité, les observateurs peuvent se souvenir de toutes leurs observations pour percer le secret dans certains contextes tandis que leur mémoire est très limitée dans d'autres. Pour rendre compte de ce phénomène nous avons présenté plusieurs types d'observateurs plus ou moins puissants. On présente finalement le problème de la non interférence qui est équivalent à celui de l'opacité. Il existe néanmoins des problèmes concrets qui ne se réduisent pas a priori aux modèles que nous avons présenté : Comment modéliser la réparation d'une panne dans le diagnostique ? Comment obtenir des garanties probabilistes sur la diagnosticabilité et l'opacité ?
+Dans cet article on voulait montrer que l'on pouvait modéliser formellement la sécurité de systèmes complexes. Dans un premier temps, nous avons présenté le problème du diagnostic d'un langage rationnel sur un automate vivant. Tous les systèmes ne sont pas diagnosticables mais la diagnosticabilité est décidable, on présente un algorithme polynomial. Dans un second temps, nous avons présenté le problème de l'opacité  pour un observateur d'un langage dans un système. Dans la réalité, les observateurs peuvent se souvenir de toutes leurs observations pour percer le secret dans certains contextes tandis que leur mémoire est très limitée dans d'autres. Pour rendre compte de ce phénomène nous avons présenté plusieurs types d'observateurs plus ou moins puissants. On présente finalement le problème de la non interférence qui est équivalent à celui de l'opacité. Il existe néanmoins des problèmes concrets qui ne se réduisent pas a priori aux modèles que nous avons présenté : Comment modéliser la réparation d'une panne dans le diagnostic ? Comment obtenir des garanties probabilistes sur la diagnosticabilité et l'opacité ?
 
 \bibliography{bibliography}
 \end{document}
