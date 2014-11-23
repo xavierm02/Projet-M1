@@ -62,7 +62,7 @@ Un mot $l_1...l_n \in \Sigma^*$ est reconnu par un automate $A$ si il existe $n 
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
-%TODO : epsilon transition
+%TODO epsilon transition
 
 \subsection{Langage extension clos}
 
@@ -81,7 +81,6 @@ On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ c
 On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
 \subsection{Projection}
-%TODO automate correspondant
 
 Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
 
@@ -95,7 +94,8 @@ a &\text{si } a\in \Sigma'\\
 \subsection{Automate de modèle de fautes}
 Un automate de modèle de faute est un automate qui reconnait un langage L extension-clos appelé langage de faute. Les états finaux de cet automate sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
     
-    \paragraph{Exemple (automate de mod\`ele de faute): } %Il faudrait ajouter les états initiaux (mais je ne sais pas comment faire)
+    \paragraph{Exemple (automate de mod\`ele de faute): } 
+    %TODO  états initiaux
     
    Dans la figure \ref{modele de fautes} $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
         \begin{figure}[H]
@@ -154,9 +154,9 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un
   \item $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions avec faute.
   \item $\mathcal L(A) \setminus \mathcal L(L)$ est le langage des ex\'ecutions sans faute.
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
-  \item Donc $\mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
+  \item Donc $ \mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{enumerate}
-Il suffit donc de v\'erifier que $$\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
@@ -166,7 +166,7 @@ Soit $A$ l'automate \`a diagnostiquer (\`a gauche) et $F$ l'automate de mod\`ele
 \begin{figure}[H]
 	\centering
     	\begin{tikzpicture}
-        	\node[draw,circle,fill=gray] (0) at (0,0) {0};
+            \node[draw,circle,fill=gray] (0) at (0,0) {0};
             \node[draw,circle,fill=gray] (1) at (1.25,1) {1};
             \node[draw,circle,fill=gray] (2) at (2.25,1) {2};
             \node[draw,circle,fill=gray] (3) at (3.25,1) {3};
@@ -255,6 +255,7 @@ Etape 3 : Nous construisons l'automate compl\'ementaire de l'automate de mod\`el
 
 Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A) \setminus \mathcal L(L)$(\`a gauche) et nous faisons le produit synchrone de cet automate avec l'automate de l'\'etape 2 qui reconna\^it le langage $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$.
 
+
 \begin{figure}[H]
 	\centering
         \begin{tikzpicture}
@@ -273,7 +274,7 @@ Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A
         	\draw [->,>=latex] (5) edge[in=100,out=80,loop] node[above] {$a,b$} (5);
         \end{tikzpicture}
         \begin{tikzpicture}
-			\node[draw,circle] (0) at (0,0) {0,0};
+	        \node[draw,circle] (0) at (0,0) {0,0};
         	\node[draw,circle,fill=gray] (1) at (1.25,1) {4,1};
         	\node[draw,circle,fill=gray] (2) at (2.75,1) {5,2};
         	\node[draw,circle] (3) at (1.25,-1) {4,3};
@@ -336,9 +337,9 @@ $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lamb
 
 \subsection{Observabilit\'e et opacit\'e}
 
-Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan aont propos\'e dans leur article ~\cite{BryansKMR08}
+Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan ont propos\'e dans leur article ~\cite{BryansKMR08}
 
-Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats \'etiquett\'e, et $\L_{obs}$ est un ensemble d'\étiquettes $observables$. Remarque nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
+Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats étiquetté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
 
 Nous allons maintenant mod\'eliser les diff\'erentes capacit\'es d'observation sur le syst\`eme qui est mod\'elis\'e par un LTS. Nous commen\c cons par d\'efinir les diff\'erents fonctions d'observations
 
@@ -405,6 +406,7 @@ Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les
 
 $$\forall (s,\lambda) \in Run(LTS), (s, \lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
 
+
 C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
 \begin{itemize}
@@ -424,8 +426,24 @@ La non-interférence permet de garantir que des actions/informations  confidenti
 Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors que les étiquettes \emph{high} sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'une étiquette high dans un run en observant uniquement les étiquettes low.~\cite{GorrieriV10}
 
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
-Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peut se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+  Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peut se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+  \label{opacity2noninterf}
 \end{myth}
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[draw,circle] (0) at (0,0) {$q_0$};
+    \node[draw,circle] (1) at (2,0) {$q_1$};
+    \node[draw,rectangle] (2) at (0,-2) {$A-L$};
+    \node[draw,rectangle] (3) at (2,-2) {$L$};
+    \draw[->,>=latex] (0)->(1) node[midway,above]{$a$};
+    \draw[->,>=latex] (0)->(2) node[midway,left]{$a$};
+    \draw[->,>=latex] (1)->(3) node[midway,left]{$h$};
+    
+  \end{tikzpicture}
+  \caption{Id\'ee de la preuve du th\'eor\`eme~\ref{opacity2noninterf}}
+\end{figure}
 
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
