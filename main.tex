@@ -447,13 +447,15 @@ Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors 
   \label{opacity2noninterf}
 \end{myth}
 
+L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u les rectanglent repr\'esentent des sous-automates reconnaissant les langages qu'ils contiennet. En notant $X=a(A\setminus L) + ahL$ le langage reconnu par cet automate, cet automate est non-interf\'erent ssi $aA=a(A\setminus L)+aL=\pi_{L_{low}}(X)\subseteq X$ ssi $A\subseteq A\setminus L$ ssi ce LTS avec $L$ comme secret est opaque.
+
 \begin{figure}[H]
   \centering
   \begin{tikzpicture}
     \node[] (x) at (-1,0) {};
     \node[draw,circle] (0) at (0,0) {$q_0$};
     \node[draw,circle] (1) at (2,0) {$q_1$};
-    \node[draw,rectangle] (2) at (0,-2) {$A-L$};
+    \node[draw,rectangle] (2) at (0,-2) {$A\setminus L$};
     \node[draw,rectangle] (3) at (2,-2) {$L$};
     \draw[->,>=latex] (x)->(0);
     \draw[->,>=latex] (0)->(1) node[midway,above]{$a$};
@@ -462,13 +464,12 @@ Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors 
     
   \end{tikzpicture}
   \caption{Id\'ee de la preuve du th\'eor\`eme~\ref{opacity2noninterf}}
+  \label{thfig}
 \end{figure}
 
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
 \end{myth}
-
-%TODO : Quelques lignes en plus pour l'intuition des preuves
 
 \section{Conclusion}
 
