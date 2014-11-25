@@ -40,7 +40,7 @@ Un automate (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \De
 \begin{itemize}
 	\item $Q$ est l'ensemble des états du système.
 	\item $\Sigma$ est l'ensemble des événements.
-	\item $\Delta \subseteq (Q \times (\Sigma \cup \{\varepsilon\}) \times Q)$ est une relation de transition.
+	\item $\Delta \subseteq (Q \times (\Sigma \cup \{\varepsilon\}) \times Q)$ est une relation de transition (o\`u $\varepsilon$ est le mot vide, c'est a dire que pour tout mot $u\in\Sigma^*$, $\varepsilon u = u = u\varepsilon$).
 	\item $q_0 \in Q$ l'état initial.
 	\item $F \subset Q$ l'ensemble des \'etats finaux.
 \end{itemize}
