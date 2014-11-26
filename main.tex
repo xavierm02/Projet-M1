@@ -69,7 +69,7 @@ On remarquera que $L(A\times B) = L(A) \cap L(B)$.
 
 \subsection{$\varepsilon$-clôture}
 
-On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
+On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{\varepsilon}{{\to}}} q_{n-1}\underset{\Delta}{\overset{l}{{\to}}} q_n$.
 
 On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
@@ -79,9 +79,9 @@ Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\
 
 $$\begin{array}{llll}
 &\pi_{\Sigma'}(\varepsilon) &= &\varepsilon\\
-\forall a \in \Sigma, \forall u \in \Sigma^*, &\pi_{\Sigma'}(au) &= &\left\{\begin{array}{ll}
-a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
-\pi_{\Sigma'}(u) &\text{ si } a \not\in \Sigma'
+\forall l \in \Sigma, \forall u \in \Sigma^*, &\pi_{\Sigma'}(lu) &= &\left\{\begin{array}{ll}
+l\pi_{\Sigma'}(u) &\text{ si } l \in \Sigma'\\
+\pi_{\Sigma'}(u) &\text{ si } l \not\in \Sigma'
 \end{array}\right.
 \end{array}$$
 
