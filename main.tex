@@ -145,7 +145,7 @@ Nous avons vu qu'en ex\'ecutant un mot par l'automate, en fonction de l'\'etat d
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu.
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu. Nous pouvons définir les langages suivants,
 
 \begin{enumerate} 
   \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
@@ -154,7 +154,7 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
   \item Donc $ \mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{enumerate}
-Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, donc pour v\'erifier qu'un langage de faute $L$ est diagnosticable dans un automate $A$, il suffit de v\'erifier qu'il n'y a pas de cycle accessible compos\'e uniquement par des \'etats finaux dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
@@ -313,11 +313,11 @@ Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A
 
 \subsection{Quelques d\'efinitions de base}
 
-Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire les conceptions de opacit\'e.
+Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire la conception de l'opacit\'e.
 
-\subsubsection{Syst\`eme de transition d'\'etats \'etiquett\'e (LTS)}
+\subsubsection{Syst\`eme de transition d'\'etats \'etiquet\'e (LTS)}
 
-Un syst\`eme de transition d'\'etats \'etiquett\'e LTS est un quadruplet 
+Un syst\`eme de transition d'\'etats \'etiquet\'e LTS est un quadruplet 
 
 $$LTS = (S,L,\Delta,S_0)$$
 
@@ -351,9 +351,9 @@ $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lamb
 
 \subsection{Observabilit\'e et opacit\'e}
 
-Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan ont propos\'e dans leur article ~\cite{BryansKMR08}
+Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan ont propos\'e dans leur article ~\cite{BryansKMR08} une définition de l'opacité.
 
-Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats étiquetté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
+Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats étiqueté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
 
 Nous allons maintenant mod\'eliser les diff\'erentes capacit\'es d'observation sur le syst\`eme qui est mod\'elis\'e par un LTS. Nous commen\c cons par d\'efinir les diff\'erents fonctions d'observations
 
@@ -423,7 +423,7 @@ Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les
 $$\forall (s,\lambda) \in Run(LTS), (s, \lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
 
 
-C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
+C'est le choix de $\sigma$ qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
 \begin{itemize}
 	\item $initial-opaque$ : $\sigma = s$
@@ -436,7 +436,7 @@ C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 La non-interférence permet de garantir que des actions/informations  confidentielles dans un système ne sont pas observables par des utilisateurs qui n'ont pas un niveau d'accréditation suffisant pour en avoir le droit. 
 
 \begin{mydef}
-  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
+  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquet\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
 \end{mydef}
 
 Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors que les étiquettes \emph{high} sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'une étiquette high dans un run en observant uniquement les étiquettes low.~\cite{GorrieriV10}
