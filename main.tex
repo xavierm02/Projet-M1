@@ -141,7 +141,7 @@ Nous avons vu qu'en ex\'ecutant un mot par l'automate, en fonction de l'\'etat d
 
 \section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu. Nous pouvons définir les langages suivants,
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu. Nous pouvons définir les langages suivants :
 
 \begin{enumerate} 
   \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
@@ -465,6 +465,8 @@ L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
 \end{myth}
+
+L'id\'ee de ce th\'eor\`eme est que la non inteférence, c'est à dire le fait de ne pas rendre visible les actions d'un alphabet $\Sigma_h \subseteq \Sigma$ peut se récrire comme l'opacité du langage $\Sigma^*\Sigma_h\Sigma^*$.
 
 \section{Conclusion}
 
