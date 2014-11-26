@@ -75,14 +75,15 @@ On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
 \subsection{Projection}
 
-Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ comme \'etant l'unique fonction v\'erifiant:
+Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ par:
 
-$$\forall u,v \in \Sigma^*, \pi_{\Sigma'}(uv)=\pi_{\Sigma'}(u)\pi_{\Sigma'}(v)$$
-$$\pi_{\Sigma'}(\varepsilon)=\varepsilon$$
-$$\forall l\in \Sigma,\pi_{\Sigma'}(l)=\left\{\begin{array}{ll}
-l &\text{si } l\in \Sigma'\\
-\varepsilon &\text{sinon} \\
-\end{array}\right.$$
+$$\begin{array}{llll}
+&\pi_{\Sigma'}(\varepsilon) &= &\varepsilon\\
+\forall a \in \Sigma, \forall u \in \Sigma^*, &\pi_{\Sigma'}(au) &= &\left\{\begin{array}{ll}
+a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
+\pi_{\Sigma'}(u) &\text{ si } a \not\in \Sigma'
+\end{array}\right.
+\end{array}$$
 
 \subsection{Automate de modèle de fautes}
 Un automate de modèle de faute est un automate qui reconnait un langage L extension-clos appelé langage de faute. Les états finaux de cet automate sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
