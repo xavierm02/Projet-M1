@@ -36,7 +36,8 @@ De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexe
 
 \subsection{Automates}
 
-Un automate (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
+\begin{mydef}[Automate]
+Un automate est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
 \begin{itemize}
 	\item $Q$ est l'ensemble des états du système.
 	\item $\Sigma$ est l'ensemble des événements.
@@ -44,39 +45,52 @@ Un automate (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \De
 	\item $q_0 \in Q$ l'état initial.
 	\item $F \subset Q$ l'ensemble des \'etats finaux.
 \end{itemize}
+\end{mydef}
 
-Un automate fini est un automate tel que $Q$ est fini.
+Un automate fini est un automate tel que $Q$ est \emph{fini}.
 \paragraph{}
 \'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \underset{\Delta}{\overset{l}{{\to}}}q$ pour $(p,l,q) \in \Delta$. On notera \'egalement $q_0 \underset{\Delta}{\overset{l_0}{{\to}}} \dots \underset{\Delta}{\overset{l_n}{{\to}}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k 
 \underset{\Delta}{\overset{l_k}{{\to}}} q_{k+1}$. Pour simplifier, le $\Delta$ sera omis lorsqu'il est \'evident.
 \paragraph{}
-On dit qu'un automate fini est sans $\varepsilon$-transitions si $\Delta \subseteq (Q\times \Sigma \times Q)$.
+On dit qu'un automate est \emph{sans $\varepsilon$-transitions} si $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
-Un automate fini d\'eterministe est un automate fini sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$
-\begin{mydef}{Langage reconnue par un automate}
+Un automate \emph{d\'eterministe} est un automate sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $$\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$$
+
+\begin{mydef}[Langage reconnu par un automate]
 Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 \end{mydef}
 
-\begin{mydef}{Langege extension-clos}
+\begin{mydef}[D\'eterminis\'e d'un automate]
+Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta'}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta'}{\overset{l}{{\to}}}q\right)\right)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe (et fini si $A$ l'est).
+
+\begin{mydef}[Compl\'ementaire d'un automate]
+Le compl\'ementaire d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\overline{A} = (Q, \Sigma, \Delta, q_0, Q\setminus F)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L\left(\overline{A}\right) = \Sigma^* \setminus \mathcal L(A)$.
+
+
+\begin{mydef}[Produit synchrone]
+Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap \Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+\end{mydef}
+On peut prouver que $\mathcal L(A\times B) = \mathcal L(A) \cap \mathcal L(B)$.
+
+\begin{mydef}[$\varepsilon$-clôture]
+On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
+\end{mydef}
+On peut prouver que $\mathcal L(\operatorname{cl}_\varepsilon(A))=\mathcal L(A)$.
+
+\begin{mydef}[Langage extension-clos]
 Un langage $L$ est dit extension-clos si $\forall u \in L, \forall v \in \Sigma^*, uv \in L$.
 \end{mydef}
 
-\subsection{Produit synchrone}
-
-Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
-
-On remarquera que $L(A\times B) = L(A) \cap L(B)$.
-
-\subsection{$\varepsilon$-clôture}
-
-On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
-
-On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
-
-\subsection{Projection}
-
+\begin{mydef}[Projection]
 Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ par:
 
 $$\begin{array}{llll}
@@ -86,6 +100,7 @@ a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
 \pi_{\Sigma'}(u) &\text{ si } a \not\in \Sigma'
 \end{array}\right.
 \end{array}$$
+\end{mydef}
 
 \section{Diagnosticabilit\'e}
 
