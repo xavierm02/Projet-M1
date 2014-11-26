@@ -167,12 +167,12 @@ Nous allons d'abord d\'efinir formellement ce que c'est un diagnostiquer pour un
   \end{itemize}
 \end{enumerate} 
 
-Nous avons vu qu'en ex\'ecutant un mot par l'automate, en fonction de l'\'etat de l'automate $D$ nous pouvons d\'eduire que si ce prefix du mot contient des \'ev\`enements fautifs (m\^eme si dans certains cas nous ne pouvons pas encore conclure, car il y des <<\'etats ambigus>>). 
+En lisant avec un mot avec l'automate, en fonction de l'état dans lequel on arrive on peut affirmer qu'une panne s'est produite, qu'aucune panne ne s'est produite ou bien que les deux cas de figure sont possibles.
 
 \subsection{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu.
-
+L'id\'ee de l'agorithme est qu'un système est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si il n'existe pas deux mots infinis de même observation tels que l'un soit fautif et pas l'autre.
+On peut calculer les langages suivants :
 \begin{enumerate} 
   \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
   \item $\pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions avec faute.
@@ -182,7 +182,7 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un
 \end{enumerate}
 Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
-Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
+Note : La longueur du mot le plus long dans ce langage est longueur de la plus grande sous séquence ambiguë.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
 
 Soit $A$ l'automate \`a diagnostiquer (\`a gauche) et $F$ l'automate de mod\`ele de fautes  (\`a droite) repr\'esent\'es ci dessous avec leurs états finaux grisés :
@@ -338,11 +338,11 @@ Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A
 
 \subsection{Quelques d\'efinitions de base}
 
-Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire les conceptions de opacit\'e.
+Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire le concept de l'opacit\'e.
 
-\subsubsection{Syst\`eme de transition d'\'etats \'etiquett\'e (LTS)}
+\subsubsection{Syst\`eme de transition d'\'etats \'etiquet\'e (LTS)}
 
-Un syst\`eme de transition d'\'etats \'etiquett\'e LTS est un quadruplet 
+Un syst\`eme de transition d'\'etats \'etiquet\'e LTS est un quadruplet 
 
 $$LTS = (S,L,\Delta,S_0)$$
 
@@ -378,7 +378,7 @@ $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lamb
 
 Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan ont propos\'e dans leur article ~\cite{BryansKMR08}
 
-Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats étiquetté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
+Soit $LTS=(S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats étiqueté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
 
 Nous allons maintenant mod\'eliser les diff\'erentes capacit\'es d'observation sur le syst\`eme qui est mod\'elis\'e par un LTS. Nous commen\c cons par d\'efinir les diff\'erents fonctions d'observations
 
@@ -448,7 +448,7 @@ Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les
 $$\forall (s,\lambda) \in Run(LTS), (s, \lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
 
 
-C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
+C'est le choix de $\sigma$ qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
 \begin{itemize}
 	\item $initial-opaque$ : $\sigma = s$
@@ -497,7 +497,7 @@ Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opac
 
 \section{Conclusion}
 
-Dans cet article on voulait montrer que l'on pouvait modéliser formellement la sécurité de systèmes complexes. Dans un premier temps, nous avons présenté le problème du diagnostic d'un langage rationnel sur un automate vivant. Tous les systèmes ne sont pas diagnosticables mais la diagnosticabilité est décidable, on présente un algorithme polynomial. Dans un second temps, nous avons présenté le problème de l'opacité  pour un observateur d'un langage dans un système. Dans la réalité, les observateurs peuvent se souvenir de toutes leurs observations pour percer le secret dans certains contextes tandis que leur mémoire est très limitée dans d'autres. Pour rendre compte de ce phénomène nous avons présenté plusieurs types d'observateurs plus ou moins puissants. On présente finalement le problème de la non interférence qui est équivalent à celui de l'opacité. Il existe néanmoins des problèmes concrets qui ne se réduisent pas a priori aux modèles que nous avons présenté : Comment modéliser la réparation d'une panne dans le diagnostic ? Comment obtenir des garanties probabilistes sur la diagnosticabilité et l'opacité ?
+Cet article montre que l'on peut modéliser formellement la sécurité de systèmes complexes. Dans un premier temps, nous avons présenté le problème du diagnostic d'un langage rationnel sur un automate vivant. Tous les systèmes ne sont pas diagnosticables mais la diagnosticabilité est décidable, on présente un algorithme polynomial. Dans un second temps, nous avons présenté le problème de l'opacité  pour un observateur d'un langage dans un système. Dans la réalité, les observateurs peuvent se souvenir de toutes leurs observations pour percer le secret dans certains contextes tandis que leur mémoire est très limitée dans d'autres. Pour rendre compte de ce phénomène nous avons présenté plusieurs types d'observateurs plus ou moins puissants. On présente finalement le problème de la non interférence qui est équivalent à celui de l'opacité pour un observateur statique. Il existe néanmoins des problèmes concrets qui ne se réduisent pas a priori aux modèles que nous avons présenté : Comment modéliser la réparation d'une panne dans le diagnostic ? Comment obtenir des garanties probabilistes sur la diagnosticabilité et l'opacité ?
 
 \bibliography{bibliography}
 \end{document}
