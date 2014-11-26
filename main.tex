@@ -84,12 +84,14 @@ l &\text{si } l\in \Sigma'\\
 \varepsilon &\text{sinon} \\
 \end{array}\right.$$
 
+\section{Diagnosticabilit\'e}
+
 \subsection{Automate de modèle de fautes}
 Un automate de modèle de faute est un automate qui reconnait un langage L extension-clos appelé langage de faute. Les états finaux de cet automate sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
     
     \paragraph{Exemple (automate de mod\`ele de faute): }
     
-   Dans la figure \ref{modele de fautes} $f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Les  nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
+   Soit \ref{modele de fautes},$f\in \Sigma$ et $L  = \Sigma^*\{f\}\Sigma^*$. Sur la figure, les nœuds blancs sont les états normaux et les nœuds gris sont les \'etats fautifs. Avec ce mod\`ele de faute, une ex\'ecution est fautive si est seulement si $f$ s'est produit.
         \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}
@@ -105,10 +107,8 @@ Un automate de modèle de faute est un automate qui reconnait un langage L exten
                 \label{modele de fautes}
         \end{figure}
         
+\subsection{Définition de la diagnosticabilité}
     
-
-\section{Diagnosticabilit\'e}
-
 Soit un automate fini d\'eterministe $A$ appel\'e syst\`eme, un modèle de faute qui reconnait le langage de faute $L$ et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
 On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et seulement si $$\begin{array}{l}
@@ -119,14 +119,14 @@ On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et s
 
 Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($x$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
 
-\section{Algorithme de construction d'un diagnostiqueur}
+\subsection{Algorithme de construction d'un diagnostiqueur}
     Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
 
     \paragraph{}
-    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $F$, on proc\'ede de la mani\`ere suivante :
+    Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $F$, avec $\Sigma_A = \Sigma_F$, on proc\'ede de la mani\`ere suivante :
     
 \begin{enumerate}
-  \item Construire $B=A\times F$, le produit synchrone de $B$ et $F$, qui donne l'automate du langage fautif.
+  \item Construire $B=A\times F$, le produit synchrone de $A$ et $F$, qui donne l'automate du langage fautif.
   \item Construire $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ (Nous d\'efinission $B[\varepsilon/no]$ comme l'automate dans lequel nous avons remplac\'e toutes les lettres non-observables dans $\Sigma_{no}$ par $\varepsilon$), nous avons que l'automate $C$ reconna\^it la projection du langage fautif sur l'alphabet des \'ev\`enement observables $\Sigma_o$.
   \item Construire $D=\det(C)$ le d\'eterminis\'e de $C$. On note $Q_D \subset \mathcal{P}(C)$ l'ensemble des états de $D$. Soit $q \in Q_D$, comme $q \subset C$ on peut distinguer trois cas :
   \begin{itemize}
@@ -138,9 +138,9 @@ Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du syst�
 
 Nous avons vu qu'en ex\'ecutant un mot par l'automate, en fonction de l'\'etat de l'automate $D$ nous pouvons d\'eduire que si ce prefix du mot contient des \'ev\`enements fautifs (m\^eme si dans certains cas nous ne pouvons pas encore conclure, car il y des <<\'etats ambigus>>). 
 
-\section{D\'ecision de la diagnosticabilit\'e en temps polynomial}
+\subsection{D\'ecision de la diagnosticabilit\'e en temps polynomial}
 
-L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu. Nous pouvons définir les langages suivants,
+L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un mod\`ele de fautes si et seulement si aucun mot infini contenant une faute n'est ambigu.
 
 \begin{enumerate} 
   \item $\mathcal L (A) \cap \mathcal L(L)$ est le langage des ex\'ecutions avec fautes.
@@ -149,7 +149,7 @@ L'id\'ee de l'agorithme est qu'un automate est diagnosticable par rapport \`a un
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
   \item Donc $ \mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{enumerate}
-Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, donc pour v\'erifier qu'un langage de faute $L$ est diagnosticable dans un automate $A$, il suffit de v\'erifier qu'il n'y a pas de cycle accessible compos\'e uniquement par des \'etats finaux dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est la dur\'ee maximale pendant laquelle on ne sait pas si le syst\`eme a fait une faute ou non.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
@@ -304,15 +304,15 @@ Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A
 
 
 
-\section{D\'efinitions de l'opacit\'e}
+\section{Opacit\'e}
 
 \subsection{Quelques d\'efinitions de base}
 
-Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire la conception de l'opacit\'e.
+Nous allons d'abord donner quelques d\'efinitions sur le syst\`eme de transition d'\'etats \'etiquet\'e afin d'introduire les conceptions de opacit\'e.
 
-\subsubsection{Syst\`eme de transition d'\'etats \'etiquet\'e (LTS)}
+\subsubsection{Syst\`eme de transition d'\'etats \'etiquett\'e (LTS)}
 
-Un syst\`eme de transition d'\'etats \'etiquet\'e LTS est un quadruplet 
+Un syst\`eme de transition d'\'etats \'etiquett\'e LTS est un quadruplet 
 
 $$LTS = (S,L,\Delta,S_0)$$
 
@@ -346,9 +346,9 @@ $$\mathcal{L}(LTS) = \{\lambda | \exists s_0 \in S_0 \mbox{ tel que } (s_0,\lamb
 
 \subsection{Observabilit\'e et opacit\'e}
 
-Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan ont propos\'e dans leur article ~\cite{BryansKMR08} une définition de l'opacité.
+Jeremy Bryans, Maciej Koutny, Laurent Mazar{\'{e}}, Peter Y. A. Ryan ont propos\'e dans leur article ~\cite{BryansKMR08}
 
-Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats étiqueté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
+Soit $LTS=(S,L,\Delta,S_0)$ est un syst\`eme de transition d'\'etats étiquetté, et $L_{obs}$ est un ensemble d'étiquettes $observables$. Nous notons $L_{obs}^{\varepsilon} = L_{obs} \cup \{\varepsilon\}$
 
 Nous allons maintenant mod\'eliser les diff\'erentes capacit\'es d'observation sur le syst\`eme qui est mod\'elis\'e par un LTS. Nous commen\c cons par d\'efinir les diff\'erents fonctions d'observations
 
@@ -418,7 +418,7 @@ Nous pouvons aussi d\'efinir les diff\'erents niveaux d'opacit\'e comme pour les
 $$\forall (s,\lambda) \in Run(LTS), (s, \lambda) \in Secret \Leftrightarrow \sigma \in Secret'$$
 
 
-C'est le choix de $\sigma$ qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
+C'est le choix de sigma qui va d\'efinir les diff\'erents niveaux d'opacit\'e :
 
 \begin{itemize}
 	\item $initial-opaque$ : $\sigma = s$
@@ -431,7 +431,7 @@ C'est le choix de $\sigma$ qui va d\'efinir les diff\'erents niveaux d'opacit\'e
 La non-interférence permet de garantir que des actions/informations  confidentielles dans un système ne sont pas observables par des utilisateurs qui n'ont pas un niveau d'accréditation suffisant pour en avoir le droit. 
 
 \begin{mydef}
-  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquet\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
+  Soit $LTS = (S,L,\Delta,S_0)$ un syst\`eme de transition d'\'etats \'etiquett\'e avec $L=L_{high}\sqcup L_{low}$. $LTS$ est non-interf\'erent ssi $\pi_{L_{low}}(L(LTS)) \subseteq L(LTS)$, c'est-\`a-dire si pour chaque run de $LTS$, le run o\`u l'on a enlev\'e tous les \'el\'ements de $L_{high}$ est encore un run.
 \end{mydef}
 
 Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors que les étiquettes \emph{high} sont priv\'es. Un LTS est dit non-interf\'erent si il n'est pas possible de d\'etecter la pr\'esence d'une étiquette high dans un run en observant uniquement les étiquettes low.~\cite{GorrieriV10}
