@@ -54,37 +54,50 @@ Un automate fini est un automate tel que $Q$ est \emph{fini}.
 \paragraph{}
 On dit qu'un automate est \emph{sans $\varepsilon$-transitions} si $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
+Un automate \emph{complet} est un automate tel que pour tout \'etat $q$ et pour toute lettre $l$ il existe une transition partant de $q$ \'etiquet\'ee par $l$. Formellement : $\forall q \in Q, \forall l \in \Sigma, \exists p\in Q, q\overset{l}{\to}p$
+
 Un automate \emph{d\'eterministe} est un automate sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $$\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$$
 
 \begin{mydef}[Langage reconnu par un automate]
-Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
+Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tels que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
 
-Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
+Le langage $\mathcal{L}(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 \end{mydef}
-
-\begin{mydef}[D\'eterminis\'e d'un automate]
-Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
-$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta'}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta'}{\overset{l}{{\to}}}q\right)\right)$$
-\end{mydef}
-
-On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe (et fini si $A$ l'est).
-
-\begin{mydef}[Compl\'ementaire d'un automate]
-Le compl\'ementaire d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\overline{A} = (Q, \Sigma, \Delta, q_0, Q\setminus F)$$
-\end{mydef}
-
-On peut prouver que $\mathcal L\left(\overline{A}\right) = \Sigma^* \setminus \mathcal L(A)$.
-
-
-\begin{mydef}[Produit synchrone]
-Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap \Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
-\end{mydef}
-On peut prouver que $\mathcal L(A\times B) = \mathcal L(A) \cap \mathcal L(B)$.
 
 \begin{mydef}[$\varepsilon$-clôture]
 On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
 \end{mydef}
 On peut prouver que $\mathcal L(\operatorname{cl}_\varepsilon(A))=\mathcal L(A)$.
+
+\begin{mydef}[Compl\'et\'e d'un automate]
+Le compl\'et\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $\operatorname{complete}(A) = (Q\cup\{\bot\}, \Sigma, \Delta', q_0, F)$ o\`u $\bot\not\in Q$ est un nouvel \'etat et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p,q \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}q \iff p\underset{\Delta}{\overset{l}{{\to}}}q\right)$$
+$$\forall l \in \Sigma, \forall p \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}\bot \iff \left(\forall q \in Q, p\underset{\Delta}{\overset{l}{{\not\to}}}q\right)\right)$$
+
+$$\forall l \in \Sigma, \forall q \in Q,\bot\underset{\Delta'}{\overset{l}{{\not\to}}}q$$
+
+$$\forall l \in \Sigma, \bot\underset{\Delta'}{\overset{l}{{\to}}}\bot$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\operatorname{complete}(A)) = \mathcal L(A)$ et que $\operatorname{complete}(A)$ est complet.
+
+\begin{mydef}[D\'eterminis\'e d'un automate]
+Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta}{\overset{l}{{\to}}}q\right)\right)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe.
+
+\begin{mydef}[Compl\'ementaire d'un automate]
+Le compl\'ementaire d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions, d\'eterministe et complet est l'automate $$\overline{A} = (Q, \Sigma, \Delta, q_0, Q\setminus F)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L\left(\overline{A}\right) = \Sigma^* \setminus \mathcal L(A)$.
+
+\begin{mydef}[Produit synchrone]
+Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap \Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+\end{mydef}
+On peut prouver que $\mathcal L(A\times B) = \mathcal L(A) \cap \mathcal L(B)$.
 
 \begin{mydef}[Langage extension-clos]
 Un langage $L$ est dit extension-clos si $\forall u \in L, \forall v \in \Sigma^*, uv \in L$.
@@ -135,13 +148,13 @@ On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et s
 \forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
 \end{array}$$
 
-Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($x$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
+Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($u$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
 
 \subsection{Algorithme de construction d'un diagnostiqueur}
 
 Nous allons d'abord d\'efinir formellement ce que c'est un diagnostiquer pour un automate et un mod\`ele de faute.
 \begin{mydef}
-  Soit $A$ un automate que nous cherchons \`a diagnostiquer et $L$ un automate de mod\`ele de fautes que nous voulons diagnostiquer. Alors nous d\'efinissons $D : \Sigma_o^* \to \{\mbox{Oui,Non,Peut-\^etre}\}$ comme un diagnostiquer sur l'automate $A$ et le mod\`ele de faute $L$, si et seulement si, soit $w \in \Sigma_o^*$ qui est accept\'e par l'automate $A$,
+  Soit $A$ un automate que nous cherchons \`a diagnostiquer et $L$ un automate de mod\`ele de fautes que nous voulons diagnostiquer. Une fonction $D : \Sigma_o^* \to \{\mbox{Oui,Non,Peut-\^etre}\}$ est un diagnostiquer sur l'automate $A$ et le mod\`ele de faute $L$, si et seulement si, soit $w \in \Sigma_o^*$ qui est accept\'e par l'automate $A$,
   \begin{itemize}
   \item si $D(w) = Oui$ alors $\forall w' \in \mathcal{L}(A)$ tel que $\pi_{\Sigma_o}(w') = w$, $\exists u \in \mathcal{L}(L)$ tel que $w' \in \Sigma^* u \Sigma^*$
   \item si $D(w) = Non$ alors $\forall w' \in \mathcal{L}(A)$ tel que $\pi_{\Sigma_o}(w') = w$, $\forall u \in \mathcal{L}(L)$ nous avons $w' \not \in \Sigma^* u \Sigma^*$
@@ -180,7 +193,8 @@ On peut calculer les langages suivants :
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
   \item Donc $ \mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{enumerate}
-Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+
+Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible contenant au moins un \'etat final dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(\operatorname{complete}(\operatorname{cl}_\varepsilon(L)))})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) reconnaissant ce langage. Si $L$ est sans $\varepsilon$-transitions, d\'eterministe et complet, on peut se contenter de construire l'automate $(A\times \overline{L})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$ de taille $|A|^2 \times |L|^2$. La d\'etection de cycle accessible pouvant se faire en temps lin\'eaire, on dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes sans $\varepsilon$-transitions, d\'eterministe et complet.
 
 Note : La longueur du mot le plus long dans ce langage est longueur de la plus grande sous séquence ambiguë.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
@@ -218,7 +232,7 @@ Soit $A$ l'automate \`a diagnostiquer (\`a gauche) et $F$ l'automate de mod\`ele
         \end{tikzpicture}
 \end{figure}
 
-Etape 2 : Nous faisons le produit synchrone sur les deux automates (\`a gauche), puis la projection sur l'alphabet observable(\`a droite) à fin de faciliter les \'etapes suivantes nous avons renomm\'e les \'etats dans l'automate projet\'e. 
+Etape 2 : Nous faisons le produit synchrone sur les deux automates (\`a gauche), puis la projection sur l'alphabet observable(\`a droite) à fin de faciliter les \'etapes suivantes nous avons renomm\'e les \'etats dans l'automate projet\'e. Cet automate reconnait tous les mots de A qui sont des fautes de L.
 
 
 
@@ -417,7 +431,7 @@ Il existe une <<fonction d'observation>> sur les mots compos\'es par les \'etiqu
 	
 	$$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$$
 	
-	ou nous pouvons voir cette d\'efinition en terme d'ensembles :
+	Nous pouvons récrire cette définition de manière ensembliste de la manière suivante:
 	
 	$$\Omega(Secret)\subseteq \Omega(Run(LTS)-Secret)$$
 \end{mydef}
@@ -471,7 +485,7 @@ Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors 
   \label{opacity2noninterf}
 \end{myth}
 
-L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u les rectanglent repr\'esentent des sous-automates reconnaissant les langages qu'ils contiennet. En notant $X=a(A\setminus L) + ahL$ le langage reconnu par cet automate, cet automate est non-interf\'erent ssi $aA=a(A\setminus L)+aL=\pi_{L_{low}}(X)\subseteq X$ ssi $A\subseteq A\setminus L$ ssi ce LTS avec $L$ comme secret est opaque.
+L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u les rectanglent repr\'esentent des sous-automates reconnaissant les langages qu'ils contiennet. En notant $X=a(A\setminus L) + ahL$ le langage reconnu par cet automate, cet automate est non-interf\'erent ssi $\pi_{L_{low}}(X)\subseteq X$. Or $\pi_{L_{low}}(X)=a(A\setminus L)+aL=aA$ et $aA\cap ahL = \emptyset$ donc $\pi_{L_{low}}(X)\subseteq X$ ssi $A\subseteq A\setminus L$, c'est-\`a-dire ssi cet automate est opaque par rapport au secret $L$.
 
 \begin{figure}[H]
   \centering
@@ -494,6 +508,8 @@ L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
 \end{myth}
+
+L'id\'ee de la preuve ce th\'eor\`eme est que la non inteférence, c'est à dire le fait de ne pas rendre visible les actions d'un alphabet $\Sigma_h \subseteq \Sigma$ peut se récrire comme l'opacité du langage $\Sigma^*\Sigma_h\Sigma^*$.
 
 \section{Conclusion}
 
