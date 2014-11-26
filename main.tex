@@ -53,13 +53,15 @@ Un automate fini est un automate tel que $Q$ est fini.
 On dit qu'un automate fini est sans $\varepsilon$-transitions si $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
 Un automate fini d\'eterministe est un automate fini sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$
-\paragraph{}
+\begin{mydef}{Langage reconnue par un automate}
 Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
+\end{mydef}
 
-\paragraph{}
+\begin{mydef}{Langege extension-clos}
 Un langage $L$ est dit extension-clos si $\forall u \in L, \forall v \in \Sigma^*, uv \in L$.
+\end{mydef}
 
 \subsection{Produit synchrone}
 
