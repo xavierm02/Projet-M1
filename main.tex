@@ -485,7 +485,7 @@ Intuitivement, les étiquettes \emph{low} sont visibles par tout le monde alors 
   \label{opacity2noninterf}
 \end{myth}
 
-L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u les rectanglent repr\'esentent des sous-automates reconnaissant les langages qu'ils contiennet. En notant $X=a(A\setminus L) + ahL$ le langage reconnu par cet automate, cet automate est non-interf\'erent ssi $aA=a(A\setminus L)+aL=\pi_{L_{low}}(X)\subseteq X$ ssi $A\subseteq A\setminus L$ ssi ce LTS avec $L$ comme secret est opaque.
+L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u les rectanglent repr\'esentent des sous-automates reconnaissant les langages qu'ils contiennet. En notant $X=a(A\setminus L) + ahL$ le langage reconnu par cet automate, cet automate est non-interf\'erent ssi $\pi_{L_{low}}(X)\subseteq X$. Or $\pi_{L_{low}}(X)=a(A\setminus L)+aL=aA$ et $aA\cap ahL = \emptyset$ donc $\pi_{L_{low}}(X)\subseteq X$ ssi $A\subseteq A\setminus L$, c'est-\`a-dire ssi cet automate est opaque par rapport au secret $L$.
 
 \begin{figure}[H]
   \centering
@@ -508,6 +508,8 @@ L'id\'ee de la preuve est de construire l'automate de la figure \ref{thfig} o\`u
 \begin{myth}[\protect{\cite[page 5]{BryansKMR08}}]
 Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
 \end{myth}
+
+L'id\'ee de la preuve ce th\'eor\`eme est que la non inteférence, c'est à dire le fait de ne pas rendre visible les actions d'un alphabet $\Sigma_h \subseteq \Sigma$ peut se récrire comme l'opacité du langage $\Sigma^*\Sigma_h\Sigma^*$.
 
 \section{Conclusion}
 
