@@ -54,37 +54,50 @@ Un automate fini est un automate tel que $Q$ est \emph{fini}.
 \paragraph{}
 On dit qu'un automate est \emph{sans $\varepsilon$-transitions} si $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
+Un automate \emph{complet} est un automate tel que pour tout \'etat $q$ et pour toute lettre $l$ il existe une transition partant de $q$ \'etiquet\'ee par $l$. Formellement : $\forall q \in Q, \forall l \in \Sigma, \exists p\in Q, q\overset{l}{\to}p$
+
 Un automate \emph{d\'eterministe} est un automate sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $$\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$$
 
 \begin{mydef}[Langage reconnu par un automate]
-Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
+Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tels que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 \end{mydef}
-
-\begin{mydef}[D\'eterminis\'e d'un automate]
-Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
-$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta'}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta'}{\overset{l}{{\to}}}q\right)\right)$$
-\end{mydef}
-
-On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe (et fini si $A$ l'est).
-
-\begin{mydef}[Compl\'ementaire d'un automate]
-Le compl\'ementaire d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\overline{A} = (Q, \Sigma, \Delta, q_0, Q\setminus F)$$
-\end{mydef}
-
-On peut prouver que $\mathcal L\left(\overline{A}\right) = \Sigma^* \setminus \mathcal L(A)$.
-
-
-\begin{mydef}[Produit synchrone]
-Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap \Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
-\end{mydef}
-On peut prouver que $\mathcal L(A\times B) = \mathcal L(A) \cap \mathcal L(B)$.
 
 \begin{mydef}[$\varepsilon$-clôture]
 On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
 \end{mydef}
 On peut prouver que $\mathcal L(\operatorname{cl}_\varepsilon(A))=\mathcal L(A)$.
+
+\begin{mydef}[Compl\'et\'e d'un automate]
+Le compl\'et\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $\operatorname{complete}(A) = (Q\cup\{\bot\}, \Sigma, \Delta', q_0, F)$ o\`u $\bot\not\in Q$ est un nouvel \'etat et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p,q \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}q \iff p\underset{\Delta}{\overset{l}{{\to}}}q\right)$$
+$$\forall l \in \Sigma, \forall p \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}\bot \iff \left(\forall q \in Q, p\underset{\Delta}{\overset{l}{{\not\to}}}q\right)\right)$$
+
+$$\forall l \in \Sigma, \forall q \in Q,\bot\underset{\Delta'}{\overset{l}{{\not\to}}}q$$
+
+$$\forall l \in \Sigma, \bot\underset{\Delta'}{\overset{l}{{\to}}}\bot$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\operatorname{complete}(A)) = \mathcal L(A)$ et que $\operatorname{complete}(A)$ est complet.
+
+\begin{mydef}[D\'eterminis\'e d'un automate]
+Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta}{\overset{l}{{\to}}}q\right)\right)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe.
+
+\begin{mydef}[Compl\'ementaire d'un automate]
+Le compl\'ementaire d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions, d\'eterministe et complet est l'automate $$\overline{A} = (Q, \Sigma, \Delta, q_0, Q\setminus F)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L\left(\overline{A}\right) = \Sigma^* \setminus \mathcal L(A)$.
+
+\begin{mydef}[Produit synchrone]
+Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap \Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+\end{mydef}
+On peut prouver que $\mathcal L(A\times B) = \mathcal L(A) \cap \mathcal L(B)$.
 
 \begin{mydef}[Langage extension-clos]
 Un langage $L$ est dit extension-clos si $\forall u \in L, \forall v \in \Sigma^*, uv \in L$.
@@ -180,7 +193,7 @@ On peut calculer les langages suivants :
   \item $\pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L))$ est le langage des observations d'ex\'ecutions sans faute.
   \item Donc $ \mathcal L_{amb} = \pi_{\Sigma_o}(\mathcal L(A) \setminus \mathcal L(L)) \cap \pi_{\Sigma_o}(\mathcal L (A) \cap \mathcal L(L))$ est le langage des observations d'ex\'ecutions ambiguës.
 \end{enumerate}
-Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(L)})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) de taille $|A|^2 \times |L|^2$ reconnaissant ce langage et la d\'etection de cycle accessible peut se faire en temps lin\'eaire. On dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme est diagnosticable par rapport \`a un mod\`ele de fautes.
+Il suffit donc de v\'erifier que $\mathcal L_{amb}$ ne contient que des mots de taille born\'ee, ce qui est équivalent au fait qu'il soit fini, ce qui est \'equivalent \`a l'absence de cycle accessible dans l'automate. Or on sait construire un automate ($(A\times \overline{\det(\operatorname{complete}(\operatorname{cl}_\varepsilon(L)))})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$) reconnaissant ce langage. Si $L$ est sans $\varepsilon$-transitions, d\'eterministe et complet, on peut se contenter de construire l'automate $(A\times \overline{L})[\varepsilon/o] \times (A\times L)[\varepsilon/o]$ de taille $|A|^2 \times |L|^2$. La d\'etection de cycle accessible pouvant se faire en temps lin\'eaire, on dispose donc d'un algorithme en $|A|^2 \times |L|^2$ pour d\'ecider si un syst\`eme sans $\varepsilon$-transitions, d\'eterministe et complet est diagnosticable par rapport \`a un mod\`ele de fautes.
 
 Note : La longueur du mot le plus long dans ce langage est longueur de la plus grande sous séquence ambiguë.
 \subsection{Un exemple de la d\'ecision de la diagnosticabilit\'e}
