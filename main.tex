@@ -123,7 +123,20 @@ On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et s
 Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($x$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
 
 \subsection{Algorithme de construction d'un diagnostiqueur}
-    Nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
+
+Nous allons d'abord d\'efinir formellement ce que c'est un diagnostiquer pour un automate et un mod\`ele de faute.
+\begin{mydef}
+  Soit $A$ un automate que nous cherchons \`a diagnostiquer et $L$ un automate de mod\`ele de fautes que nous voulons diagnostiquer. Alors nous d\'efinissons $D : \Sigma_o^* \to \{\mbox{Oui,Non,Peut-\^etre}\}$ comme un diagnostiquer sur l'automate $A$ et le mod\`ele de faute $L$, si et seulement si, soit $w \in \Sigma_o^*$ qui est accept\'e par l'automate $A$,
+  \begin{itemize}
+  \item si $D(w) = Oui$ alors $\forall w' \in \mathcal{L}(A)$ tel que $\pi_{\Sigma_o}(w') = w$, $\exists u \in \mathcal{L}(L)$ tel que $w' \in \Sigma^* u \Sigma^*$
+  \item si $D(w) = Non$ alors $\forall w' \in \mathcal{L}(A)$ tel que $\pi_{\Sigma_o}(w') = w$, $\forall u \in \mathcal{L}(L)$ nous avons $w' \not \in \Sigma^* u \Sigma^*$
+  \item $D(w) = \mbox{Peut-\^etre}$ pour tous les autres cas
+  \end{itemize}
+  
+\end{mydef}
+
+
+    Apr\`es, nous allons présenter un algorithme pour construire un diagnostiqueur en temps exponentiel. ~\cite{SamSRST96}
 
     \paragraph{}
     Pour construire un diagnostiqueur de l'automate $A$ avec l'automate de mod\`ele de faute $F$, avec $\Sigma_A = \Sigma_F$, on proc\'ede de la mani\`ere suivante :
