@@ -46,35 +46,30 @@ Un automate (avec $\varepsilon$-transitions) est un 5-uplet $A = (Q, \Sigma, \De
 \end{itemize}
 
 Un automate fini est un automate tel que $Q$ est fini.
-
+\paragraph{}
 \'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \underset{\Delta}{\overset{l}{{\to}}}q$ pour $(p,l,q) \in \Delta$. On notera \'egalement $q_0 \underset{\Delta}{\overset{l_0}{{\to}}} \dots \underset{\Delta}{\overset{l_n}{{\to}}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k 
 \underset{\Delta}{\overset{l_k}{{\to}}} q_{k+1}$. Pour simplifier, le $\Delta$ sera omis lorsqu'il est \'evident.
-
-
-
+\paragraph{}
 On dit qu'un automate fini est sans $\varepsilon$-transitions si $\Delta \subseteq (Q\times \Sigma \times Q)$.
 
 Un automate fini d\'eterministe est un automate fini sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$
-
-\subsection{Langage reconnu}
-
-Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n+1}$ et $q_{n+1} \in F$.
+\paragraph{}
+Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tel que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
 
 Le langage $L(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 
-\subsection{Langage extension clos}
-
+\paragraph{}
 Un langage $L$ est dit extension-clos si $\forall u \in L, \forall v \in \Sigma^*, uv \in L$.
 
 \subsection{Produit synchrone}
 
-Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
 
-On notera que $L(A\times B) = L(A) \cap L(B)$.
+On remarquera que $L(A\times B) = L(A) \cap L(B)$.
 
 \subsection{$\varepsilon$-clôture}
 
-On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{\varepsilon}{{\to}}} q_n$.
+On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ comme l'$\varepsilon$-clôture \`a gauche de l'automate $A$, c'est-\`a-dire $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
 
 On notera que $L(\operatorname{cl}_\varepsilon(A))=L(A)$.
 
@@ -84,8 +79,8 @@ Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\
 
 $$\forall u,v \in \Sigma^*, \pi_{\Sigma'}(uv)=\pi_{\Sigma'}(u)\pi_{\Sigma'}(v)$$
 $$\pi_{\Sigma'}(\varepsilon)=\varepsilon$$
-$$\forall a\in \Sigma,\pi_{\Sigma'}(a)=\left\{\begin{array}{ll}
-a &\text{si } a\in \Sigma'\\
+$$\forall l\in \Sigma,\pi_{\Sigma'}(l)=\left\{\begin{array}{ll}
+l &\text{si } l\in \Sigma'\\
 \varepsilon &\text{sinon} \\
 \end{array}\right.$$
 
