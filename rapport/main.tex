@@ -43,7 +43,7 @@ Un automate est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
 	\item $\Sigma$ est l'ensemble des événements.
 	\item $\Delta \subseteq (Q \times (\Sigma \cup \{\varepsilon\}) \times Q)$ est une relation de transition (o\`u $\varepsilon$ est le mot vide, c'est a dire que pour tout mot $u\in\Sigma^*$, $\varepsilon u = u = u\varepsilon$).
 	\item $q_0 \in Q$ l'état initial.
-	\item $F \subset Q$ l'ensemble des \'etats finaux.
+	\item $F \subseteq Q$ l'ensemble des \'etats finaux.
 \end{itemize}
 \end{mydef}
 
@@ -70,7 +70,7 @@ On définit  $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ c
 On peut prouver que $\mathcal L(\operatorname{cl}_\varepsilon(A))=\mathcal L(A)$.
 
 \begin{mydef}[Compl\'et\'e d'un automate]
-Le compl\'et\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $\operatorname{complete}(A) = (Q\cup\{\bot\}, \Sigma, \Delta', q_0, F)$ o\`u $\bot\not\in Q$ est un nouvel \'etat et $\Delta'$ est d\'efinie par :
+Le compl\'et\'e d'un automate déterminisé complet $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $\operatorname{complete}(A) = (Q\cup\{\bot\}, \Sigma, \Delta', q_0, F)$ o\`u $\bot\not\in Q$ est un nouvel \'etat et $\Delta'$ est d\'efinie par :
 $$\forall l \in \Sigma,\forall p,q \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}q \iff p\underset{\Delta}{\overset{l}{{\to}}}q\right)$$
 $$\forall l \in \Sigma, \forall p \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}\bot \iff \left(\forall q \in Q, p\underset{\Delta}{\overset{l}{{\not\to}}}q\right)\right)$$
 
@@ -154,7 +154,8 @@ Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du syst�
 
 Nous allons d'abord d\'efinir formellement ce que c'est un diagnostiquer pour un automate et un mod\`ele de faute.
 \begin{mydef}
-  Soit $A$ un automate que nous cherchons \`a diagnostiquer et $L$ un automate de mod\`ele de fautes que nous voulons diagnostiquer. Une fonction $D : \Sigma_o^* \to \{\mbox{Oui,Non,Peut-\^etre}\}$ est un diagnostiquer sur l'automate $A$ et le mod\`ele de faute $L$, si et seulement si, soit $w \in \Sigma_o^*$ qui est accept\'e par l'automate $A$,
+  Soit $A$ un automate que nous cherchons \`a diagnostiquer par rapport à un automate de mod\`ele de fautes $L$. Une fonction $D : \Sigma_o^* \to \{\mbox{Oui,Non,Peut-\^etre}\}$ est un diagnostiqueur de $A$ par rapport à $L$ si et seulement si :
+ Soit $w \in \Sigma_o^*$ qui est accept\'e par l'automate $A$,
   \begin{itemize}
   \item si $D(w) = Oui$ alors $\forall w' \in \mathcal{L}(A)$ tel que $\pi_{\Sigma_o}(w') = w$, $\exists u \in \mathcal{L}(L)$ tel que $w' \in \Sigma^* u \Sigma^*$
   \item si $D(w) = Non$ alors $\forall w' \in \mathcal{L}(A)$ tel que $\pi_{\Sigma_o}(w') = w$, $\forall u \in \mathcal{L}(L)$ nous avons $w' \not \in \Sigma^* u \Sigma^*$
@@ -514,7 +515,7 @@ L'id\'ee de la preuve ce th\'eor\`eme est que la non inteférence, c'est à dire
 \section{Conclusion}
 
 Cet article montre que l'on peut modéliser formellement la sécurité de systèmes complexes. Dans un premier temps, nous avons présenté le problème du diagnostic d'un langage rationnel sur un automate vivant. Tous les systèmes ne sont pas diagnosticables mais la diagnosticabilité est décidable, on présente un algorithme polynomial. Dans un second temps, nous avons présenté le problème de l'opacité  pour un observateur d'un langage dans un système. Dans la réalité, les observateurs peuvent se souvenir de toutes leurs observations pour percer le secret dans certains contextes tandis que leur mémoire est très limitée dans d'autres. Pour rendre compte de ce phénomène nous avons présenté plusieurs types d'observateurs plus ou moins puissants. On présente finalement le problème de la non interférence qui est équivalent à celui de l'opacité pour un observateur statique. Il existe néanmoins des problèmes concrets qui ne se réduisent pas a priori aux modèles que nous avons présenté : Comment modéliser la réparation d'une panne dans le diagnostic ? Comment obtenir des garanties probabilistes sur la diagnosticabilité et l'opacité ?
-
+\newpage
 \bibliography{bibliography}
 \end{document}
 
