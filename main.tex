@@ -83,7 +83,7 @@ On peut prouver que $\mathcal L(\operatorname{complete}(A)) = \mathcal L(A)$ et 
 
 \begin{mydef}[D\'eterminis\'e d'un automate]
 Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
-$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta}{\overset{l}{{\to}}}q\right)\right)$$
+$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta'}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta}{\overset{l}{{\to}}}q\right)\right)$$
 \end{mydef}
 
 On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe.
