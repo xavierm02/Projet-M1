@@ -16,6 +16,27 @@
 %\institute{} 
 %\date{} 
 %\subject{} 
+\bibliographystyle{plain}
+\setbeamertemplate{bibliography item}{[\theenumiv]}
+
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\colorlet{xlightblue}{blue!5}
+
+\newtcolorbox{beamerlikethm}[1]{
+  title=#1,
+  beamer,
+  colback=xlightblue,
+  colframe=blue!30,
+  fonttitle=\bfseries,
+  left=1mm,
+  right=1mm,
+  top=1mm,
+  bottom=1mm,
+  middle=1mm
+}
+
 \begin{document}
 
 \begin{frame}
@@ -231,14 +252,70 @@ $$\begin{array}{l}
 
 
 \begin{section}{Non-interf\'erence des syst\`eme et les r\'eductions vers les autres propri\'et\'es}
+
+
+\begin{frame}{D\'efinition de la non-terf\'erence}
+\begin{block}{D\'efinition}
+\begin{itemize}
+  \item $LTS = (S,L,\Delta,S_0)$ avec $L=L_{high}\sqcup L_{low}$
+  \item $L_{high}$ : \'ev\`enements \`a cacher
+  \item $L_{low}$ : \'ev\`enements observables
+\end{itemize}
+
+$LTS$ est dit non-intef\'erent si
+
+$$\pi_{L_{low}}(\mathcal L(LTS)) \subseteq \mathcal L(LTS)$$
+
+Intuition : $LTS$ est non-interf\'erent ssi un observateur n'observant que les \'ev\`enements \emph{low} ne peut pas d\'etecter la pr\'esence d'un \'ev\`enement \emph{high}
+\end{block}
+\end{frame}
  
- 
+\begin{frame}{R\'eduction : Opacit\'e $\to$ Non-interf\'erence}
+\begin{beamerlikethm}{Th\'eor\`eme {\cite[page 5]{BryansKMR08}}}
+Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peut se r\'eduire \`a un probl\`eme  de non-interf\'erence.
+\end{beamerlikethm}
+
+Id\'ee de la preuve :
+
+\begin{figure}[H]
+  \centering
+  \begin{tikzpicture}
+    \node[] (x) at (-1,0) {};
+    \node[draw,circle] (0) at (0,0) {$q_0$};
+    \node[draw,circle] (1) at (2,0) {$q_1$};
+    \node[draw,rectangle] (2) at (0,-2) {$A\setminus S$};
+    \node[draw,rectangle] (3) at (2,-2) {$S$};
+    \draw[->,>=latex] (x)->(0);
+    \draw[->,>=latex] (0)->(1) node[midway,above]{$a$};
+    \draw[->,>=latex] (0)->(2) node[midway,left]{$a$};
+    \draw[->,>=latex] (1)->(3) node[midway,left]{$h$};
+    
+  \end{tikzpicture}
+\end{figure}
+
+$$A \subseteq A\setminus S \iff \pi_{low}(a(A\setminus S) + a h S)\subseteq a(A\setminus S) + a h S$$
+\end{frame}
+
+\begin{frame}{R\'eduction : Non-interf\'erence $\to$ Opacit\'e}
+\begin{beamerlikethm}{Th\'eor\`eme {\cite[page 5]{BryansKMR08}}}
+Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opacit\'e reposant sur une fonction d'observation statique.
+\end{beamerlikethm}
+
+Id\'ee de la preuve :
+
+$$S=\Sigma^*\Sigma_h\Sigma^*, \Omega = \pi_{low}$$
+
+$$\pi_{low}(A) \subseteq A \iff \Omega(A) \subseteq \Omega(A \setminus S)$$
+\end{frame}
+
 \end{section}
+
 
 \begin{section}{Conclusion}
  
 \end{section}
 
-
-
+\begin{frame}{Bibliographie}
+\bibliography{../rapport/bibliography}
+\end{frame}
 \end{document}
