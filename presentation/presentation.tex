@@ -409,7 +409,7 @@ Intuition : $LTS$ est non-interf\'erent ssi un observateur n'observant que les \
 \begin{beamerlikethm}{Th\'eor\`eme {\cite[page 5]{BryansKMR08}}}
 Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation statique peut se r\'eduire \`a un probl\`eme  de non-interf\'erence.
 \end{beamerlikethm}
-
+\vspace{10pt}
 Id\'ee de la preuve :
 
 \begin{columns}
@@ -420,8 +420,8 @@ Id\'ee de la preuve :
     \node[] (x) at (-1,0) {};
     \node[draw,circle] (0) at (0,0) {$q_0$};
     \node[draw,circle] (1) at (2,0) {$q_1$};
-    \node[draw,rectangle] (2) at (0,-2) {$A\setminus S$};
-    \node[draw,rectangle] (3) at (2,-2) {$S$};
+    \node[draw,rectangle] (2) at (0,-2) {$\Omega(A\setminus S)$};
+    \node[draw,rectangle] (3) at (2,-2) {$\Omega(S)$};
     \draw[->,>=latex] (x)->(0);
     \draw[->,>=latex] (0)->(1) node[midway,above]{$a$};
     \draw[->,>=latex] (0)->(2) node[midway,left]{$a$};
@@ -431,13 +431,15 @@ Id\'ee de la preuve :
 \end{figure}
  \end{column}
 
- \begin{column}{.85\textwidth}
+ \begin{column}{.8\textwidth}
  \begin{flushleft}
-$$\begin{array}{ll}
-& \pi_{low}(a\Omega(A\setminus S) + a h \Omega(S))\subseteq a\Omega(A\setminus S) + a h S\\
-\iff & \pi_{low}(a\Omega(A\setminus S) + a h \Omega(S))\subseteq a\Omega(A\setminus S)\\
-\iff & a\Omega(A\setminus S) + a \Omega(S)\subseteq a\Omega(A\setminus S)\\
-\iff & \Omega(A) \subseteq \Omega(A\setminus S)\\
+$$\begin{array}{l}
+\phantom{\iff} \textcolor{blue}{\pi_{low}(}a\Omega(A\setminus S) + a h \Omega(S)\textcolor{blue}{)}\subseteq a\Omega(A\setminus S) + a \textcolor{blue}{h} S\\
+\iff \textcolor{blue}{\pi_{low}(}a\Omega(A\setminus S) + a \textcolor{blue}{h} \Omega(S)\textcolor{blue}{)}\subseteq a\Omega(A\setminus S)\\
+\iff \textcolor{blue}{a}\Omega(A\setminus S) \,\textcolor{blue}{+}\, \textcolor{blue}{a} \Omega(S)\subseteq a\Omega(A\setminus S)\\
+\iff \textcolor{blue}{a(}\Omega(A\setminus S) + \Omega(S)\textcolor{blue}{)}\,\textcolor{blue}{\subseteq}\, \textcolor{blue}{a}\Omega(A\setminus S)\\
+\iff \textcolor{blue}{\Omega(A\setminus S)} + \Omega(S)\subseteq \textcolor{blue}{\Omega(A\setminus S)}\\
+\iff \Omega(S) \subseteq \Omega(A\setminus S)\\
 \end{array}
 $$
 \end{flushleft}
@@ -456,9 +458,14 @@ Tout probl\`eme de non-interf\'erence peut se r\'eduire \`a un probl\`eme d'opac
 
 Id\'ee de la preuve :
 
-$$S=\Sigma^*\Sigma_h\Sigma^*, \Omega = \pi_{low}$$
+$$S=\Sigma^*\Sigma_h\Sigma^*\cap A, \Omega = \pi_{low}$$
 
-$$\pi_{low}(A) \subseteq A \iff \Omega(A) \subseteq \Omega(A \setminus S)$$
+$$\begin{array}{ll}
+\pi_{low}(A) \subseteq A & \iff \pi_{low}(A) \subseteq A \textcolor{blue}{\setminus S}\\
+& \iff \pi_{low}(A) \subseteq \textcolor{blue}{\pi_{low}(}A \setminus S\textcolor{blue}{)}\\
+& \iff \textcolor{blue}{\Omega}(A) \subseteq \textcolor{blue}{\Omega}(A \setminus S)\\
+& \iff \Omega(\textcolor{blue}{S}) \subseteq \Omega(A \setminus S)
+\end{array}$$
 \end{frame}
 
 \end{section}
