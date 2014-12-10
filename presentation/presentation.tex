@@ -195,7 +195,7 @@ Construction du diagnostiqueur :
         \draw[->,>=latex] (1) -> (2) node[midway,above]{$b$};
         \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
         \end{tikzpicture}
-  \caption{$D : \Sigma_o^* \to \{\mbox{Oui,\ Non,\ Peut-\^etre}\}$ }
+  \caption{$D : \Sigma_o^* \to \{\mbox{Oui,\ Non,\ Peut-\^etre}\}$ ~\cite{SamSRST96}}
 \end{figure}
 \pause
 \textbf{Si une faute se produit, combien de temps faut il attendre au maximum avant de le savoir ?}\\
@@ -207,7 +207,7 @@ Longueur du plus long chemin constitué uniquement d'états de doute dans le dia
 \begin{frame}{Définition formelle}
 \centering
 \begin{itemize}
-\item On dit que $L$ est diagnosticable dans le système $A$ si :
+\item On dit que $L$ est diagnosticable~\cite{SamSRST96} dans le système $A$ si :
 $$\begin{array}{l}
 \exists n \in \mathbb N, \forall w \in L,\\
 \forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(u)\right|\ge n \land wu \in \mathcal L(A)\right) \implies\\
@@ -296,7 +296,7 @@ $$\begin{array}{l}
 	    \forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
 	     \end{array}$$ 
       
-     Nous disons que $Secret$ est opaque par rapport \`a $\Omega$ si et seulement si
+     Nous disons que $Secret$ est opaque ~\cite{BryansKMR08} par rapport \`a $\Omega$ si et seulement si
 	
 	$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$
 	
@@ -416,6 +416,6 @@ $$\pi_{low}(A) \subseteq A \iff \Omega(A) \subseteq \Omega(A \setminus S)$$
 \end{section}
 
 \begin{frame}{Bibliographie}
-\bibliography{../rapport/bibliography}
+\bibliography{presentation}
 \end{frame}
 \end{document}
