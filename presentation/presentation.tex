@@ -54,7 +54,170 @@
 
 
 \begin{section}{Diagnosticablit\'e d'un automate}
+\begin{frame}{Intuition du problème}
+\begin{figure}[H]
+	\centering
+    	\begin{tikzpicture}
+    	    \node[] (x) at (-1,0) {};
+            \node[draw,circle,fill=lightgray] (0) at (0,0) {0};
+            \node[draw,circle,fill=lightgray] (1) at (1.25,1) {1};
+            \node[draw,circle,fill=lightgray] (2) at (2.25,1) {2};
+            \node[draw,circle,fill=lightgray] (3) at (3.25,1) {3};
+            \node[draw,circle,fill=lightgray] (4) at (1.25,-1) {4};
+            \node[draw,circle,fill=lightgray] (5) at (2.25,-1) {5};
+            \draw[->,>=latex] (x)->(0);
+            \draw[->,>=latex, color=lightgray] (0) -> (1) node[midway,above]{$f$};
+            \draw[->,>=latex] (1) -> (2) node[midway,above]{$a$};
+            \draw[->,>=latex] (2) -> (3) node[midway,above]{$b$};
+            \draw [->,>=latex] (3) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
+            \draw[->,>=latex] (0) -> (4) node[midway,above]{$a$};
+            \draw[->,>=latex] (4) -> (5) node[midway,above]{$b$};
+            \draw [->,>=latex] (5) edge[in=100,out=80,loop] node[above] {$a,b$} (5); 
+        \end{tikzpicture}
+ \caption{Système $A = (Q_A, \Sigma=\Sigma_o\sqcup \Sigma_{no}, \Delta_A, q_A, Q_A)$}    
+\end{figure}
+\pause
+\begin{figure}
+\begin{tikzpicture}
+    	    \node[] (x) at (-1,0) {};
+        	\node[draw,circle] (1) at (0,0) {0};
+            \node[draw,circle,fill=lightgray](2) at (3,0){1};
+            \draw[->,>=latex] (x)->(1);
+            \draw[->,>=latex] (1)->(2) node[midway,above]{$f$};
+            \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$a,b$} (1);
+            \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$a,b,f$} (2);
+        \end{tikzpicture}
+\centering
+ \caption{Langage de faute $L = (Q_L, \Sigma, \Delta_L, q_L, F_L)$}      
+\end{figure}
+\end{frame}
+\begin{frame}{Diagnostiqueur}
+\begin{center}
+$D : \Sigma_o^* \to \{\mbox{Oui,\ Non,\ Peut-\^etre}\}$ 
+\end{center}
+\pause
+Construction du diagnostiqueur :
 
+  \begin{tabular}{cc}
+ \begin{tikzpicture}[scale=0.9, transform shape]
+	    \node[] (x) at (-1,0) {};
+		\node[draw,circle] (0) at (0,0) {0,0};
+        \node[draw,circle,fill=gray] (1) at (1.25,1) {1,1};
+        \node[draw,circle,fill=gray] (2) at (2.75,1) {2,1};
+        \node[draw,circle,fill=gray] (3) at (4.25,1) {3,1};
+        \node[draw,circle] (4) at (1.25,-1) {4,0};
+        \node[draw,circle] (5) at (2.75,-1) {5,0};
+        \draw[->,>=latex] (x)->(0);
+        \draw[->,>=latex, color=lightgray] (0) -> (1) node[midway,above] {$f$};
+        \draw[->,>=latex] (1) -> (2) node[midway,above]{$a$};
+        \draw[->,>=latex] (2) -> (3) node[midway,above]{$b$};
+        \draw [->,>=latex] (3) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
+        \draw[->,>=latex] (0) -> (4) node[midway,above]{$a$};
+        \draw[->,>=latex] (4) -> (5) node[midway,above]{$b$};
+        \draw [->,>=latex] (5) edge[in=100,out=80,loop] node[above] {$a,b$} (5);
+	\end{tikzpicture}
+  & 
+ \begin{tikzpicture}
+	    \node[] (x) at (-1,0) {};
+		\node[draw,circle] (0) at (0,0) {0};
+        \node[draw,circle,fill=gray] (1) at (1.25,1) {1};
+        \node[draw,circle,fill=gray] (2) at (2.75,1) {2};
+        \node[draw,circle] (3) at (1.25,-1) {3};
+        \node[draw,circle] (4) at (2.75,-1) {4};
+        \draw[->,>=latex] (x)->(0);
+        \draw[->,>=latex] (0) -> (1) node[midway,above]{$a$};
+        \draw[->,>=latex] (1) -> (2) node[midway,above]{$b$};
+        \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
+        \draw[->,>=latex] (0) -> (3) node[midway,above]{$a$};
+        \draw[->,>=latex] (3) -> (4) node[midway,above]{$b$};
+        \draw [->,>=latex] (4) edge[in=100,out=80,loop] node[above] {$a,b$} (5);
+	\end{tikzpicture}   \\
+	\\
+	$B=A \times L$  & $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$ \\
+  \end{tabular}
+	
+\end{frame}
+
+\begin{frame}{Diagnostiqueur}
+\begin{center}
+$D : \Sigma_o^* \to \{\mbox{Oui,\ Non,\ Peut-\^etre}\}$ 
+\end{center}
+
+Construction du diagnostiqueur :
+
+  \begin{tabular}{cc}
+ \begin{tikzpicture}
+	    \node[] (x) at (-1,0) {};
+		\node[draw,circle] (0) at (0,0) {0};
+        \node[draw,circle,fill=gray] (1) at (1.25,1) {1};
+        \node[draw,circle,fill=gray] (2) at (2.75,1) {2};
+        \node[draw,circle] (3) at (1.25,-1) {3};
+        \node[draw,circle] (4) at (2.75,-1) {4};
+        \draw[->,>=latex] (x)->(0);
+        \draw[->,>=latex] (0) -> (1) node[midway,above]{$a$};
+        \draw[->,>=latex] (1) -> (2) node[midway,above]{$b$};
+        \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
+        \draw[->,>=latex] (0) -> (3) node[midway,above]{$a$};
+        \draw[->,>=latex] (3) -> (4) node[midway,above]{$b$};
+        \draw [->,>=latex] (4) edge[in=100,out=80,loop] node[above] {$a,b$} (5);
+	\end{tikzpicture}
+  & 
+   \begin{tikzpicture}[scale=0.8, transform shape]
+   		\node[] (h) at (-2,-1.75) {};
+	    \node[] (x) at (-1.3,0) {};
+		\node[draw,circle, minimum size = 1.3cm] (0) at (0,0) {$\{0\}$};
+        \node[draw,circle,fill=lightgray] (1) at (2,0) {$\{1,3\}$};
+        \node[draw,circle,fill=lightgray] (2) at (4,0) {$\{2,4\}$};
+         \draw[->,>=latex] (x)->(0);
+         \draw[->,>=latex] (0) -> (1) node[midway,above]{$a$};
+        \draw[->,>=latex] (1) -> (2) node[midway,above]{$b$};
+        \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
+        \end{tikzpicture}
+      
+   \\
+	\\
+	 $C=\operatorname{cl}_\varepsilon(B[\varepsilon/no])$  &  $D=\det'(C)$\\
+  \end{tabular}
+	
+\end{frame}
+
+\begin{frame}{Diagnostiqueur}
+
+\begin{figure}
+\centering
+ \begin{tikzpicture}[scale=1, transform shape]
+	    \node[] (x) at (-1.2,0) {};
+		\node[draw,circle] (0) at (0,0) {Non};
+        \node[draw,circle,fill=lightgray, minimum size = 1.1cm] (1) at (2,0) {?};
+        \node[draw,circle,fill=lightgray, minimum size = 1.1cm] (2) at (4,0) {?};
+         \draw[->,>=latex] (x)->(0);
+         \draw[->,>=latex] (0) -> (1) node[midway,above]{$a$};
+        \draw[->,>=latex] (1) -> (2) node[midway,above]{$b$};
+        \draw [->,>=latex] (2) edge[in=100,out=80,loop] node[above] {$a,b$} (3);
+        \end{tikzpicture}
+  \caption{$D : \Sigma_o^* \to \{\mbox{Oui,\ Non,\ Peut-\^etre}\}$ ~\cite{SamSRST96}}
+\end{figure}
+\pause
+\textbf{Si une faute se produit, combien de temps faut il attendre au maximum avant de le savoir ?}\\
+\pause
+Longueur du plus long chemin constitué uniquement d'états de doute dans le diagnostiqueur. \\
+
+\end{frame}
+
+\begin{frame}{Définition formelle}
+\centering
+\begin{itemize}
+\item On dit que $L$ est diagnosticable~\cite{SamSRST96} dans le système $A$ si :
+$$\begin{array}{l}
+\exists n \in \mathbb N, \forall w \in L,\\
+\forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(u)\right|\ge n \land wu \in \mathcal L(A)\right) \implies\\
+\forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
+\end{array}$$ 
+\vspace{1cm}
+\pause
+\item On peut décider la diagnosticabilité en temps polynomial.
+\end{itemize}
+\end{frame}
 \end{section}
 
 \begin{section}{Opacit\'e et observabilit\'e}
@@ -125,9 +288,17 @@
        \item $Secret$ un sous-ensemble de $Run(LTS)$
       \end{itemize}
 
-     Nous disons que $Secret$ est opaque par rapport \`a $\Omega$ si et seulement si
+      Diagnosticabilité :
+      
+      $$\begin{array}{l}
+	    \exists n \in \mathbb N, \forall w \in L,\\
+	    \forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(u)\right|\ge n \land wu \in \mathcal L(A)\right) \implies\\
+	    \forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
+	     \end{array}$$ 
+      
+     Nous disons que $Secret$ est opaque ~\cite{BryansKMR08} par rapport \`a $\Omega$ si et seulement si
 	
-	$$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$$
+	$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$
 	
 	D\'efinition \'equivalente ensembliste:
 	
@@ -263,6 +434,6 @@ $$\pi_{low}(A) \subseteq A \iff \Omega(A) \subseteq \Omega(A \setminus S)$$
 \end{section}
 
 \begin{frame}{Bibliographie}
-\bibliography{../rapport/bibliography}
+\bibliography{presentation}
 \end{frame}
 \end{document}
