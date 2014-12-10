@@ -288,9 +288,17 @@ $$\begin{array}{l}
        \item $Secret$ un sous-ensemble de $Run(LTS)$
       \end{itemize}
 
+      Diagnosticabilité :
+      
+      $$\begin{array}{l}
+	    \exists n \in \mathbb N, \forall w \in L,\\
+	    \forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(u)\right|\ge n \land wu \in \mathcal L(A)\right) \implies\\
+	    \forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
+	     \end{array}$$ 
+      
      Nous disons que $Secret$ est opaque par rapport \`a $\Omega$ si et seulement si
 	
-	$$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$$
+	$\forall (s,\lambda) \in Secret, \exists (s',\lambda')\not\in Secret \mbox{ tel que } \Omega(s,\lambda) = \Omega (s',\lambda')$
 	
 	D\'efinition \'equivalente ensembliste:
 	
