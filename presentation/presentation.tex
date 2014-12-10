@@ -206,7 +206,9 @@ Toute propri\'et\'e d'opacit\'e initiale reposant sur une fonction d'observation
 
 Id\'ee de la preuve :
 
-\begin{figure}[H]
+\begin{columns}
+ \begin{column}{.30\textwidth}
+  \begin{figure}[H]
   \centering
   \begin{tikzpicture}
     \node[] (x) at (-1,0) {};
@@ -221,8 +223,24 @@ Id\'ee de la preuve :
     
   \end{tikzpicture}
 \end{figure}
+ \end{column}
 
-$$A \subseteq A\setminus S \iff \pi_{low}(a(A\setminus S) + a h S)\subseteq a(A\setminus S) + a h S$$
+ \begin{column}{.85\textwidth}
+ \begin{flushleft}
+$$\begin{array}{ll}
+& \pi_{low}(a\Omega(A\setminus S) + a h \Omega(S))\subseteq a\Omega(A\setminus S) + a h S\\
+\iff & \pi_{low}(a\Omega(A\setminus S) + a h \Omega(S))\subseteq a\Omega(A\setminus S)\\
+\iff & a\Omega(A\setminus S) + a \Omega(S)\subseteq a\Omega(A\setminus S)\\
+\iff & \Omega(A) \subseteq \Omega(A\setminus S)\\
+\end{array}
+$$
+\end{flushleft}
+ \end{column}
+\end{columns}
+
+
+
+
 \end{frame}
 
 \begin{frame}{R\'eduction : Non-interf\'erence $\to$ Opacit\'e}
