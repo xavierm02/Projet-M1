@@ -1,0 +1,58 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{float}
+\newtheorem{myth}{Th\'eor\`eme}
+\newtheorem{mydef}{D\'efinition}
+\title{Diagnosticabilit\'e avec co\^ut}
+
+\begin{document}
+
+\section{Motivation}
+
+Nous avons vu deux propri\'et\'es du syst\`eme : diagnosticabilit\'e et opacit\'e. Mais nous nous apercevons que ces deux notions sont trop restrictives, nous nous sommes int\'eress\'e \`a proposer des notions un peu plus souples que ces deux notions.
+
+\section{D\'efinition}
+
+Pour d\'efinir les nouvelles notions, nous d\'efinissons d'abord un $oracle$.
+
+\begin{mydef}{Oracle}
+
+  Nous d\'efinissons un oracle comme \'etant une fonction $O: 2^Q\times Run \to \{True, False\} \times \mathbb{N}$, qui prend une ex\'ecution et une partition des \'etats courants possibles et renvoie une valeur bool\'eanne qui est vraie si et seulement si l'\'etat courant est dans la partition des \'etats donn\'ee. Et une valuer $n \in \mathbb{N}$ qui indique le co\^ut de cette consultation.
+
+\end{mydef}
+
+C'est clair que si nous permettons les consultations de ces oracles infiniement souvent, alors nous allons pouvoir d\'eterminer que si l'\'etat courant est fautif. Nous pouvons donc consid\'erer cela comme une extension de la d\'efinition de la diagnosticabilit\'e. Parce que nous pouvons trouver des syst\`emes qui ne sont pas diagnosticables, mais en ajoutant un appel d'oracle nous arrivons le diagnostiquer. Comme l'exemple suivant:
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}
+      \node[draw,circle](0) at (-1, 0){0};
+      \node[draw,rectangle](1) at (1, 0){1};
+      \draw[->,>=latex] (0)->(1)node[midway,above]{$a$};
+      \draw[->,>=latex] (0) edge[in=110,out=70,loop] node[above] {$a$} (0);
+      \draw[->,>=latex] (1) edge[in=110,out=70,loop] node[above] {$a$} (1);
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+
+Dans l'exemple nous notons que les \'etats fautif par les rectangles et les \'etat non-fautif par les circles.
+
+\section{Questions reste \`a trouver.}
+
+Nous avons plusieurs questions pour cette d\'efinition reste \`a r\'soudre.
+
+\begin{itemize}
+\item Nous avons d\'efini que toutes les consultations des oracles auront un co\^ut. Plusieurs questions est pos\'ees \`a ce niveau. Comment peut-on d\'efinir les diff\'erents co\^uts pour chaque consultation? Une fois nous avons d\'efinit les co\^uts de chaque consultation, comment peut-on trouv\'e une strat\'egie pour la quelle le co\^ut de la diagnostication est minimal.
+
+\item Est-ce que cette notion peut \^etre d\'efini comme une propri\'et\'e en utilisant les twin-plant?
+
+\item Est-ce que nous devons encore ajouter des contraintes pour les consultations des oracles? Pout la m\^eme configuration, on ne peut consulter qu'une seule fois le m\^eme oracle par exemple.
+
+\item Nous pouvons aussi \'etendre cette notion de consultation des oracles \`a la k-diagnosticabilit\'e.
+\end{itemize}
+
+\end{document}
