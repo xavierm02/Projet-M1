@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
+\usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{tikz}
@@ -11,11 +12,56 @@
 
 \begin{document}
 
-\section{Motivation}
+\section*{Introduction}
+
+blablabla
+
+2semaines diag rep
+
+2 semaines diag oracle
+
+\section{Diagnostic avec r\'eparation}
+\subsection{Rappel : Définition de la diagnosticabilité}
+\begin{quote}
+Soit un automate fini d\'eterministe $A$ appel\'e syst\`eme, un modèle de faute qui reconnait le langage de faute $L$ et une partition $\Sigma=\Sigma_o\sqcup \Sigma_{no}$. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
+
+On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et seulement si $$\begin{array}{l}
+\exists n \in \mathbb N, \forall w \in L,\\
+\forall u \in \Sigma^*, \left(\left|\pi_{\Sigma_o}(u)\right|\ge n \land wu \in \mathcal L(A)\right) \implies\\
+\forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
+\end{array}$$
+
+Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($u$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
+\end{quote}
+
+\subsection{Extension : Ajout des r\'eparations}
+
+Le mod\`ele pr\'ec\'edent ne permet de mod\'eliser que les fautes permanentes. Nous envisageons donc de d\'efinir une nouvelle diagnosticabilit\'e (que l'on appellerait $R$-diagnosticabilit\'e) qui prendrait en compte les r\'eparations. Un syst\`eme $R$-diagnosticable serait alors un syst\`eme pour lequel toutes les fautes sont d\'etect\'ees avant d'\^etre r\'epar\'ees et apr\`es un nombre born\'e d'\'ev\`enements observables. Nous chercherons \`a faire en sorte qu'un syst\`eme $R$-diagnosticable soit diagnosticable et qu'un syst\`eme diagnosticable dans lequel aucune r\'eparation ne peut avoir lieu le soit $R$-diagnosticable.
+
+D'un point de vue technique, autoriser les r\'eparations revient \`a rel\^cher la contrainte de cl\^oture par extension ($L\Sigma^*\subseteq L$) impos\'ee au langage diagnostiqu\'e. En effet, si aucune r\'eparation n'est possible, une fois qu'une faut a eu lieu, elle ne peut pas dispara\^itre donc tous les mots partageant le m\^eme pr\'efixe sont fautifs mais lorsqu'une r\'eparation a lieu, le mot n'est pas fautif alors qu'un de ses pr\'efixes l'est puisqu'une faute a eu lieu.
+
+Pour le moment, nous envisageons la d\'efinition suivante :
+
+\begin{mydef}
+  Une faute $f$ qui peut \^etre r\'epar\'ee par $r$ est $R$-diagnosticable sur un syst\`eme $A$ si et seulement si\\
+  $\exists n \in \mathbb N,\exists Diag : \pi_o(\mathcal L(A)) \to 2^{\{tt, ff\}}\setminus \{\emptyset\}$,\\
+  $\forall ufv\in \mathcal L(A)$ avec $v\in \left(\Sigma\setminus \{r\}\right)^*$,\\
+  $\exists v'\le v, |\pi_o(ufv')| \le n \land Diag(\pi_o(ufv'))=\{tt\}$
+\end{mydef}
+
+Intuitivement, cela veut dire qu'il existe un diagnostiqueur $Diag$ qui prend une observation et dit si l'etat est sain ($\{tt\}$), fautif ($\{ff\}$) ou ambigu ($\{tt, ff\}$). On impose que ce diagnostiqueur soit capable, \'etant donn\'e une ex\'ecution ($ufvr$) contenant une faut et une r\'eparation de d\'etecter qu'une faute a effectivement eu lieu ($Diag(\pi_o(ufv'))=\{tt\}$) avant la r\'eparation (mais pas forc\'ement juste avant, n'importe quand entre la faute et la r\'eparation, d'o\`u l'utilisation de $v'$ qui est un pr\'efixe de $v$). L'existence du $n$ et la condition $|\pi_o(ufv')| \le n$ servent a forcer la d\'etection d'une faute non r\'epar\'ee en temps fini.
+
+\subsection{R\'esultats envisag\'es}
+
+Nous pensons pouvoir d\'ecider l'existence d'un tel couple $(n, Diag)$ en temps polynomial en utilisant une twin machine $A\times A$ et envisageons $A\times det(A)$ comme diagnostiqueur.
+
+\section{Diagnostic avec oracle}
+
+\subsection{Motivation}
 
 Nous avons vu deux propri\'et\'es du syst\`eme : diagnosticabilit\'e et opacit\'e. Mais nous nous apercevons que ces deux notions sont trop restrictives, nous nous sommes int\'eress\'e \`a proposer des notions un peu plus souples que ces deux notions.
 
-\section{D\'efinition}
+\subsection{D\'efinition}
 
 Pour d\'efinir les nouvelles notions, nous d\'efinissons d'abord un $oracle$.
 
@@ -41,7 +87,7 @@ C'est clair que si nous permettons les consultations de ces oracles infiniement 
 
 Dans l'exemple nous notons que les \'etats fautif par les rectangles et les \'etat non-fautif par les circles.
 
-\section{Questions reste \`a trouver.}
+\subsection{Questions reste \`a trouver.}
 
 Nous avons plusieurs questions pour cette d\'efinition reste \`a r\'soudre.
 
