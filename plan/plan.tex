@@ -55,11 +55,13 @@ Intuitivement, cela veut dire qu'il existe un diagnostiqueur $Diag$ qui prend un
 
 Nous pensons pouvoir d\'ecider l'existence d'un tel couple $(n, Diag)$ en temps polynomial en utilisant une twin machine $A\times A$ et envisageons $A\times det(A)$ comme diagnostiqueur.
 
-\section{Diagnostic avec oracle}
+\section{Diagnostic avec oracles et budget}
 
 \subsection{Motivation}
 
 Nous avons vu deux propri\'et\'es du syst\`eme : diagnosticabilit\'e et opacit\'e. Mais nous nous apercevons que ces deux notions sont trop restrictives, nous nous sommes int\'eress\'e \`a proposer des notions un peu plus souples que ces deux notions.
+
+Nous envisageons \`a raffiner les notions de non-diagnosticabilit\'e, ajoutant des informations nous arrivons \`a d\'etecter la faute qui a eu lieu dans le syst\`eme.
 
 \subsection{D\'efinition}
 
@@ -101,4 +103,15 @@ Nous avons plusieurs questions pour cette d\'efinition reste \`a r\'soudre.
 \item Nous pouvons aussi \'etendre cette notion de consultation des oracles \`a la k-diagnosticabilit\'e.
 \end{itemize}
 
+
+\subsection{Plan de travail}
+
+Nous comptons de suivre le plan de travail suivant:
+\begin{itemize}
+\item Pour commencer nous commen\c cons par un oracle sur une partitions que nous avons d\'efini avant.
+\item Budget rechargable et k-diagnosticable.
+\item Co\^ut reli\'e \`a l'automate, co\^ut constante \dots
+\end{itemize}
+
+%Utilisation de th\'eorie de Jeux pour trouver les strat\'egie.
 \end{document}
