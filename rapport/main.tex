@@ -117,6 +117,8 @@ a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
 
 \section{Diagnosticabilit\'e}
 
+\'Etant donné un système qui peut commettre des fautes, il est important de s'assurer que ce qu'on observe du système suffit pour détecter une faute, c'est à dire de s'assurer que le système est \emph{diagnosticable}. On appelle \emph{diagnosticabilité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter les erreurs du système. En pratique, les systèmes dont on veut tester la diagnosticabilité peuvent être arbitrairement grands, pour que la diagnosticabilité puisse passer à l'échelle on va présenter un formalisme suffisamment général pour représenter de nombreux systèmes mais pour lequel il existe un algorithme polynomial pour décider la diagnosticabilité.
+
 \subsection{Automate de modèle de fautes}
 Un automate de modèle de faute est un automate qui reconnait un langage L extension-clos appelé langage de faute. Les états finaux de cet automate sont appelés <<\'etats fautifs>> et les autres <<\'etats normaux>>.
     
@@ -148,7 +150,7 @@ On dit que $L$ est diagnosticable dans le système $A$~\cite{SamSRST96}  si et s
 \forall v \in \mathcal L(A), \pi_{\Sigma_o}(v)=\pi_{\Sigma_o}(wu) \implies v \in L
 \end{array}$$
 
-Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($u$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que l'on peut toujours affirmer sans se tromper qu'une faute a eu lieu ($n$ observables après qu'elle se soit produite).
+Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du système produisant un mot $w$ contenant une faute, si l'on attend $n$ nouveaux observables ($u$), alors tous les mots $v$ qui produisent la m\^eme observation que $wx$ contiennent une faute, ce qui veut dire que quand une faute a eu lieu, on peut toujours affirmer sans se tromper qu'elle eu lieu (au plus tard $n$ observables après qu'elle se soit produite).
 
 \subsection{Algorithme de construction d'un diagnostiqueur}
 
@@ -350,6 +352,8 @@ Etape 4 : Nous renommons les \'etats de l'automate qui reconna\^it $\mathcal L(A
 
 
 \section{Opacit\'e}
+
+\'Etant donné un système dont certaines configurations doivent rester secrètes, il est important de s'assurer que ce qu'un observateur du système observe ne suffira à inférer le secret, c'est à dire de s'assurer que le système est \emph{opaque}. On appelle \emph{opacité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter si on est dans une configuration secrète. En pratique, les systèmes dont on veut tester l'opacité peuvent être arbitrairement grands, pour que l'opacité puisse passer à l'échelle on va présenter un formalisme suffisamment général pour représenter de nombreux systèmes mais pour lequel il existe un algorithme qui décide l'opacité.
 
 \subsection{Quelques d\'efinitions de base}
 
