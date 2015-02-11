@@ -62,6 +62,7 @@ TODO ajouter pk AxA "appele twin machine". $cl_\varepsilon(A)\times det(A)$
 
 En pratique, l'observation d'un système a souvent un cout. Or la diagnosticabilité binaire habituelle ne permet pas de discriminer les systèmes que l'on peut diagnostiquer pour un coût très faible de ceux pour lesquels le diagnostique est plus couteux. Nous envisageons donc de raffiner la notion de diagnosticabilit\'e afin de prendre en compte son coût.
 
+
 \subsection{D\'efinition}
 
 Pour d\'efinir les nouvelles notions, on commence par introduire un $oracle$.
@@ -72,8 +73,7 @@ Pour d\'efinir les nouvelles notions, on commence par introduire un $oracle$.
 
 \end{mydef}
 
-Il apparaît clairement que si nous permettons les consultations de ces %lesquels?!%
- oracles infiniement souvent, alors nous allons pouvoir d\'eterminer que si l'\'etat courant est fautif. Nous pouvons donc consid\'erer cela comme une extension de la d\'efinition de la diagnosticabilit\'e. Parce que nous pouvons trouver des syst\`emes qui ne sont pas diagnosticables, mais en ajoutant un appel d'oracle nous arrivons le diagnostiquer. Comme l'exemple suivant:
+Il apparaît clairement que si nous permettons la consultation de n'importe quel oracle infiniement souvent, alors nous allons toujours pouvoir d\'eterminer si l'\'etat courant est fautif. Nous pouvons donc consid\'erer cela comme une extension de la d\'efinition de la diagnosticabilit\'e. Parce que nous pouvons trouver des syst\`emes qui ne sont pas diagnosticables, mais en ajoutant un appel d'oracle nous arrivons le diagnostiquer. Comme l'exemple suivant:
 
 \begin{figure}[H]
   \begin{center}
@@ -87,27 +87,27 @@ Il apparaît clairement que si nous permettons les consultations de ces %lesquel
   \end{center}
 \end{figure}
 
-Dans l'exemple nous notons que les \'etats fautifs par les rectangles et les \'etat non-fautif par les cercles.
+Dans l'exemple nous notons que les \'etats fautifs par les rectangles et les \'etat non-fautif par les cercles. Et le syst\`eme initial n'est pas diagnosticabile, mais si nous pouvons d\'eambigu\"uer entre l'\'etat $1$ et l'\'etat $2$, alors le syst\`eme devient diagnosticable.
 
-Ensuite nous avons d\'efini un co\^ut moyen de la consultation pour un syst\`eme $k$-diagnosticable.
+Ensuite nous allons d\'efinir un co\^ut moyen de la consultation pour un syst\`eme $k$-diagnosticable.
 
 \begin{mydef}{Co\^ut moyen pour les syst\`emes $k$-diagnosticables}
   
-  Nous posons la sommes des co\^ut \`a payer pour les consultations des oracles normalis\'ee par $k$ comme \'etant le co\^ut moyen des syst\`emes $k$-diagnosticables.
+  Nous posons la sommes des co\^uts \`a payer pour les consultations des oracles normalis\'ee par $k$ comme \'etant le co\^ut moyen des syst\`emes $k$-diagnosticables.
 \end{mydef}
 
 \subsection{Questions reste \`a trouver.}
 
 Nous avons plusieurs questions pour cette d\'efinition reste \`a r\'soudre.
-kk
-\begin{itemize}
-\item Nous avons d\'efini que toutes les consultations des oracles auront un co\^ut. Plusieurs questions est pos\'ees \`a ce niveau. Comment peut-on d\'efinir les diff\'erents co\^uts pour chaque consultation? Une fois nous avons d\'efinit les co\^uts de chaque consultation, comment peut-on trouv\'e une strat\'egie pour la quelle le co\^ut de la diagnostication est minimal.
 
-\item Est-ce que cette notion peut \^etre d\'efini comme une propri\'et\'e en utilisant les twin-plant?
+\begin{itemize}
+\item Nous avons d\'efini que toutes les consultations des oracles auront un co\^ut. Plusieurs questions est pos\'ees \`a ce niveau. Comment peut-on d\'efinir les diff\'erents co\^uts pour chaque consultation? Une fois nous avons d\'efinit les co\^uts de chaque consultation, comment peut-on trouver une strat\'egie pour laquelle le co\^ut de diagnostiquer est minimal.
+
+\item Est-ce que cette notion peut \^etre d\'efini comme une propri\'et\'e en des twin-plants construits \`a partir du syst\`eme?
 
 \item Est-ce que nous devons encore ajouter des contraintes pour les consultations des oracles? Pour la m\^eme configuration, on ne peut consulter qu'une seule fois le m\^eme oracle par exemple.
 
-\item Nous avons envie de d\'efinir un co\^ut moyen de la consultation de l'oracle. Mais dans des cas particulier cela va d\'efinir des syst\`eme non-diagnosticable mais de co\^ut moyen nul. L'exemple ci-dessous est un tel exemple:
+\item Nous avons envie de d\'efinir un co\^ut moyen de la consultation de l'oracle. Mais dans des cas particulier cela va d\'efinir des syst\`emes qui sont en m\^eme temps non-diagnosticable et de co\^ut moyen nul. L'exemple ci-dessous est un tel exemple:
 
 \begin{figure}[H]
   \begin{center}
@@ -127,24 +127,24 @@ kk
 
 \subsection{Plan de travail}
 
-Nous allons tra\^iter les diff\'erents probl\`emes que nous avons pos\'e avant
+Nous allons tra\^iter les diff\'erents probl\`emes que nous avons pos\'es pr\'ec\'edemment
 
 \subsubsection{Cas le plus simple}
 
-Nous commen\c cerons par un oracle sur une partitions que nous avons d\'efini avant. Donc la fonction oracle est r\'eduite \`a $O : Run \to \{True, False\}$. Nous consid\'erons que chaque consultation de l'oracle co\^ute 1. Notre but sera de trouver une strat\'egie pour trouver toutes fautes en utilisant le moins souvent possible l'oracle au plus apr\`es $k$ coup.
+Nous commen\c cerons par un oracle sur une partitions que nous avons d\'efini avant. Donc la fonction oracle est r\'eduite \`a $O : Run \to \{True, False\}$. Nous consid\'erons que chaque consultation de l'oracle co\^ute 1. Notre but sera de trouver une strat\'egie telle que toutes les fautes sont trouv\'ees en utilisant le moins souvent possible l'oracle au plus apr\`es $k$ coups.
 
-Donc nous avons envie d'introduire la notion de $k$-diagnosticabilit\'e pour eviter les probl\`emes de co\^ut moyenne nulle.
+Donc nous avons envie d'introduire la notion de $k$-diagnosticabilit\'e pour \'eviter les syst\`eme qui sont \`a la fois non-diagnosticalbe et de co\^ut moyen nul.
 
 \subsubsection{Cas avec les diff\'erents types d'oracles}
 
-Dans le cas plus g\'en\'eral, nous avons envie de g\'en\'eraliser le probl\`eme que nous avons d\'efinit avant. Nous allons r\'esoudre le probl\`eme en donnant plusieurs oracles diff\'erents, et essayer de trouver la strat\'egie pour avoir un co\^ut moyen minimal pour les syst\`emes $k$-diagnosticables.
+Dans le cas plus g\'en\'eral, nous avons envie de g\'en\'eraliser le probl\`eme que nous avons d\'efinit avant. Nous allons r\'esoudre le probl\`eme en donnant plusieurs oracles diff\'erents, et essayer de trouver la strat\'egie pour avoir un co\^ut moyen minimal pour diagnostiquer les syst\`emes $k$-diagnosticables.
 
 \subsubsection{Extensions envisag\'ees}
-Les questions de budget rechargeable sont aussi envisag\'ees. Car il nous semble naturel que nous pouvons avoir des budget qui se charge tous les combiens de co\^ut ou ap\`es avoir passer un \'etat sp\'ecifique.
+Les questions de budget rechargeable sont aussi envisag\'ees. Car il nous semble naturel que nous pouvons avoir des budgets qui se charge apr\`es un nombres de coups ou ap\`es avoir passer un \'etat sp\'ecifique.
 
 \subsection{Quelques id\'ees et des pistes pour continuer}
 
-Il nous semble tr\`es probables qu'il faut utiliser les m\'ethode de la th\'eorie de jeux pour trouver les strat\'egie du budget minimal.
+Il nous semble tr\`es probable qu'il faut utiliser les m\'ethodes de la th\'eorie des jeux pour trouver les strat\'egies du budget minimal.
 
 
 \end{document}
