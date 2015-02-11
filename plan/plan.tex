@@ -60,19 +60,20 @@ TODO ajouter pk AxA "appele twin machine". $cl_\varepsilon(A)\times det(A)$
 \section{Diagnostic avec oracles et budget}
 \subsection{Motivation}
 
-Nous avons vu deux propri\'et\'es du syst\`eme : diagnosticabilit\'e et opacit\'e. Nous nous sommes aper\c cu qu'il y a beaucoup de syst\`emes qui ne v\'erifient aucunes des deux propri\'et\'es. Donc nous envisageons \`a raffiner les notions de non-diagnosticabilit\'e en ajoutant des informations pour nous puisse d\'etecter la faute qui a eu lieu dans le syst\`eme.
+En pratique, l'observation d'un système a souvent un cout. Or la diagnosticabilité binaire habituelle ne permet pas de discriminer les systèmes que l'on peut diagnostiquer pour un coût très faible de ceux pour lesquels le diagnostique est plus couteux. Nous envisageons donc de raffiner la notion de diagnosticabilit\'e afin de quantifier son coût.
 
 \subsection{D\'efinition}
 
-Pour d\'efinir les nouvelles notions, nous d\'efinissons d'abord un $oracle$.
+Pour d\'efinir les nouvelles notions, on commence par introduire un $oracle$.
 
 \begin{mydef}{Oracle}
 
-  Nous d\'efinissons un oracle comme \'etant une fonction $O: 2^Q\times Run \to \{True, False\} \times \mathbb{N}$, qui prend une ex\'ecution et une partition des \'etats courants possibles et renvoie une valeur bool\'eanne qui est vraie si et seulement si l'\'etat courant est dans la partition des \'etats donn\'ee. Et une valeur $n \in \mathbb{N}$ qui indique le co\^ut de cette consultation.
+  Nous d\'efinissons un oracle comme \'etant une fonction $O: 2^Q\times Run \to \{True, False\} \times \mathbb{N}$, qui prend une ex\'ecution et une partition des \'etats courants possibles et renvoie une valeur bool\'eanne qui est vraie si et seulement si l'\'etat courant est dans la partition des \'etats donn\'es. Et une valeur $n \in \mathbb{N}$ qui indique le co\^ut de cette consultation.
 
 \end{mydef}
 
-C'est clair que si nous permettons les consultations de ces oracles infiniement souvent, alors nous allons pouvoir d\'eterminer que si l'\'etat courant est fautif. Nous pouvons donc consid\'erer cela comme une extension de la d\'efinition de la diagnosticabilit\'e. Parce que nous pouvons trouver des syst\`emes qui ne sont pas diagnosticables, mais en ajoutant un appel d'oracle nous arrivons le diagnostiquer. Comme l'exemple suivant:
+Il apparaît clairement que si nous permettons les consultations de ces %lesquels?!%
+ oracles infiniement souvent, alors nous allons pouvoir d\'eterminer que si l'\'etat courant est fautif. Nous pouvons donc consid\'erer cela comme une extension de la d\'efinition de la diagnosticabilit\'e. Parce que nous pouvons trouver des syst\`emes qui ne sont pas diagnosticables, mais en ajoutant un appel d'oracle nous arrivons le diagnostiquer. Comme l'exemple suivant:
 
 \begin{figure}[H]
   \begin{center}
