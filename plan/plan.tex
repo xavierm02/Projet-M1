@@ -8,9 +8,12 @@
 \usepackage{float}
 \newtheorem{myth}{Th\'eor\`eme}
 \newtheorem{mydef}{D\'efinition}
-\title{Diagnosticabilit\'e avec co\^ut}
+\title{Diagnostic avec réparation, Diagnostic avec co\^uts, Plan de travail}
+\date{}
 
 \begin{document}
+
+\maketitle
 
 \section*{Introduction}
 
@@ -65,7 +68,7 @@ Nous allons essayer de le prouver et de construire un diagnosiqueur.
 \section{Diagnostic avec budget}
 \subsection{Motivation}
 
-En pratique, l'observation d'un système a souvent un cout. Or la diagnosticabilité binaire habituelle ne permet pas de discriminer les systèmes que l'on peut diagnostiquer pour un coût très faible de ceux pour lesquels le diagnostic est plus couteux. Nous envisageons donc de raffiner la notion de diagnosticabilit\'e afin de prendre en compte son coût.
+En pratique, l'observation d'un système a parfois un cout. Or la diagnosticabilité habituelle ne permet pas de discriminer les systèmes que l'on peut diagnostiquer pour un coût très faible de ceux pour lesquels la diagnosticabilité implique des diagnostics plus couteux (envoyer un drone pour voir ce qui se passe à un endroit précis dans un système de grande taille, par exemple). Nous envisageons donc d'étendre la notion de diagnosticabilit\'e afin de prendre en compte des oracles permettant d'avoir plus d'information sur le système mais ayant un coût.
 
 
 \subsection{D\'efinition}
@@ -109,6 +112,10 @@ Ensuite nous allons d\'efinir un co\^ut moyen de la consultation pour un syst\`e
 Plusieurs questions restent à poser et plusieurs problèmes restent à résoudre :
 
 \begin{itemize}
+
+\item Étant donné un système A non diagnosticable, 
+Étant donné un oracle O, qui peut être invoqué après chaque observation pour désambiguïser un état, existe-t-il une stratégie d'appel de O telle que A soit diagnosticable ?
+
 \item Nous pensons que toutes les consultations des oracles doivent avoir un co\^ut. Mais plusieurs questions se posent \`a ce niveau. Comment peut-on d\'efinir les diff\'erents co\^uts pour chaque consultation ? Une fois que nous aurons d\'efini les co\^uts de chaque consultation, comment peut-on trouver la strat\'egie pour laquelle le co\^ut du diagnostic soit minimal ?
 
 \item Est-ce que nous devons encore ajouter des contraintes pour les consultations des oracles? Pour la m\^eme configuration, on ne peut consulter qu'une seule fois le m\^eme oracle par exemple.
@@ -139,7 +146,7 @@ Nous allons tra\^iter les diff\'erents probl\`emes que nous avons pos\'es pr\'ec
 
 Nous commen\c cerons par un oracle sur une partition de l'ensemble des états $P$ d\'efinie a priori et chaque consultation de l'oracle co\^ute $1$. La fonction oracle serait r\'eduite \`a $O_P : 2^Q \to \{True, False\}$. Notre but sera de trouver une strat\'egie telle que toutes les fautes sont diagnostiqu\'ees au plus apr\`es $k$ coups en utilisant le moins souvent possible l'oracle.
 
-Nous pensons introduire une notion de $k$-diagnosticabilit\'e pour \'eviter les syst\`emes qui sont \`a la fois non-diagnosticables sans oracle et de co\^ut moyen nul.
+Nous pensons introduire une notion de $k$-diagnosticabilit\'e pour \'eviter les syst\`emes qui sont \`a la fois non-diagnosticables (au sens classique) sans oracle et diagnosticable avec un coût arbitrairement petit avec un oracle mais sans borne fixée a priori pour le délai de détection des fautes.
 
 \subsubsection{Cas avec plusieurs d'oracles}
 
