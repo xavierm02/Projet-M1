@@ -65,25 +65,28 @@ Pour d\'efinir les nouvelles notions, on commence par introduire un $oracle$.
 
 \begin{mydef}{Oracle}
 
-  Nous d\'efinissons un oracle comme \'etant une fonction $O: 2^Q\times Run \to \{True, False\} \times \mathbb{N}$, qui prend une ex\'ecution et une partition des \'etats courants possibles et renvoie une valeur bool\'eanne qui est vraie si et seulement si l'\'etat courant est dans la partition des \'etats donn\'es. La valeur $n \in \mathbb{N}$ indique le co\^ut de cette consultation.
+  Soit $\{P,Q-P\}$ forme une partition de l'ensemble des \'etats du syst\`eme. Nous d\'efinissons un oracle comme \'etant une fonction $O_P: 2^Q \to \{True,False\} \times \mathbb{N}$, $O_P(A)$ qui prend un sous-ensembles $A$ de l'ensemble des \'etats dans l'automate et renvoie une valeur bool\'eenne vraie si et seulement si l'\'etat courant $q\in A$ est dans $A\cap P$ et une valeur $n \in \mathbb{N}$ indique le co\^ut de cette consultation. $A$ est ensemble des \'etats courants possible.
 
 \end{mydef}
 
-Il apparaît clairement que si nous permettons la consultation de n'importe quel oracle infiniment souvent, alors nous allons toujours pouvoir d\'eterminer si l'\'etat courant est fautif. Nous pouvons donc consid\'erer cela comme une extension de la d\'efinition de la diagnosticabilit\'e. Il est possible trouver des syst\`emes qui ne sont pas diagnosticables, mais qui le deviennent lorsque l'observateur peut effectuer un unique appel à l'oracle. Comme dans l'exemple suivant:
+Si nous permettons la consultation de n'importe quel oracle, alors nous allons toujours pouvoir d\'eterminer si l'\'etat courant est fautif notamment avec l'oracle $O_F$ dont $F$ est l'ensemble des \'etats fautifs. Donc nous pouvons d\'efinir une notion de diagnosticabilit\'e avec oracles qui est moins fort que la diagnosticabilit\'e sans oracles. Voici un exemple qui montre que les diff\'erentes puissances des oracles existent pour le syst\`eme:
 
 \begin{figure}[H]
   \begin{center}
     \begin{tikzpicture}
-      \node[draw,circle](0) at (-1, 0){0};
-      \node[draw,rectangle](1) at (1, 0){1};
+      \node[draw,circle](2) at (-2, 0){2};      
+      \node[draw,circle](0) at (0, 0){0};
+      \node[draw,rectangle](1) at (2, 0){1};
+      \draw[->,>=latex] (0)->(2)node[midway,above]{$a$};
       \draw[->,>=latex] (0)->(1)node[midway,above]{$a$};
       \draw[->,>=latex] (0) edge[in=110,out=70,loop] node[above] {$a$} (0);
       \draw[->,>=latex] (1) edge[in=110,out=70,loop] node[above] {$a$} (1);
+      \draw[->,>=latex] (2) edge[in=110,out=70,loop] node[above] {$a$} (2);
     \end{tikzpicture}
   \end{center}
 \end{figure}
 
-Dans l'exemple nous notons que les \'etats fautifs par les rectangles et les \'etat non-fautif par les cercles. Le syst\`eme initial n'est pas diagnosticabile, mais si nous pouvons d\'eambigu\"uer entre l'\'etat $1$ et l'\'etat $2$, alors le syst\`eme devient diagnosticable.
+Dans l'exemple nous notons les \'etats fautifs par les rectangles et les \'etats non-fautifs par les cercles. Le syst\`eme initial n'est pas diagnosticable, et si nous pouvons utiliser l'oracle $O_{\{2\}}$, alors le système devient diagnosticable. Mais par contre si nous avons seulement le droit de consulter l'oracle moins puissant $O_{\{0,2\}}$ pour ce système, on voit bien que le système reste non-diagnosticable. Cet exemple montre qu'il existe différents niveaux de puissances des oracles pour les systèmes.
 
 Ensuite nous allons d\'efinir un co\^ut moyen de la consultation pour un syst\`eme $k$-diagnosticable.
 
@@ -119,26 +122,33 @@ Plusieurs questions restent à poser et plusieurs problèmes restent à résoudr
 \end{itemize}
 
 
-\subsection{Plan de travail}
+\subsection{Les solutions envisag\'ees}
 
 Nous allons tra\^iter les diff\'erents probl\`emes que nous avons pos\'es pr\'ec\'edemment
 
 \subsubsection{Cas le plus simple}
 
-Nous commen\c cerons par un oracle sur une partition de l'ensemble des états d\'efinie a priori. La fonction oracle serait r\'eduite \`a $O : Run \to \{True, False\}$. Nous consid\'ererons que chaque consultation de l'oracle co\^ute 1. Notre but sera de trouver une strat\'egie telle que toutes les fautes sont diagnostiqu\'ees au plus apr\`es $k$ coups en utilisant le moins souvent possible l'oracle.
+Nous commen\c cerons par un oracle sur une partition de l'ensemble des états $P$ d\'efinie a priori et chaque consultation de l'oracle co\^ute $1$. La fonction oracle serait r\'eduite \`a $O_P : 2^Q \to \{True, False\}$. Notre but sera de trouver une strat\'egie telle que toutes les fautes sont diagnostiqu\'ees au plus apr\`es $k$ coups en utilisant le moins souvent possible l'oracle.
 
-Nous pensons introduire une notion de $k$-diagnosticabilit\'e pour \'eviter les syst\`emes qui sont \`a la fois non-diagnosticables et de co\^ut moyen nul.
+Nous pensons introduire une notion de $k$-diagnosticabilit\'e pour \'eviter les syst\`emes qui sont \`a la fois non-diagnosticables sans oracle et de co\^ut moyen nul.
 
-\subsubsection{Cas avec les diff\'erents types d'oracles}
+\subsubsection{Cas avec plusieurs d'oracles}
 
 Dans le cas plus g\'en\'eral, nous allons r\'esoudre le probl\`eme en donnant plusieurs oracles diff\'erents, et essayer de trouver la strat\'egie pour avoir un co\^ut moyen minimal pour diagnostiquer les syst\`emes $k$-diagnosticables.
 
 \subsubsection{Extensions envisag\'ees}
-Les questions de budget rechargeable sont aussi envisag\'ees. Car il nous semble naturel qu'un budget puisse se recharger apr\`es un certain nombre de coups ou ap\`es avoir passé un \'etat sp\'ecifique.
 
-\subsection{Quelques id\'ees et des pistes pour continuer}
+Un système de diagnsotic avec oracle peut disposer d'un budget, qui décroit \`a chaque utilisation d'un oracle.
 
-Il nous semble tr\`es probable qu'il nous faudra utiliser des m\'ethodes de la th\'eorie des jeux pour trouver les strat\'egies de budget minimal.
+De la m\^eme mani\`ere, nous pouvons supposer que le budget peut \^etre recharg\'e par un \'ev\`enement particulier ou au bout d'un nombre de pas du syst\`eme.
 
+\subsection{Plan de travail}
+
+\begin{enumerate}
+\item definir les oracles et les diff\'erentes puissances.
+\item definir la notion de diagnosticabilité avec oracle.
+\item definir la notion de diagnostiqueur avec oracle et son calcul ( on pense qu'on pourra utiliser la théorie des jeux).
+\item g\'en\'eraliser les r\'esultats avec plusieurs oracles.
+\end{enumerate}
 
 \end{document}
