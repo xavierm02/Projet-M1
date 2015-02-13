@@ -32,9 +32,9 @@ Intuitivement, il existe une borne $n$ telle que pour toute ex\'ecution du syst√
 
 \subsection{Extension : Ajout des r\'eparations}
 
-Le mod\`ele pr\'ec\'edent ne permet de mod\'eliser que les fautes permanentes. Nous envisageons donc de d\'efinir une nouvelle notion de diagnosticabilit\'e (que l'on appellerait $R$-diagnosticabilit\'e) qui prendrait en compte les r\'eparations. Un syst\`eme $R$-diagnosticable serait alors un syst\`eme pour lequel toutes les fautes sont d\'etect\'ees avant d'\^etre r\'epar\'ees et apr\`es un nombre born\'e d'\'ev\`enements observables. Nous chercherons \`a faire en sorte qu'un syst\`eme $R$-diagnosticable soit diagnosticable et qu'un syst\`eme diagnosticable dans lequel aucune r\'eparation ne peut avoir lieu le soit $R$-diagnosticable.
+Le mod\`ele pr\'ec\'edent ne permet de mod\'eliser que les fautes permanentes, c'est-\`a-dire qu'une fois qu'une faut s'est produite, le syst\`eme reste fautif. Nous envisageons donc de d\'efinir une nouvelle notion de diagnosticabilit\'e (que l'on appellerait $R$-diagnosticabilit\'e) qui prendrait en compte les r\'eparations. Un syst\`eme $R$-diagnosticable serait alors un syst\`eme pour lequel toutes les fautes sont d\'etect\'ees avant d'\^etre r\'epar\'ees et apr\`es un nombre born\'e d'\'ev\`enements observables. Nous chercherons \`a faire en sorte qu'un syst\`eme $R$-diagnosticable soit diagnosticable et qu'un syst\`eme diagnosticable dans lequel aucune r\'eparation ne peut avoir lieu le soit $R$-diagnosticable.
 
-D'un point de vue technique, autoriser les r\'eparations revient \`a rel\^cher la contrainte de cl\^oture par extension ($L\Sigma^*\subseteq L$) impos\'ee au langage diagnostiqu\'e. En effet, si aucune r\'eparation n'est possible, une fois qu'une faut a eu lieu, elle ne peut pas dispara\^itre donc tous les mots partageant le m\^eme pr\'efixe sont fautifs mais lorsqu'une r\'eparation a lieu, le mot n'est pas fautif alors qu'un de ses pr\'efixes l'est puisqu'une faute a eu lieu.
+D'un point de vue technique, autoriser les r\'eparations revient \`a rel\^acher la contrainte de cl\^oture par extension ($L\Sigma^*\subseteq L$) impos\'ee au langage diagnostiqu\'e. En effet, si aucune r\'eparation n'est possible, une fois qu'une faute a eu lieu, elle ne peut pas dispara\^itre donc tous les mots partageant le m\^eme pr\'efixe sont fautifs mais lorsqu'une r\'eparation a lieu, le mot n'est pas fautif alors qu'un de ses pr\'efixes l'est puisqu'une faute a eu lieu.
 
 Pour le moment, nous envisageons la d\'efinition suivante :
 
@@ -42,14 +42,21 @@ Pour le moment, nous envisageons la d\'efinition suivante :
   Une faute $f$ qui peut \^etre r\'epar\'ee par $r$ est $R$-diagnosticable sur un syst\`eme $A$ si et seulement si\\
   $\exists n \in \mathbb N,\exists Diag : \pi_o(\mathcal L(A)) \to 2^{\{tt, ff\}}\setminus \{\emptyset\}$,\\
   $\forall ufv\in \mathcal L(A)$ avec $v\in \left(\Sigma\setminus \{r\}\right)^*$,\\
-  $\exists v'\le v, |\pi_o(v')| \le n \land Diag(\pi_o(ufv'))=\{tt\}$
+  $\left(ufvr \in L(A) \lor |\pi_o(v)| \ge n\right) \implies$\\
+  $\exists v'\le v, Diag(\pi_o(ufv'))=\{tt\}$
 \end{mydef}
 
-Intuitivement, cela veut dire qu'il existe un diagnosticur $Diag$ qui prend une observation et dit si l'etat est sain ($\{tt\}$), fautif ($\{ff\}$) ou ambigu ($\{tt, ff\}$). On impose que ce diagnosticur soit capable, \'etant donn\'e une ex\'ecution ($ufvr$) contenant une faut et une r\'eparation de d\'etecter qu'une faute a effectivement eu lieu ($Diag(\pi_o(ufv'))=\{tt\}$) avant la r\'eparation (mais pas forc\'ement juste avant, n'importe quand entre la faute et la r\'eparation, d'o\`u l'utilisation de $v'$ qui est un pr\'efixe de $v$). L'existence du $n$ et la condition $|\pi_o(v')| \le n$ servent a forcer la d\'etection d'une faute non r\'epar\'ee en temps fini.
+Intuitivement, cela veut dire qu'il existe un diagnostiqueur $Diag$ qui prend une observation et dit si l'etat est sain ($\{tt\}$), fautif ($\{ff\}$) ou ambigu ($\{tt, ff\}$). On impose que ce diagnostiqueur soit capable, \'etant donn\'e une ex\'ecution $ufv$ contenant une faute $f$, de d\'etecter qu'une faute a effectivement eu lieu\\ ($Diag(\pi_o(ufv'))=\{tt\}$) avant la r\'eparation et en temps born\'e.
 
 \subsection{R\'esultats envisag\'es}
 
-Nous pensons pouvoir d\'ecider l'existence d'un tel couple $(n, Diag)$ en temps polynomial en utilisant une \emph{twin machine} $A\times A$ et envisageons $A\times det(A)$ comme diagnosticur.
+La diagnosticabilit\'e peut \^etre d\'ecid\'ee en temps polynomial en d\'ecidant l'existence de cycle ambig\"u dans la twin machine $A\times A$. Nous pensons que la $R$-diagnosticabilit\'e est \'egalement d\'ecidable par un algorithme en temps polynomial utilisant la twin machine $A\times A$.
+
+Nous allons essayer de le prouver et de construire un diagnosiqueur.
+
+%Cependant, nous pensons que $\det(A)$ ne suffitra pas comme diagnostiqueur et envisageons donc d'utiliser $cl_\varepsilon(A)\times \det (A)$, le $cl_\varepsilon(A)$ servirait \`a 
+
+%Nous pensons pouvoir d\'ecider l'existence d'un tel couple $(n, Diag)$ en temps polynomial en utilisant une \emph{twin machine} $A\times A$ et envisageons $A\times det(A)$ comme diagnosticur.
 
 %TODO ajouter pk AxA "appele twin machine". $cl_\varepsilon(A)\times det(A)$%
 
