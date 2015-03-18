@@ -1,0 +1,27 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{textcomp}
+%opening
+\title{Proof of the equivalence between the graph and the formula}
+\author{Chen Qian}
+
+\begin{document}
+
+\maketitle
+
+\section{Proof}
+
+Nous allons prouver que les fl\`ches existantes sur le graphes impliquent
+
+$$\forall u \in L_{min(F)}. \exists n \in \mathbb{N}. \forall v \in \Sigma^*.(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n) \to \exists v'\leq v, u.pref(v') \subseteq L_F \wedge [uv'] \cap L_A \subseteq L_F$$.
+
+Nous allons distinquer deux cas possibles, car les autres cas ne v\'erifient pas $u \in L_{min(F)}$:
+\begin{itemize}
+\item \'Etat courrant est $(\Box, \Box)$, $\forall v \in \Sigma^*.(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n)$, nous pouvons choisir $v'$ comme $\varepsilon$ qui est un pr\'efix de $v$. Et nous avons $v.pref(\varepsilon) \subseteq L_F \wedge [u] \cap L_A \subseteq L_F$ par la d\'efinition de l'\'etat $(\Box, \Box)$.
+\item \'Etat courrant est $(\bigcirc,\Box)$ au niveau deux. Comme nous ne pouvons pas rester infiniement souvent sur l'\'etat $(\bigcirc,\Box)$, alors il existe $n \in \mathbb{N}$ tel que $ \forall v \in \Sigma^*.(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n) \to \exists v'\leq v$ tel que tous les mots dans $[uv]$ conduisent \`a un \'etat $(\Box,\Box)$. Pour le mot $u$ qui est repr\'esent\'e par $\Box$ dans l'\'etat courrant $(\Box,\Box)$. Nous prenons $v$ comme $v'$ qui est un pr\'efix de lui-m\^eme, comme $u$ est repr\'esent\'e par $\Box$ de m\^eme pour tous les mots dans $u.pref(v)$ donc par la d\'efinition de twin-plant $u.pref(v') \subseteq L_F$. De plus $[uv]$ arrive dans un \'etat $(\Box,\Box)$ qui veut dire que $[uv'] \cap L_A \subseteq L_F$. Si $u$ nous conduit \`a un \'etat $(\bigcirc,\Box)$, le graph v\'erifie encore la formule.
+\end{itemize}
+\end{document}
