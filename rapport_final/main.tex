@@ -22,7 +22,7 @@ Nous montrons que la T-diagnosticabilit\'e \'etend bien la notion de diagnostica
 Nous proposons un algorithme quadratique de d\'ecision pour la T-diagnosticabilit\'e et une construction de R-diagnostiqueur.
 \end{abstract}
 
-\section{Introduction}
+\section*{Introduction}
 
 De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur sûret\'e. On les mod\'elise donc formellement pour prouver des propriétés. La diagnosticabilit\'e est une propri\'et\'e qui exprime la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partir d'une connaissance partielle de son \'etat.
 
@@ -30,13 +30,15 @@ La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux 
 
 Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la R-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un R-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la R-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la R-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
 
+\newpage
+
 \section{Pr\'erequis}
 
 Automates
 
 Diagnosticabilit\'e
 
-R\'eduction : Langage de fautes -> \'etats fautifs / non-fautifs
+R\'eduction : Langage de fautes $\Rightarrow$ \'etats fautifs / non-fautifs
 
 R\'eduction aux mots fautifs minimaux
 
@@ -50,13 +52,28 @@ Decidabilit\'e, Twin machine
 
 T-diagnosticabilit\'e, Transient fault diagnosticability
 
-T-diag sans r\'eparation <-> diag
+T-diag sans r\'eparation $ \iff $ diag
 
 \section{$\mathcal{A}$-diagnosticabilit\'e}
 
 automate diag, equivalence
 
 automate T-diag, equivalence
+
+remarque T-diag sans r\'eparation $ \iff $ diag
+
+\section{Diagnostiqueur}
+
+Description
+
+Validité
+
+\section*{Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}
 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
   thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}, align=center, minimum size=1.4cm]
@@ -75,33 +92,22 @@ automate T-diag, equivalence
   \path[every node/.style={font=\sffamily\small}]
     (1) edge [bend left=10]  		(4)
         edge [bend left=20]  		(2)
-        edge [bend right=20] 		(3)  
+        edge [bend right=20] 		(3)
         edge [loop below]    		(1)
     (2) edge [loop left, dashed]    	(2)
         edge [bend left=15]  		(4)
     (3) edge [loop right, dashed]   	(3)
-        edge [bend right=15] 		(4)  
+        edge [bend right=15] 		(4)
     (4) edge [bend left=10]  		(1)
         edge [loop above]    		(4)
-	edge [bend left=10]  		(5)
-	edge [bend left=10]  		(6)
+        edge [bend left=10]  		(5)
+        edge [bend left=10]  		(6)
     (5) edge [loop left]     		(5)
-	edge [bend right=75] 		(1)
-	edge [bend left=10]  		(4)
-   	edge                 		(2)
-    (6) edge [loop right=20] 		(6)	
- 	edge [bend left=10]  		(4)
-	edge [bend left=75]  		(1)
-   	edge                 		(3);
+        edge [bend right=75] 		(1)
+        edge [bend left=10]  		(4)
+        edge                 		(2)
+    (6) edge [loop right=20] 		(6)
+        edge [bend left=10]  		(4)
+        edge [bend left=75]  		(1)
+        edge                 		(3);
 \end{tikzpicture}
-
-remarque T-diag sans r\'eparation <-> diag
-
-\subsection{Diagnostiqueur}
-
-diagnostiqueur
-
-\bibliographystyle{plain}
-\bibliography{bibliography}
-
-\end{document}
