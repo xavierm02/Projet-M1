@@ -1,4 +1,4 @@
- \documentclass[10pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[francais]{babel}
 \usepackage[T1]{fontenc}
@@ -191,12 +191,12 @@ remarque T-diag sans r\'eparation $ \iff $ diag
 
 \section{Diagnostiqueur}
 
-Description
-
-Validité
+La construction du diagnostiqueur est juste de faire la d\'eterminisation de l'automate $\mathcal{A}_{2Etats}$. Pour utiliser ce diagnostiqueur, nous allons ex\'ecuter les mots sur ce diagnostiqueur. Quand nous arrivons dans un \'etat qui est compos\'e que par des \'etats $\Box$, nous allons lever un alarme pour indiquer qu'il y a eu une faute.
 
 \section*{Conclusion}
 
+Dans ce papier, nous avons poser un nouveau type de diagnosticabilit\'e, nous 
+avons trouv\'e un algorithme PSPACE de ce probl\`eme. Cette notion extendre la diagnosticabilit\'e avec les fautes r\'eparables qui est souvent le cas dans notre vie courrante. La propri\'et\'e que nous nous avons int\'eress\'e est aussi applicable \`a des cas concr\`etes, par examples dans les syst\`emes qui peut r\'eparer des pannes tout seul, mais nous avons quand m\^eme envie de d\'etecter les fautes qu'il a eu lieu.
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
