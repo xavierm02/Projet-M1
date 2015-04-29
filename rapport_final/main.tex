@@ -126,9 +126,9 @@ $$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*
         edge                 		(3);
 \end{tikzpicture}
 \end{figure}
-Nous allons, dans un premier temps ne regarder que deux exécutions à la fois et regarder quelles paires d'exécutions impliquent la non-T-diagnosticabilité. Dans la figure \ref{a2diag} est une abstraction de la twin machine $A\times A$ montrant toutes les transitions qui sont compatibles avec la T-diagnosticabilité. Chaque noeud contient une paire qui représente l'état de chaque exécution. Un $\ec$ représente un état sain, un $\es$ représente un état fautif qui n'a pas encore été détecté et un $\fs$ représente un état fautif qui a déjà été détectée. Un flèche pleine indique une transition possible et une flèche non-pleine indique une transition possible mais qui ne peut être prise qu'un nombe borné de fois jusqu'à-ce qu'on quitte l'état (ce qui veut dire que dans l'automate réel, il n'y a pas de boucle mais une chaîne finie d'états où le status ne change pas). Cet automate a été construit \`a partir des observations suivantes :
+Nous allons, dans un premier temps ne regarder que deux exécutions à la fois et regarder quelles paires d'exécutions impliquent la non-T-diagnosticabilité. Dans la figure \ref{a2diag} est une abstraction de la twin machine $A\times A$ montrant toutes les transitions qui sont compatibles avec la T-diagnosticabilité. Chaque noeud contient un paire qui représente l'état de chaque exécution. Un $\ec$ représente un état sain, un $\es$ représente un état fautif qui n'a pas encore été détecté et un $\fs$ représente un état fautif qui a déjà été détecté. Une flèche pleine indique une transition possible et une flèche non-pleine indique une transition possible mais qui ne peut être prise qu'un nombe borné de fois jusqu'à-ce qu'on quitte l'état (ce qui veut dire que dans l'automate réel, il n'y a pas de boucle mais une chaîne finie d'états où le status ne change pas). Cet automate a été construit \`a partir des observations suivantes :
 \begin{itemize}
-	\item Un état saint peut subir une faute ($\ec \to \es$)
+	\item Un état sain peut subir une faute ($\ec \to \es$)
 	\item On ne peut détecter une faute que si toutes les exécutions équivalentes observationnellement sont fautives (donc on ne peut obtenir des $\fs$ que en passant par $(\fs, \fs)$)
 	\item Un état fautif dont la faute a été détectée peut se réparer ($\fs\to \ec$)
 	\item Une faute doit être détectée en temps borné (donc on ne peut pas rester un temps non-borné dans un état contenant un $\es$)
@@ -193,12 +193,12 @@ remarque T-diag sans r\'eparation $ \iff $ diag
 
 \section{Diagnostiqueur}
 
-Description
-
-Validité
+La construction du diagnostiqueur est juste de faire la d\'eterminisation de l'automate $\mathcal{A}_{2Etats}$. Pour utiliser ce diagnostiqueur, nous allons ex\'ecuter les mots sur ce diagnostiqueur. Quand nous arrivons dans un \'etat qui est compos\'e que par des \'etats $\Box$, nous allons lever un alarme pour indiquer qu'il y a eu une faute.
 
 \section*{Conclusion}
 
+Dans ce papier, nous avons poser un nouveau type de diagnosticabilit\'e, nous 
+avons trouv\'e un algorithme PSPACE de ce probl\`eme. Cette notion extendre la diagnosticabilit\'e avec les fautes r\'eparables qui est souvent le cas dans notre vie courrante. La propri\'et\'e que nous nous avons int\'eress\'e est aussi applicable \`a des cas concr\`etes, par examples dans les syst\`emes qui peut r\'eparer des pannes tout seul, mais nous avons quand m\^eme envie de d\'etecter les fautes qu'il a eu lieu.
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
