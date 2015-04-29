@@ -7,6 +7,8 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 \usepackage{wasysym}
+\newtheorem{mydef}{D\'efinition}
+\newtheorem{myth}{Th\'eor\`eme}
 
 \usepackage{amssymb}\usepackage{varwidth}
 \usetikzlibrary{arrows,positioning,automata,shadows}
@@ -133,9 +135,9 @@ Nous allons, dans un premier temps ne regarder que deux exécutions à la fois e
 \end{itemize}
 
 Celà peut se généraliser à $k$ exécutions en utilisant ces mêmes observations. Plus formellement, les états sont des éléments de $\{\ec, \es, \fs \}^k$. Une transition de $q=(q_1, \dots, q_k)$ vers $q'=(q_1',\dots,q_k')$ est possible ssi $$\forall i \in \{1, \dots, k\}, (q_i = q_i')\lor ((q_i = \ec) \land (q_i'=\es)) \lor ((q_i = \fs)\land (q_i' = \ec))$$
-\`a une exception près : si $q_1'=\dots=q_k'=\es$, alors la transition se fait en fait vers $(\fs, \dots, \fs)$ au lieu de se faire vers $(\es, \dots, \es)$. Toutes les transitions peuvent être prises un nombre non-borné de fois sans quitter l'état sauf celles telles que $q= q'$ et $\exists i\in \{1, \dots, k\}, q_i = \es = q_i'$.
+\`a une exception près : si $q_1'=\dots=q_k'=\es$, alors la transition se fait en fait vers $(\fs, \dots, \fs)$ au lieu de se faire vers $(\es, \dots, \es)$. Toutes les transitions peuvent être prises un nombre non-borné de fois sans quitter l'état sauf celles telles que $q= q'$ et $\exists i\in \{1, \dots, k\}, q_i = \es = q_i'$. On appelera cet automate $B_k$.
 
-blablabla def un automate verifie le modele
+Soit $A$ un automate avec états fautifs / non-fautifs. On pose $A\times B_k$ l'automate dont les états sont des paires d'états ayant les mêmes status (c'est-à-dire que pour chaque état $(a, b)$, $a_i$ fautif $\iff b_i$ fautif) et tel que $(a_1,b_1)\overset{x}{\to}(a_2, b_2)$ ssi $a_1\overset{x}{\to} a_2$ et $b_1 \to b_2$. On dira que $B_k$ modélise $A^k$ si pour chaque transition accessible $a_1\overset{x}{\to} a_2$ dans $A$, il existe $b_1$ et $b_2$ tels qu'il y ait une transition correspondante $(a_1,b_1)\overset{x}{\to}(a_2, b_2)$ (ce qui assure que $A^k$ n'essaye pas de prendre des transitions interdites dans $B_k$) et si $A\times B_k$ ne contient pas de cycle accessible dont tous les noeuds contiennt un $\es$ dans la composante venant de $B_k$ (ce qui oblige à détecter toute faute en temps borné). Tester cette propriété peut se faire en espace polynomial par rapport à la taille de $A$: 
 
 def $T_i-diag$ : ca marche pour $i$ executions
 
