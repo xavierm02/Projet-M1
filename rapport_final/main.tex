@@ -51,6 +51,13 @@ Diag classique
 Decidabilit\'e, Twin machine
 
 T-diagnosticabilit\'e, Transient fault diagnosticability
+\paragraph{}
+\noindent Soit $A$ le système que l'on cherche à diagnostiquer et $F$ l'automate de modèle de faute. 
+$A$ est T-Diag par rapport à $F$ si et seulement si :
+\newline
+\newline
+$ \forall u \in L_F.\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \wedge u.Pref(v') \subseteq L_F \wedge [uv'] \cap L_A \subseteq L_F) $
+\paragraph{}
 
 T-diag sans r\'eparation $ \iff $ diag
 
@@ -62,18 +69,6 @@ automate T-diag, equivalence
 
 remarque T-diag sans r\'eparation $ \iff $ diag
 
-\section{Diagnostiqueur}
-
-Description
-
-Validité
-
-\section*{Conclusion}
-
-\bibliographystyle{plain}
-\bibliography{bibliography}
-
-\end{document}
 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
   thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}, align=center, minimum size=1.4cm]
@@ -111,3 +106,18 @@ Validité
         edge [bend left=75]  		(1)
         edge                 		(3);
 \end{tikzpicture}
+
+\section{Diagnostiqueur}
+
+Description
+
+Validité
+
+\section*{Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}
+
+
