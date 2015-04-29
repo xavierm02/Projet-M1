@@ -52,15 +52,16 @@ Simulation
 
 \section{T-Diagnosticabilit\'e}
 
-Diag classique
+\subsection{Diag classique}
+$$\begin{array}{l}
+\exists n_0 \in \mathbb N, \forall x \in L_F(S),\\
+\forall y \in \Sigma^*, \left(||y||_{\Sigma_o} \ge n \land xy \in  L(S)\right) \implies\\
+\forall z \in L(S), \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
+\end{array}$$
 
-Decidabilit\'e, Twin machine
+\subsection{Twin machine}
 
-T-diagnosticabilit\'e, Transient fault diagnosticability
-
-T-diag sans r\'eparation $ \iff $ diag
-
-\subsection*{[Temporaire] Defs}
+\subsection{T-diagnosticabilit\'e, Transient fault diagnosticability}
 
 Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$
 \paragraph{T-diag (1) :}
@@ -80,6 +81,40 @@ $$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*
 \forall u \in L_{FMIN}(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
 (uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
 \end{multline*}
+
+
+\subsection{T-diag généralise diag}
+
+\subsubsection{diag $\Rightarrow$ T-diag}
+
+Soit $S$, un système diag, montrons que $S$ est T-diag. 
+\paragraph{}
+\noindent $\forall u \in L_{F}(S)$, on prend $n := n_0$, $\forall v \in \Sigma^*$, on prend $v' := v$. 
+\begin{equation}
+v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S)
+\end{equation}
+On sait que (1) est vrai puisque $v'=v$, que $L_F(S)$ est suffixe clos et que $u \in L_F(S)$.
+\begin{equation}
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n)
+\end{equation}
+De plus, comme $S$ est diag, si l'on a (2) alors tout mot de $L(S)$ observationellement équivalent à $uv$ est fautif. Donc l'ensemble de ces mots est inclus dans $L_F(S)$ et l'on a :
+\begin{equation}
+[uv'] \cap L(S) \subseteq L_F(S)
+\end{equation}
+Ainsi, on a $(1) \wedge [ (2)  \Rightarrow (3) ]$ donc $(2)  \Rightarrow [ (1) \wedge (3) ]$, on retrouve exactement la définition de la T-diagnosticabilité, $S$ est T-diag.
+\subsubsection{T-diag sans r\'eparation $\Rightarrow$ diag}
+Soit $S$, un système T-diag sans réparation (sans transition d'un état fautif vers un état non fautif), montrons que $S$ est diag.
+\paragraph{}
+\noindent On prend $n_0:= \max\limits_{u} n$ et
+$\forall x \in L_F(S),\ y \in \Sigma^*,\ z \in L(S),$ si l'on a :
+\begin{equation}
+||y||_{\Sigma_o} \ge n \land xy \in  L(S) 
+\end{equation}
+Alors l'ensemble des mots observationnellement équivalents à $xy$ est inclus dans $L_F(S)$ car $S$ est T-diag. Donc on a :
+\begin{equation}
+ \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
+\end{equation}
+Ainsi on a $(4) \Rightarrow (5)$, on retrouve la définition de la diagnosticabilité, $S$ est diag.
 
 
 \newpage
