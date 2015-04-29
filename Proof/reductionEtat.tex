@@ -1,0 +1,32 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{textcomp}
+%opening
+\title{R\'eduction de l'automate des transitions vers l'automate de deux \'etats}
+\author{Chen Qian}
+
+
+
+\begin{document}
+
+\maketitle
+
+Nous allons expliciter comment peut-on construire l'automate du syst\`eme avec les \'etats marqu\'es(fautifs ou non-fautifs). Soit $\mathcal{A}_F = (Q = Q_F\cup Q_{NF}, \Sigma, \Delta, q_0)$ un automate de fautes comme celui dans la d\'efinition de diagnosticabilit\'e classique qui repr\'esente un langague de fautes $\mathcal{L}_F$. D'o\`u $Q_F$ et $Q_{NF}$ sont les \'etats fautifs et les \'etats non-fautifs, ce qui est diff\'erent du cas classique est que ce langage n'est plus forc\'ement extension-clos.
+
+Prenons notre syst\`eme qui est un automate $\mathcal{A}$, pour marquer les \'etats:
+
+\begin{itemize}
+\item Faire le produit synchronis\'e entre $\mathcal{A}$ et $\mathcal{A}_F$, notons le r\'esultat par  $\mathcal{A}_G = \mathcal{A} \times \mathcal{A}_F$
+\item Marquer tous les \'etats $\mathcal{A}_G$, un \'etat $(q_0,q_1)$ de $\mathcal{A}_G$ est fautif si et seulement si $q_1 \in Q_F$.
+\item Faire la substitution de toutes les transitions non-observables par les $\varepsilon-$transitions. Notons ce nouvel automate par $\mathcal{A}_\varepsilon$
+\item Faire la $\varepsilon-$cl\^oture de l'automate $\mathcal{A}_\varepsilon$ notons le r\'esultat par $\mathcal{A}_{2Etats}$
+\end{itemize}
+
+Ce nouvel automate $\mathcal{A}_{2Etats}$ est l'automate sur lequel nous allons poser notre d\'efinition de R-diagnosticabilit\'e.
+
+\end{document}
+
