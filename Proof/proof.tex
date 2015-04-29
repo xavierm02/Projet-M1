@@ -26,4 +26,28 @@ Nous allons distinquer deux cas possibles, car les autres cas ne v\'erifient pas
 \end{itemize}
 
 Remarquons que $u\in L_{min(F)}$ donc l'\'etat en lissant $u$ ne peut pas arriver \`a un \'etat $(\Box,\bigcirc)$ ou $(\bigcirc,\Box)$ du troisi\`eme niveau, parce que le $\bigcirc$ repr\'esente qu'il existe $v$ tel que $v \sim u$ et dans $v$ il y a eu une faute qui a \'et\'e r\'epar\'e, ce qui est absurde avec le fait que $u \in L_{min(F)}$.
+
+Dans un deuxiième temps nous allons prouver que les flèches manquantes sur le graphe impliquent
+
+$$\exists u \in L_{min(F)}. \forall n \in \mathbb{N}. \exists v \in \Sigma^*.(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n) \to \forall v'\leq v, u.pref(v') \not \subseteq L_F \vee [uv'] \cap L_A \not \subseteq L_F$$
+
+Nous allons distinguer trois cas :
+
+\begin{itemize}
+\item S'il exist une auto-fl\`ech dans l'\'etat $(\bigcirc,\Box)$ du deuxi\`eme niveau et il y a un mot $m$ et $a\in \Sigma$ tel que il existe une ex\'ecution qui v\'erifie que
+  \begin{enumerate}
+  \item $Run'(m)$ arrive dans un \'etat $\Box$,
+  \item $Run'(ma)$ arrive dans un \'etat $\bigcirc$,
+  \item pour tout $l \in pref(m)- \{m\}.Run'(l)$ arrive dans un \'etat $\bigcirc$
+  \item pendant toute l'ex\'ecution $Run'(ma)$ n'arrive qu'\`a l'\'etat $(\bigcirc)$ ou \`a l'\'etat $(\bigcirc,\Box)$ du deuxi\`eme niveau.
+  \end{enumerate}
+  Donc prenons ce $m$ comme $u$, comme $m$ v\'erifie condition $1,3$, $m \in L_{min(F)}$. Prenons $v$ un mot qui v\'erifie $(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n)$ et $a\in prefix(v)$. Pour tout $v'\leq v$,
+  \begin{enumerate}
+
+  \item si $v'= \varepsilon$,comme $u$ arrive dans l'\'etat $(\bigcirc,\Box)$ donc $[u]\cap L_A \not \subseteq L_F$
+  \item si $v'\neq \varepsilon$, donc $a\in pref(v')$. Or d'apr\`es la condition $2$ nous avons $ua \not \in L_F$, alors $u.pref(v')\not\subseteq L_F$  
+  \end{enumerate}
+  \item S'il exist une auto-fl\`eche infinie dans l'\'etat $(\bigcirc,\Box)$ du deuxi\`eme niveau, prenons un mot $u$ qui arrive au \'etat $(\bigcirc,\Box)$ du deuxi\`eme niveau et qui est prefix d'une ex\'ecution qui prend
+\end{itemize}
 \end{document}
+
