@@ -51,15 +51,30 @@ Diag classique
 Decidabilit\'e, Twin machine
 
 T-diagnosticabilit\'e, Transient fault diagnosticability
-\paragraph{}
-\noindent Soit $A$ le système que l'on cherche à diagnostiquer et $F$ l'automate de modèle de faute. 
-$A$ est T-Diag par rapport à $F$ si et seulement si :
-\newline
-\newline
-$ \forall u \in L_F.\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\(uv \in L_A \wedge ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \wedge u.Pref(v') \subseteq L_F \wedge [uv'] \cap L_A \subseteq L_F) $
-\paragraph{}
 
 T-diag sans r\'eparation $ \iff $ diag
+
+\subsection*{[Temporaire] Defs}
+
+Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$
+\paragraph{T-diag (1) :}
+
+\begin{multline*}
+\forall u \in L_F(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{multline*}
+
+
+\paragraph{Langage de faute minimal :}
+$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall v,w \in \Sigma^*, u = vw \land v.\text{Pref}(w)\subseteq L_F(S) \implies w = \varepsilon \}$$
+ou bien
+$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies v \not \in L_{FMIN}(S)\}$$
+\paragraph{T-diag (2) :}
+\begin{multline*}
+\forall u \in L_{FMIN}(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{multline*}
+
 
 \section{$\mathcal{A}$-diagnosticabilit\'e}
 
@@ -68,7 +83,6 @@ automate diag, equivalence
 automate T-diag, equivalence
 
 remarque T-diag sans r\'eparation $ \iff $ diag
-
 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
   thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}, align=center, minimum size=1.4cm]
@@ -117,6 +131,8 @@ Validité
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
+
+
 
 \end{document}
 
