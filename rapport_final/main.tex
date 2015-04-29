@@ -70,6 +70,17 @@ Validité
 
 \section*{Conclusion}
 
+T-diag:
+
+$$L^0_f(A) = \{u \in L_f(A) \mid \forall v,w \in \Sigma^*, u = vw \land v.\text{pref}(w)\subseteq L_f(A) \implies w = \varepsilon \}$$
+
+ou
+
+$$L^0_f(A) = \{u \in L_f(A) \mid \forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies v \not \in L_f(A)\}$$
+
+$$\forall u \in L^0_f(A), \forall v \in \Sigma^*, uv \in L(A) \land \|v\|_{\Sigma_o} \implies$$
+$$\exists v'\le v, u.\text{pref}(v') \subseteq L_f(A) \land [|uv'|] \cap L(A) \subseteq L_f(A)$$
+
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
