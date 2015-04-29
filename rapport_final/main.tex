@@ -54,6 +54,28 @@ T-diagnosticabilit\'e, Transient fault diagnosticability
 
 T-diag sans r\'eparation $ \iff $ diag
 
+\subsection*{[Temporaire] Defs}
+
+Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$
+\paragraph{T-diag (1) :}
+
+\begin{multline*}
+\forall u \in L_F(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{multline*}
+
+
+\paragraph{Langage de faute minimal :}
+$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall v,w \in \Sigma^*, u = vw \land v.\text{Pref}(w)\subseteq L_F(S) \implies w = \varepsilon \}$$
+ou bien
+$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies v \not \in L_{FMIN}(S)\}$$
+\paragraph{T-diag (2) :}
+\begin{multline*}
+\forall u \in L_{FMIN}(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{multline*}
+
+
 \section{$\mathcal{A}$-diagnosticabilit\'e}
 
 automate diag, equivalence
@@ -61,30 +83,6 @@ automate diag, equivalence
 automate T-diag, equivalence
 
 remarque T-diag sans r\'eparation $ \iff $ diag
-
-\section{Diagnostiqueur}
-
-Description
-
-Validité
-
-\section*{Conclusion}
-
-T-diag:
-
-$$L^0_f(A) = \{u \in L_f(A) \mid \forall v,w \in \Sigma^*, u = vw \land v.\text{pref}(w)\subseteq L_f(A) \implies w = \varepsilon \}$$
-
-ou
-
-$$L^0_f(A) = \{u \in L_f(A) \mid \forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies v \not \in L_f(A)\}$$
-
-$$\forall u \in L^0_f(A), \forall v \in \Sigma^*, uv \in L(A) \land \|v\|_{\Sigma_o} \implies$$
-$$\exists v'\le v, u.\text{pref}(v') \subseteq L_f(A) \land [|uv'|] \cap L(A) \subseteq L_f(A)$$
-
-\bibliographystyle{plain}
-\bibliography{bibliography}
-
-\end{document}
 
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=4cm,
   thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}, align=center, minimum size=1.4cm]
@@ -122,3 +120,20 @@ $$\exists v'\le v, u.\text{pref}(v') \subseteq L_f(A) \land [|uv'|] \cap L(A) \s
         edge [bend left=75]  		(1)
         edge                 		(3);
 \end{tikzpicture}
+
+\section{Diagnostiqueur}
+
+Description
+
+Validité
+
+\section*{Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+
+
+\end{document}
+
+
