@@ -347,33 +347,36 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{wasysym}
+\newtheorem{mydef}{D\'efinition}
+\newtheorem{myth}{Th\'eor\`eme}
+\newtheorem{myco}{Corollaire}
+
+\usepackage{amssymb}\usepackage{varwidth}
+\usetikzlibrary{arrows,positioning,automata,shadows}
+
+\newcommand{\es}{\square}
+\newcommand{\fs}{\blacksquare}
+\newcommand{\ec}{\ocircle}
+
 
 \begin{document}
 %
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
-\title{Bare Demo of IEEEtran.cls for Conferences}
+\title{T-diagnosticabilit\'e}
 
 
 % author names and affiliations
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Michael Shell}
-\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
-Georgia Institute of Technology\\
-Atlanta, Georgia 30332--0250\\
-Email: http://www.michaelshell.org/contact.html}
-\and
-\IEEEauthorblockN{Homer Simpson}
-\IEEEauthorblockA{Twentieth Century Fox\\
-Springfield, USA\\
-Email: homer@thesimpsons.com}
-\and
-\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
-\IEEEauthorblockA{Starfleet Academy\\
-San Francisco, California 96678-2391\\
-Telephone: (800) 555--1212\\
-Fax: (888) 555--1212}}
+\author{Fran\c{c}ois \textsc{Godi}, Chen \textsc{Qian} et Xavier \textsc{Montillet}}
 
 % conference papers do not typically use \thanks and this command
 % is locked out in conference mode. If really needed, such as for
@@ -412,7 +415,11 @@ Fax: (888) 555--1212}}
 
 \begin{abstract}
 %\boldmath
-The abstract goes here.
+La notion classique de diagnosticabilit\'e ne permet de mod\'eliser que des fautes permanentes, et le langage des fautes est donc suppos\'e suffixe-clos. Dans ce papier, nous rel\^achons cette hypoth\`ese afin de permettre la mod\'elisation de fautes r\'eparables. Pour ce faire, nous introduisons la T-diagnosticabilit\'e qui formalise le fait que toute faute est d\'etect\'ee en temps born\'e et avant d'\^etre r\'epar\'ee.
+
+Nous montrons que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, les notions de T-diagnosticabilit\'e et de diagnosticabilit\'e coincident.
+
+Nous proposons un algorithme quadratique de d\'ecision pour la T-diagnosticabilit\'e et une construction de R-diagnostiqueur.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -440,23 +447,175 @@ The abstract goes here.
 
 \section{Introduction}
 % no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.7 and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
+De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur sûret\'e. On les mod\'elise donc formellement pour prouver des propriétés. La diagnosticabilit\'e est une propri\'et\'e qui exprime la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partir d'une connaissance partielle de son \'etat.
 
-\hfill mds
- 
-\hfill January 11, 2007
+La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux systèmes où les fautes sont définitives. Dans ce papier, nous généralisons cette notion afin de prendre en compte les systèmes où les fautes peuvent être r\'eparées. Notre nouvelle notion, la R-diagnosticabilit\'e, formalise le fait que toute faute est détectée en temps born\'e et avant d'avoir été r\'epar\'ee.
 
-\subsection{Subsection Heading Here}
-Subsection text here.
+Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la R-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un R-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la R-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la R-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
+
+\section{Pr\'erequis}
+
+Automates
+
+Diagnosticabilit\'e
+
+R\'eduction : Langage de fautes $\Rightarrow$ \'etats fautifs / non-fautifs
+
+R\'eduction aux mots fautifs minimaux
+
+Simulation
+
+\section{T-Diagnosticabilit\'e}
+
+\subsection{Diag classique}
+$$\begin{array}{l}
+\exists n_0 \in \mathbb N, \forall x \in L_F(S),\\
+\forall y \in \Sigma^*, \left(||y||_{\Sigma_o} \ge n \land xy \in  L(S)\right) \implies\\
+\forall z \in L(S), \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
+\end{array}$$
+
+\subsection{Twin machine}
+
+\subsection{T-diagnosticabilit\'e, Transient fault diagnosticability}
+
+Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$
+\paragraph{T-diag (1) :}
+
+\begin{multline*}
+\forall u \in L_F(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{multline*}
 
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+\paragraph{Langage de faute minimal :}
+$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall v,w \in \Sigma^*, u = vw \land v.\text{Pref}(w)\subseteq L_F(S) \implies w = \varepsilon \}$$
+ou bien
+$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies v \not \in L_{FMIN}(S)\}$$
+\paragraph{T-diag (2) :}
+\begin{multline*}
+\forall u \in L_{FMIN}(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{multline*}
+
+
+\subsection{T-diag généralise diag}
+
+\subsubsection{diag $\Rightarrow$ T-diag}
+
+Soit $S$, un système diag, montrons que $S$ est T-diag. 
+\paragraph{}
+\noindent $\forall u \in L_{F}(S)$, on prend $n := n_0$, $\forall v \in \Sigma^*$, on prend $v' := v$. 
+\begin{equation}
+v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S)
+\end{equation}
+On sait que (1) est vrai puisque $v'=v$, que $L_F(S)$ est suffixe clos et que $u \in L_F(S)$.
+\begin{equation}
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n)
+\end{equation}
+De plus, comme $S$ est diag, si l'on a (2) alors tout mot de $L(S)$ observationellement équivalent à $uv$ est fautif. Donc l'ensemble de ces mots est inclus dans $L_F(S)$ et l'on a :
+\begin{equation}
+[uv'] \cap L(S) \subseteq L_F(S)
+\end{equation}
+Ainsi, on a $(1) \wedge [ (2)  \Rightarrow (3) ]$ donc $(2)  \Rightarrow [ (1) \wedge (3) ]$, on retrouve exactement la définition de la T-diagnosticabilité, $S$ est T-diag.
+\subsubsection{T-diag sans r\'eparation $\Rightarrow$ diag}
+Soit $S$, un système T-diag sans réparation (sans transition d'un état fautif vers un état non fautif), montrons que $S$ est diag.
+\paragraph{}
+\noindent On prend $n_0:= \max\limits_{u} n$ et
+$\forall x \in L_F(S),\ y \in \Sigma^*,\ z \in L(S),$ si l'on a :
+\begin{equation}
+||y||_{\Sigma_o} \ge n \land xy \in  L(S) 
+\end{equation}
+Alors l'ensemble des mots observationnellement équivalents à $xy$ est inclus dans $L_F(S)$ car $S$ est T-diag. Donc on a :
+\begin{equation}
+ \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
+\end{equation}
+Ainsi on a $(4) \Rightarrow (5)$, on retrouve la définition de la diagnosticabilité, $S$ est diag.
+
+\section{Décision de la T-diagnosticabilité}
+\begin{figure}
+\caption{Description des paires d'excécutions compatibles avec la T-diagnosticabilité}
+\label{a2diag}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+  thick,main node/.style={circle,draw,font=\sffamily\Large\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node] (4) [fill=green!20] {$\fs,\fs$};
+  \node[main node] (2) [below left of=4, fill=orange!20] {$\es, \ec$};
+  \node[main node] (1) [below right of=2, fill=blue!20, initial below] {$\ec, \ec$};
+  \node[main node] (3) [below right of=4, fill=orange!20] {$\ec,\es$};
+  \node[main node] (6) [right of=4, fill=green!20] {$\fs, \ec$};
+  \node[main node] (5) [left of=4, fill=green!20] {$\ec, \fs$};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (1) edge [bend left=30]  		(4)
+        edge [bend left=30]  		(2)
+        edge [bend right=20] 		(3)
+        edge [loop above]    		(1)
+    (2) edge [loop left, dashed]    	(2)
+        edge [bend left=15]  		(4)
+    (3) edge [loop right, dashed]   	(3)
+        edge [bend right=15] 		(4)
+    (4) edge [bend left=30]  		(1)
+        edge [loop above]    		(4)
+        edge [bend left=10]  		(5)
+        edge [bend left=10]  		(6)
+    (5) edge [loop left]     		(5)
+        edge [bend right=75] 		(1)
+        edge [bend left=10]  		(4)
+        edge                 		(2)
+    (6) edge [loop right=20] 		(6)
+        edge [bend left=10]  		(4)
+        edge [bend left=75]  		(1)
+        edge                 		(3);
+\end{tikzpicture}
+\end{figure}
+Nous allons, dans un premier temps ne regarder que deux exécutions à la fois et regarder quelles paires d'exécutions impliquent la non-T-diagnosticabilité. Dans la figure \ref{a2diag} est une abstraction de la twin machine $A\times A$ montrant toutes les transitions qui sont compatibles avec la T-diagnosticabilité. Chaque noeud contient un paire qui représente l'état de chaque exécution. Un $\ec$ représente un état sain, un $\es$ représente un état fautif qui n'a pas encore été détecté et un $\fs$ représente un état fautif qui a déjà été détecté. Une flèche pleine indique une transition possible et une flèche non-pleine indique une transition possible mais qui ne peut être prise qu'un nombe borné de fois jusqu'à-ce qu'on quitte l'état (ce qui veut dire que dans l'automate réel, il n'y a pas de boucle mais une chaîne finie d'états où le status ne change pas). Cet automate a été construit \`a partir des observations suivantes :
+\begin{itemize}
+	\item Un état sain peut subir une faute ($\ec \to \es$)
+	\item On ne peut détecter une faute que si toutes les exécutions équivalentes observationnellement sont fautives (donc on ne peut obtenir des $\fs$ que en passant par un état ne contenant que des $\fs$, et donc par $(\fs,\fs)$ dans ce cas précis)
+	\item Un état fautif dont la faute a été détectée peut se réparer ($\fs\to \ec$)
+	\item Une faute doit être détectée en temps borné (donc on ne peut pas rester un temps non-borné dans un état contenant un $\es$)
+\end{itemize}
+
+Celà peut se généraliser à $k$ exécutions en utilisant ces mêmes observations. Plus formellement, les états sont des éléments de $\{\ec, \es, \fs \}^k$. Une transition de $q=(q_1, \dots, q_k)$ vers $q'=(q_1',\dots,q_k')$ est possible ssi $$\forall i \in \{1, \dots, k\}, (q_i = q_i')\lor ((q_i = \ec) $$$$\land (q_i'=\es)) \lor ((q_i = \fs)\land (q_i' = \ec))$$
+\`a une exception près : si $q_1'=\dots=q_k'=\es$, alors la transition se fait en fait vers $(\fs, \dots, \fs)$ au lieu de se faire vers $(\es, \dots, \es)$. Toutes les transitions peuvent être prises un nombre non-borné de fois sans quitter l'état sauf celles telles que $q= q'$ et $\exists i\in \{1, \dots, k\}, q_i = \es = q_i'$. On appelera cet automate $B_k$.
+
+Soit $A$ un automate avec états fautifs / non-fautifs. On pose $A\times B_k$ l'automate dont les états sont des paires d'états ayant les mêmes status (c'est-à-dire que pour chaque état $(a, b)$, $a_i$ fautif $\iff b_i$ fautif) et tel que $(a_1,b_1)\overset{x}{\to}(a_2, b_2)$ ssi $a_1\overset{x}{\to} a_2$ et $b_1 \to b_2$. On dira que $B_k$ modélise $A^k$ si pour chaque transition accessible $a_1\overset{x}{\to} a_2$ dans $A$, il existe $b_1$ et $b_2$ tels qu'il y ait une transition correspondante $(a_1,b_1)\overset{x}{\to}(a_2, b_2)$ (ce qui assure que $A^k$ n'essaye pas de prendre des transitions interdites dans $B_k$) et si $A\times B_k$ ne contient pas de cycle accessible dans lequel une composante reste à $\es$ (ce qui assure que toute faute est détectée en temps fini). 
+
+Tester cette propriété peut se faire en espace polynomial par rapport à la taille de $A$ car il suffit de regarder des chemins de taille inférieure ou égale à $n$ (le nombre d'états dans $A$). Pour vérifier qu'aucune transition interdite n'est utilisée, on étudie les noeuds un par un. On commence par différencier les sous-états fautifs qui peuvent être des $\es$ ou des $\fs$, selon le chemin choisi, de ceux qui sont toujours des $\fs$ car ils ont plus de transitions possibles (dans le cas $k=2$, ce serait par exemple les transitions $(\ec,\fs)\to (\es, \ec)$ qui sont permises alors que $(\ec,\es)\to (\es, \ec)$ ne l'est pas), ce qui se fait en espace polynomial en $n$ en regardant les chemins de taille $n$ arrivant sur le nœud. La vérification que les transitions sortantes sont bien autorisées ou non découlent directement de la distinction $\es$ / $\fs$. La détection de cycle se fait en testant tous les cycles potentiels de taille inférieure ou égale à $n$ et en vérifiant à chaque fois si c'est effectiement un cycle et que chacun de se nœuds peut effectivement avoir un $\es$ en $i^\text{ème}$ composante (pour $i$ fixé et on itère ensuite pour chaque $i$ possible). Pour ce qui est de l'accessibilité, elle se décide également en regardant les chemins de tailles $n$ arrivant au nœud.
+
+\begin{mydef}[$T_k$-diagnosticabilité]
+Un automate $A$ est $T_k$-diagnosticable ssi $B_k$ modélise $A^k$.
+\end{mydef}
+
+Intuitivement, un automate est $T_k$-diagnosticable s'il est $T$-diagnosticable où si $k$ exécution ne suffisent pas à déterminer qu'il est non T-diagnosticable.
+
+\begin{myth}[Conditions nécessaires de $T$-diagnosticabilité]
+Soit $A$ un automate. Si $A$ est $T$-diagnosticable alors pour tout $k,$ $A$ est $T_k$-diagnosticable.
+\end{myth}
+
+\begin{myth}[Conditions suffisantes de $T$-diagnosticabilité]
+Soit $A$ un automate \`a $n$ états. Pour tout $k \ge n$, si $A$ est $T_k$-diagnosticable, alors $A$ est $T$-diagnosticable.
+\end{myth}
+
+Intuitivement, la borne est à $n$ car pour $k\ge n$, $A^k$ peut simuler $\text{det}(A)$ en représentant un ensemble d'état de $A$ par sa tuple (où il y a en plus un ordre et des répétitions). 
+
+\begin{myco}
+Soit $A$ un automate \`a $n$ états. $A$ est $T$-diagnosticable ssi $A$ est $T_n$-diagnosticable.
+\end{myco}
+
+
+
+On notera que la condition $k\ge n$ est imporante.
+
+$$TODO contre exemple eric$$
+
+\section{Diagnostiqueur}
+
+La construction du diagnostiqueur est juste de faire la d\'eterminisation de l'automate $\mathcal{A}_{2Etats}$. Pour utiliser ce diagnostiqueur, nous allons ex\'ecuter les mots sur ce diagnostiqueur. Quand nous arrivons dans un \'etat qui est compos\'e que par des \'etats $\Box$, nous allons lever un alarme pour indiquer qu'il y a eu une faute.
 
 
 % An example of a floating figure using the graphicx package.
