@@ -353,7 +353,6 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{tikz}
-\usepackage{wasysym}
 \usepackage{mathtools}
 \usepackage{stmaryrd}
 \usepackage{tikz}
@@ -367,6 +366,7 @@
 \usepackage{amssymb}\usepackage{varwidth}
 \usetikzlibrary{arrows,positioning,automata,shadows}
 
+\usepackage{wasysym}
 \newcommand{\es}{\square}
 \newcommand{\fs}{\blacksquare}
 \newcommand{\ec}{\ocircle}
@@ -492,7 +492,7 @@ Le langage $\mathcal{L}(A)$ reconnu par un automate $A$ est l'ensemble des mots 
 \end{mydef}
 
 \begin{figure}[H]
-  \caption{exemple d'un automate}
+  \caption{Exemple d'automate.}
   \begin{center}
     \begin{tikzpicture}
       \node[] (0) at (-1,0) {};
@@ -589,13 +589,8 @@ On va introduire une nouvelle notion de diagnosticabilité, la T-diagnosticabili
 On part toujours de $S$, un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$. Mais on peut maintenant avoir une transition d'un état fautif vers un état non fautif, ainsi $L_F(S)$ n'est plus extension clos.
 
 \begin{mydef}[Langage de faute minimal]
-$$\begin{array}{lll}
-L_{F}^{MIN}(S)&=\{u \in L_F(S) \mid & \forall v,w \in \Sigma^*, u = vw \\
-&&\land v.\text{Pref}(w)\subseteq L_F(S) \implies w = \varepsilon \}\\
- & = \{u \in L_F(S) \mid \\
- &&\forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies\\
- && v \not \in L_F^{MIN}(S)\}
-\end{array}$$
+
+$$L_{F}^{MIN}(S) =  \{v.a \in L_F(S) \mid v\not \in L_F(S), a\in \Sigma \} $$
 \end{mydef}
 
 Le langage de faute minimale permet de considérer qu'une faute se produit seulement au moment exact où le système commence à être en faute, on ne compte pas une faute à nouveau si le système reste en faute.
@@ -614,7 +609,7 @@ Intuitivement, pour chaque faute $u$, il existe une borne $n$ telle que si l'on 
 Prenons un exemple de T-diagnosticabilit\'e :
 
 \begin{figure}[H]
-  \caption{V\'erification de T-diagnosticabilit\'e. Les \'etats carr\'ees repr\'esente les \'etats fautifs et les circles repr\'esente les \'etats non-fautifs}
+  \caption{V\'erification de T-diagnosticabilit\'e. Les \'etats carr\'ees repr\'esente les \'etats fautifs et les cercles repr\'esente les \'etats non-fautifs}
   \begin{center}
     \begin{tikzpicture}
       \node[] (0) at (-1,0) {};
@@ -718,7 +713,7 @@ Ainsi on a $(4) \Rightarrow (5)$, on retrouve la définition de la diagnosticabi
 
   \node[main node] (4) [fill=green!20] {$\fs,\fs$};
   \node[main node] (2) [below left of=4, fill=orange!20] {$\es, \ec$};
-  \node[main node] (1) [below right of=2, fill=blue!20, initial below] {$\ec, \ec$};
+  \node[main node] (1) [below right of=2, fill=blue!20, initial below] {$\ec, \ec$}; %il faudrait enlever le start
   \node[main node] (3) [below right of=4, fill=orange!20] {$\ec,\es$};
   \node[main node] (6) [right of=4, fill=green!20] {$\fs, \ec$};
   \node[main node] (5) [left of=4, fill=green!20] {$\ec, \fs$};
@@ -1127,8 +1122,8 @@ avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliquer pou
 
 
 % use section* for acknowledgement
-\section*{Acknowledgment}
-
+\section*{Remerciements}
+Nous remercions nos encadrants \'Eric Fabre, Loïc Hélouët et Hervé Marchand pour le temps qu'ils nous ont consacré et pour les idées et conseils qu'ils nous ont donné.
 
 TODO The authors would like to thank...
 
