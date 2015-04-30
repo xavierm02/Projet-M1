@@ -420,7 +420,7 @@
 
 \begin{abstract}
 %\boldmath
-La notion classique de diagnosticabilit\'e ne permet de mod\'eliser que des fautes permanentes, et le langage des fautes est donc suppos\'e suffixe-clos. Dans ce papier, nous rel\^achons cette hypoth\`ese afin de permettre la mod\'elisation de fautes r\'eparables. Pour ce faire, nous introduisons la T-diagnosticabilit\'e qui formalise le fait que toute faute est d\'etect\'ee en temps born\'e et avant d'\^etre r\'epar\'ee.
+La notion classique de diagnosticabilit\'e ne permet de mod\'eliser que des fautes permanentes, et le langage des fautes est donc suppos\'e extension-clos. Dans ce papier, nous rel\^achons cette hypoth\`ese afin de permettre la mod\'elisation de fautes r\'eparables. Pour ce faire, nous introduisons la T-diagnosticabilit\'e qui formalise le fait que toute faute est d\'etect\'ee en temps born\'e et avant d'\^etre r\'epar\'ee.
 
 Nous montrons que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, les notions de T-diagnosticabilit\'e et de diagnosticabilit\'e coincident.
 
@@ -450,13 +450,13 @@ Nous proposons un algorithme de d\'ecision PSPACE pour la T-diagnosticabilit\'e 
 
 
 
-\section{Introduction}
+\section*{Introduction}
 % no \IEEEPARstart
 De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur sûret\'e. On les mod\'elise donc formellement pour prouver des propriétés. La diagnosticabilit\'e est une propri\'et\'e qui exprime la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partir d'une connaissance partielle de son \'etat.
 
 La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux systèmes où les fautes sont définitives. Dans ce papier, nous généralisons cette notion afin de prendre en compte les systèmes où les fautes peuvent être r\'eparées. Notre nouvelle notion, la T-diagnosticabilit\'e, formalise le fait que toute faute est détectée en temps born\'e et avant d'avoir été r\'epar\'ee.
 
-TODO CHANGER Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la T-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un T-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la T-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
+Voici comment s'organise ce rapport : Dans la section I, on rappelle les prérequis, sur les automates puis la notion classique de diagnosticabilité. Dans la section II, on introduit la définition de la T-diagnosticabilit\'e, de T-diagnostiqueur et on montre que la T-diagnosticabilit\'e généralise bien la diagnosticabilité. Dans la section III, nous montrons que la diagnosticabilité est $PSPACE$, nous expliquons pourquoi nous pensons qu'elle est $PSPACE-Complet$ et nous donnerons un algorithme PSPACE pour décider la diagnosticabilité.
 
 \section{Pr\'erequis}
 
@@ -542,8 +542,11 @@ a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
 \end{mydef}
 
 \subsection{Diagnosticabilité classique}
+\'Etant donné un système qui peut commettre des fautes, il est important de s'assurer que ce qu'on observe du système suffit pour détecter une faute, c'est à dire de s'assurer que le système est \emph{diagnosticable}. On appelle \emph{diagnosticabilité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter les erreurs du système. La diagnosticabilité introduite par Sampath et autres\cite{SamSRST96} est décidable polynomialement mais est réservée aux systèmes dont les fautes sont définitives.
+\newline
+Soit un automate fini d\'eterministe $S$ dont tous les états sont finaux appel\'e syst\`eme. Les états de $S$ sont marqués fautifs ou non fautifs et, comme les fautes ne sont pas réparables, les successeurs d'un état fautif sont toujours fautifs. On note  $L_F(S)$, le langage de faute, l'ensemble des mots que le système peut reconnaitre en terminant sur un état fautif. Les lettres de l'alphabet $\Sigma=\Sigma_o\sqcup \Sigma_{no}$ de $S$ représentent les évènements. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
-
+On dit que $S$ est diagnosticable si et seulement si
 
 $$\begin{array}{l}
 \exists n_0 \in \mathbb N, \forall x \in L_F(S),\\
@@ -551,16 +554,18 @@ $$\begin{array}{l}
 \forall z \in L(S), \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
 \end{array}$$
 
-R\'eduction : Langage de fautes $\Rightarrow$ \'etats fautifs / non-fautifs
+Intuitivement, il existe une borne $n_0$ telle que pour toute ex\'ecution du système produisant un mot $x$ contenant une faute, si l'on attend $n_0$ nouveaux observables ($y$), alors tous les mots $z$ qui produisent la m\^eme observation que $xy$ contiennent une faute, ce qui veut dire que quand une faute a eu lieu, on peut toujours affirmer sans se tromper qu'elle eu lieu (au plus tard $n_0$ observables après qu'elle se soit produite).
 
-R\'eduction aux mots fautifs minimaux
+%R\'eduction : Langage de fautes $\Rightarrow$ \'etats fautifs / non-fautifs
+
+%R\'eduction aux mots fautifs minimaux
 
 \section{T-Diagnosticabilité}
 
-
+On va introduire une nouvelle notion de diagnosticabilité, la T-diagnosticabilité,  qui généralise la diagnosticabilité en autorisant les fautes à se réparer. Dans cette section on définit la T-diagnosticabilité et on montre qu'elle généralise bien la diagnosticabilité.
 
 \subsection{T-diagnosticabilité, Transient fault diagnosticability}
-Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$.
+On part toujours de $S$, un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$. Mais on peut maintenant avoir une transition d'un état fautif vers un état non fautif, ainsi $L_F(S)$ n'est plus extension clos.
 
 \begin{mydef}[Langage de faute minimal]
 $$\begin{array}{lll}
@@ -572,6 +577,8 @@ L_{F}^{MIN}(S)&=\{u \in L_F(S) \mid & \forall v,w \in \Sigma^*, u = vw \\
 \end{array}$$
 \end{mydef}
 
+Le langage de faute minimale permet de considérer qu'une faute se produit seulement au moment exact où le système entre en faute.
+
 \begin{mydef}[T-diagnosticabilité, par Hervé Marchand]
 
 $$\begin{array}{l}
@@ -581,11 +588,11 @@ $$\begin{array}{l}
 \end{array}$$
 \end{mydef}
 
-\subsection{T-diag généralise diag}
+\subsection{La T-diagnosticabilité généralise la diagnosticabilité}
 
-\subsubsection{diag $\Rightarrow$ T-diag}
+\begin{myth}[Diag $\Rightarrow$ T-diag]
 
-Soit $S$, un système diag, montrons que $S$ est T-diag. 
+Soit $S$, un système diagnosticable, montrons que $S$ est T-diagnosticable. 
 \paragraph{}
 \noindent $\forall u \in L_{F}(S)$, on prend $n := n_0$, $\forall v \in \Sigma^*$, on prend $v' := v$. 
 \begin{equation}
@@ -599,9 +606,10 @@ De plus, comme $S$ est diag, si l'on a (2) alors tout mot de $L(S)$ observatione
 \begin{equation}
 [uv'] \cap L(S) \subseteq L_F(S)
 \end{equation}
-Ainsi, on a $(1) \wedge [ (2)  \Rightarrow (3) ]$ donc $(2)  \Rightarrow [ (1) \wedge (3) ]$, on retrouve exactement la définition de la T-diagnosticabilité, $S$ est T-diag.
-\subsubsection{T-diag sans r\'eparation $\Rightarrow$ diag}
-Soit $S$, un système T-diag sans réparation (sans transition d'un état fautif vers un état non fautif), montrons que $S$ est diag.
+Ainsi, on a $(1) \wedge [ (2)  \Rightarrow (3) ]$ donc $(2)  \Rightarrow [ (1) \wedge (3) ]$, on retrouve exactement la définition de la T-diagnosticabilité, $S$ est T-diagnosticable.
+\end{myth}
+\begin{myth}[T-diag sans r\'eparation $\Rightarrow$ diag]
+Soit $S$, un système T-diag sans réparation (sans transition d'un état fautif vers un état non fautif), montrons que $S$ est diagnosticable.
 \paragraph{}
 \noindent On prend $n_0:= \max\limits_{u} n$ et
 $\forall x \in L_F(S),\ y \in \Sigma^*,\ z \in L(S),$ si l'on a :
@@ -612,8 +620,8 @@ Alors l'ensemble des mots observationnellement équivalents à $xy$ est inclus d
 \begin{equation}
  \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
 \end{equation}
-Ainsi on a $(4) \Rightarrow (5)$, on retrouve la définition de la diagnosticabilité, $S$ est diag.
-
+Ainsi on a $(4) \Rightarrow (5)$, on retrouve la définition de la diagnosticabilité, $S$ est diagnosticable.
+\end{myth}
 \section{Décision de la T-diagnosticabilité}
 \begin{figure}
 \caption{Description des paires d'excécutions compatibles avec la T-diagnosticabilité}
