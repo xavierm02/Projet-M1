@@ -457,7 +457,7 @@ De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexe
 
 La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux systèmes où les fautes sont définitives. Dans ce papier, nous généralisons cette notion afin de prendre en compte les systèmes où les fautes peuvent être r\'eparées. Notre nouvelle notion, la T-diagnosticabilit\'e, formalise le fait que toute faute est détectée en temps born\'e et avant d'avoir été r\'epar\'ee.
 
-Voici comment s'organise ce rapport : Dans la section I, on rappelle les prérequis, sur les automates puis la notion classique de diagnosticabilité. Dans la section II, on introduit la définition de la T-diagnosticabilit\'e, de T-diagnostiqueur et on montre que la T-diagnosticabilit\'e généralise bien la diagnosticabilité. Dans la section III, nous montrons que la diagnosticabilité est $PSPACE$, nous expliquons pourquoi nous pensons qu'elle est $PSPACE-Complet$ et nous donnerons un algorithme $PSPACE$ pour décider la diagnosticabilité.
+Voici comment s'organise ce rapport : Dans la section I, on rappelle les prérequis, sur les automates puis la notion classique de diagnosticabilité. Dans la section II, on introduit la définition de la T-diagnosticabilit\'e, de T-diagnostiqueur et on montre que la T-diagnosticabilit\'e généralise bien la diagnosticabilité. Dans la section III, nous montrons que la diagnosticabilité est PSPACE, nous expliquons pourquoi nous pensons qu'elle est PSPACE-Complète et nous donnerons un algorithme PSPACE pour décider la diagnosticabilité.
 
 \section{Pr\'erequis}
 
@@ -486,7 +486,7 @@ Un automate \emph{complet} est un automate tel que pour tout \'etat $q$ et pour 
 Un automate \emph{d\'eterministe} est un automate sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $$\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$$
 
 \begin{mydef}[Langage reconnu par un automate]
-Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tels que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
+Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $q_1,...,q_n \in Q$ tels que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
 
 Le langage $\mathcal{L}(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 \end{mydef}
@@ -563,9 +563,9 @@ a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
 \end{mydef}
 
 \subsection{Diagnosticabilité classique}
-\'Etant donné un système qui peut commettre des fautes, il est important de s'assurer que ce qu'on observe du système suffit pour détecter une faute, c'est à dire de s'assurer que le système est \emph{diagnosticable}. On appelle \emph{diagnosticabilité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter les erreurs du système. La diagnosticabilité introduite par Sampath et autres\cite{SamSRST96} est décidable polynomialement mais est réservée aux systèmes dont les fautes sont définitives.
+\'Etant donné un système qui peut commettre des fautes, il est important de s'assurer que ce qu'on observe du système suffit pour détecter une faute, c'est à dire de s'assurer que le système est \emph{diagnosticable}. On appelle \emph{diagnosticabilité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter les erreurs du système. La diagnosticabilité introduite par Sampath et autres\cite{SamSRST96} est décidable polynomialement mais est restreinte aux systèmes dont les fautes sont définitives, à dire que à partir du moment où le système est en faute il le restera toujours.
 \newline
-Soit un automate fini d\'eterministe $S$ dont tous les états sont finaux appel\'e syst\`eme. Les états de $S$ sont marqués fautifs ou non fautifs et, comme les fautes ne sont pas réparables, les successeurs d'un état fautif sont toujours fautifs. On note  $L_F(S)$, le langage de faute, l'ensemble des mots que le système peut reconnaitre en terminant sur un état fautif. Les lettres de l'alphabet $\Sigma=\Sigma_o\sqcup \Sigma_{no}$ de $S$ représentent les évènements. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
+Plus exactement, soit un automate fini d\'eterministe $S$ dont tous les états sont finaux appel\'e syst\`eme. Les états de $S$ sont marqués fautifs ou non fautifs et, comme les fautes ne sont pas réparables, les successeurs d'un état fautif sont toujours fautifs. On note  $L_F(S)$, le langage de faute, l'ensemble des mots que le système peut reconnaitre en terminant sur un état fautif. Les lettres de l'alphabet $\Sigma=\Sigma_o\sqcup \Sigma_{no}$ de $S$ représentent les évènements. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
 On dit que $S$ est diagnosticable si et seulement si
 
@@ -583,7 +583,7 @@ Intuitivement, il existe une borne $n_0$ telle que pour toute ex\'ecution du sys
 
 \section{T-Diagnosticabilité}
 
-On va introduire une nouvelle notion de diagnosticabilité, la T-diagnosticabilité,  qui généralise la diagnosticabilité en autorisant les fautes à se réparer. Dans cette section on définit la T-diagnosticabilité et on montre qu'elle généralise bien la diagnosticabilité.
+On va introduire une nouvelle notion de diagnosticabilité, la T-diagnosticabilité,  qui généralise la diagnosticabilité en autorisant la réparation des fautes. Dans cette section on définit la T-diagnosticabilité et on montre qu'elle généralise bien la diagnosticabilité.
 
 \subsection{T-diagnosticabilité, Transient fault diagnosticability}
 On part toujours de $S$, un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$. Mais on peut maintenant avoir une transition d'un état fautif vers un état non fautif, ainsi $L_F(S)$ n'est plus extension clos.
@@ -1021,12 +1021,12 @@ Le problème de décision de la T-diagnosticabilité est PSPACE-dur.
 \end{myconj}
 
 \begin{mydis}
-On exhibe une réduction polynomiale du problème de la vacuité de l'intersection de $k$ langages rationnels dont ont sait qu'il est PSPACE-complet \cite{Lange92theemptiness}. Soit $L_1, \dots, L_k$ des langages rationnels. Soient $D_{1,k},\dots, D_{k,k}$ les automates construits précédement. Soit $\alpha$ une lettre n'apparaissant dans l'aphabet d'aucun des $L_i$. Soit $A$ l'automate consistant de $L_1, \dots, L_k, D_{1,k},\dots, D_{k,k}$ avec des transitions étiquettées par $\alpha$ des états finaux de $L_i$ à l'état initial de $D_{i,k}$, et ce pour chaque $i$. Les états initiaux de $A$ sont les états initiaux des $L_i$. Alors $A$ est $T$-diagnosticable ssi l'intersection des $L_i$ est vide. L'idée est que si l'intersection est vide alors pour tout mot, il y aura au moins un des $D_{i,k}$ que l'on ne pourra pas atteindre et on sera donc $T$-diagnosticable. Et si l'intersection des $L_i$ est non-vide alors après avoir lu ce mot, un $\alpha$, on peut entrer dans tous les $D_{i,k}$ et le résultat n'est donc pas $T$-diagnosticable. On notera que le $\alpha$ sert a synchroniser les différents morceaux de l'automate (dans le sente où lorsque l'on va construire $A^k$, on pourra soit lire alpha partout, soit ne pas le lire, ce qui évite que pour certains $i$, le mot lu par $L_i$ soit plus court que pour d'autres (un préfixe en fait), ce qui aurait pour effet de fausser le résultat et de déphaser les $D_{i,k}$.
+On exhibe une réduction polynomiale du problème de la vacuité de l'intersection de $k$ langages rationnels dont ont sait qu'il est PSPACE-complète \cite{Lange92theemptiness}. Soit $L_1, \dots, L_k$ des langages rationnels. Soient $D_{1,k},\dots, D_{k,k}$ les automates construits précédement. Soit $\alpha$ une lettre n'apparaissant dans l'aphabet d'aucun des $L_i$. Soit $A$ l'automate consistant de $L_1, \dots, L_k, D_{1,k},\dots, D_{k,k}$ avec des transitions étiquettées par $\alpha$ des états finaux de $L_i$ à l'état initial de $D_{i,k}$, et ce pour chaque $i$. Les états initiaux de $A$ sont les états initiaux des $L_i$. Alors $A$ est $T$-diagnosticable ssi l'intersection des $L_i$ est vide. L'idée est que si l'intersection est vide alors pour tout mot, il y aura au moins un des $D_{i,k}$ que l'on ne pourra pas atteindre et on sera donc $T$-diagnosticable. Et si l'intersection des $L_i$ est non-vide alors après avoir lu ce mot, un $\alpha$, on peut entrer dans tous les $D_{i,k}$ et le résultat n'est donc pas $T$-diagnosticable. On notera que le $\alpha$ sert a synchroniser les différents morceaux de l'automate (dans le sente où lorsque l'on va construire $A^k$, on pourra soit lire alpha partout, soit ne pas le lire, ce qui évite que pour certains $i$, le mot lu par $L_i$ soit plus court que pour d'autres (un préfixe en fait), ce qui aurait pour effet de fausser le résultat et de déphaser les $D_{i,k}$.
 \end{mydis}
 
-En admettant cette conjecture (dont nous sommes persuadés mais n'en ayant pas encore trop discuté avec nos encadrants, nous préférons rester prudents) on peut prouver que la T-diagnosticabilité est PSPACE-complet.
+En admettant cette conjecture (dont nous sommes persuadés mais n'en ayant pas encore trop discuté avec nos encadrants, nous préférons rester prudents) on peut prouver que la T-diagnosticabilité est PSPACE-complète.
 \begin{myth}
-Si la conjecture 1 est vraie alors le problème de décision de la T-diagnosticabilité est PSPACE-complet.
+Si la conjecture 1 est vraie alors le problème de décision de la T-diagnosticabilité est PSPACE-complète.
 \end{myth}
 \begin{proof}
 T-diagnosticabilité est PSPACE car nous avons donné un algorithme poylnomial en mémoire et T-diagnosticabilité est PSPACE-dur d'après la conjecture 1.
@@ -1117,8 +1117,8 @@ T-diagnosticabilité est PSPACE car nous avons donné un algorithme poylnomial e
 % command of the stfloats package.
 
 \section{Conclusion}
-Dans ce papier, nous avons généralisé la notion classique de diagnosticabilit\'e en autorisant les fautes intermitentes. Nous 
-avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliquer pouquoi nous pensons que ce problème est PSPACE-complet. Nous cherchons maintenant à prouver rigoureusement cette conjecture.
+On veut souvent s'assurer que toutes les fautes d'un système à évènements discrets pourront être détecté en temps réel. La diagnosticabilité classique permettait d'exprimer cette propriété pour les systèmes qui tombaient en panne sans réparation possible. Dans ce papier, nous avons généralisé cette notion de diagnosticabilit\'e en autorisant les réparations, c'est à dire les fautes intermittentes. Nous 
+avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliquer pourquoi nous pensons que ce problème est PSPACE-complète. Nous cherchons maintenant à prouver rigoureusement cette conjecture.
 
 
 
