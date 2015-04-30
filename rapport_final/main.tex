@@ -129,7 +129,7 @@ $$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*
 Nous allons, dans un premier temps ne regarder que deux exécutions à la fois et regarder quelles paires d'exécutions impliquent la non-T-diagnosticabilité. Dans la figure \ref{a2diag} est une abstraction de la twin machine $A\times A$ montrant toutes les transitions qui sont compatibles avec la T-diagnosticabilité. Chaque noeud contient un paire qui représente l'état de chaque exécution. Un $\ec$ représente un état sain, un $\es$ représente un état fautif qui n'a pas encore été détecté et un $\fs$ représente un état fautif qui a déjà été détecté. Une flèche pleine indique une transition possible et une flèche non-pleine indique une transition possible mais qui ne peut être prise qu'un nombe borné de fois jusqu'à-ce qu'on quitte l'état (ce qui veut dire que dans l'automate réel, il n'y a pas de boucle mais une chaîne finie d'états où le status ne change pas). Cet automate a été construit \`a partir des observations suivantes :
 \begin{itemize}
 	\item Un état sain peut subir une faute ($\ec \to \es$)
-	\item On ne peut détecter une faute que si toutes les exécutions équivalentes observationnellement sont fautives (donc on ne peut obtenir des $\fs$ que en passant par $(\fs, \fs)$)
+	\item On ne peut détecter une faute que si toutes les exécutions équivalentes observationnellement sont fautives (donc on ne peut obtenir des $\fs$ que en passant par un état ne contenant que des $\fs$, et donc par $(\fs,\fs)$ dans ce cas précis)
 	\item Un état fautif dont la faute a été détectée peut se réparer ($\fs\to \ec$)
 	\item Une faute doit être détectée en temps borné (donc on ne peut pas rester un temps non-borné dans un état contenant un $\es$)
 \end{itemize}
