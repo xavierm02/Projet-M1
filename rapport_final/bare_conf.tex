@@ -490,6 +490,26 @@ Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par
 Le langage $\mathcal{L}(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
 \end{mydef}
 
+\begin{figure}[H]
+  \caption{Example d'un automate}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[] (0) at (-1,0) {};
+      \node[draw,circle] (1) at (0,0) {O};
+      \node[draw,circle] (2) at (1.5,1) {N};
+      \node[draw,circle] (3) at (3,0) {E};
+      \node[draw,circle] (4) at (1.5,-1) {S};
+      \draw[->,>=latex] (0)->(1) {}; 
+      \draw[->,>=latex] (1)->(2) node[midway,above]{$a$};
+      \draw[->,>=latex] (2)->(3) node[midway,above]{$a,b$};
+      \draw[->,>=latex] (3)->(4) node[midway,above]{$b$};
+      \draw[->,>=latex] (4)->(1) node[midway,above]{$a,b$};
+      \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$a$} (1);
+      \draw [->,>=latex] (3) edge[in=100,out=80,loop] node[above] {$b$} (3);
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+
 \begin{mydef}[$\varepsilon$-clôture]
 L'$\varepsilon$-clôture \`a gauche  d'un automate $A$ est l'automate $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ et l'on a $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
 \end{mydef}
@@ -587,6 +607,62 @@ $$\begin{array}{l}
 (u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
 \end{array}$$
 \end{mydef}
+
+Prenons un example de T-diagnosticabilit\'e :
+
+\begin{figure}[H]
+  \caption{V\'erification de T-diagnosticabilit\'e. Les \'etats carr\'ees repr\'esente les \'etats fautifs et les circles repr\'esente les \'etats non-fautifs}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[] (0) at (-1,0) {};
+      \node[draw,circle] (1) at (0,0) {O};
+      \node[draw,rectangle] (2) at (1.5,1) {N};
+      \node[draw,rectangle] (3) at (3,0) {E};
+      \node[draw,circle] (4) at (1.5,-1) {S};
+      \draw[->,>=latex] (0)->(1) {}; 
+      \draw[->,>=latex] (1)->(2) node[midway,above]{$a$};
+      \draw[->,>=latex] (2)->(3) node[midway,above]{$a,b$};
+      \draw[->,>=latex] (3)->(4) node[midway,below]{$b$};
+      \draw[->,>=latex] (4)->(1) node[midway,below]{$a,b$};
+      \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$a$} (1);
+      \draw [->,>=latex] (3) edge[in=100,out=80,loop] node[above] {$b$} (3);
+      \draw [->,>=latex,dashed] (1) edge [in=110,out=0] node[midway,above]{$b$} (4) ;
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+
+Ce syst\`eme sans les deux fl\`ches $c$ est T-diagnosticable. Si on ajoute les deux fl\`eche $c$. Consid\'erons les deux ex\'ecutions suivantes:
+
+\begin{figure}[H]
+  \caption{Deux ex\'ecutions qui montrent que le syst\`eme est non-T-diagnosticable}
+  \begin{center}
+    \begin{tikzpicture}
+      \node[](0) at (-1,0) {};
+      \node[draw,circle] (1) at (0,0) {O};
+      \node[draw,rectangle] (2) at (2,0) {N};
+      \node[draw,rectangle] (3) at (4,0) {E};
+      \node[draw,circle] (4) at (6,0) {S};
+      \draw[->,>=latex] (0)->(1) {};
+      \draw[->,>=latex] (1)->(2) node[midway,above]{$a$};
+      \draw[->,>=latex] (2)->(3) node[midway,above]{$a$};
+      \draw[->,>=latex] (3)->(4) node[midway,above]{$b$};
+
+      
+      \node[](5) at (-1,-2) {};
+      \node[draw,circle] (6) at (0,-2) {O};
+      \node[draw,circle] (7) at (2,-2) {O};
+      \node[draw,circle] (8) at (4,-2) {O};
+      \node[draw,circle] (9) at (6,-2) {S};
+      
+      \draw[->,>=latex] (5)->(6) {};
+      \draw[->,>=latex] (6)->(7) node[midway,above]{$a$};
+      \draw[->,>=latex] (7)->(8) node[midway,above]{$a$};
+      \draw[->,>=latex] (8)->(9) node[midway,above]{$b$};
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+
+Nous voyons que dans ces deux ex\'ecutions, la faute qui est pass\'ee par $N,E$ dans la premi\`ere ex\'ecution n'est jamais d\'etect\'ee.
 
 \section{T-Diagnostiqueur}
 Comme pour la diagnosticabilité classique, pour détecter effectivement les fautes sur des séquences d'évènements, on utilise un diagnostiqueur.
