@@ -419,7 +419,7 @@ La notion classique de diagnosticabilit\'e ne permet de mod\'eliser que des faut
 
 Nous montrons que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, les notions de T-diagnosticabilit\'e et de diagnosticabilit\'e coincident.
 
-Nous proposons un algorithme quadratique de d\'ecision pour la T-diagnosticabilit\'e et une construction de R-diagnostiqueur.
+Nous proposons un algorithme de d\'ecision PSPACE pour la T-diagnosticabilit\'e et une construction de R-diagnostiqueur.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -451,7 +451,7 @@ De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexe
 
 La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux systèmes où les fautes sont définitives. Dans ce papier, nous généralisons cette notion afin de prendre en compte les systèmes où les fautes peuvent être r\'eparées. Notre nouvelle notion, la R-diagnosticabilit\'e, formalise le fait que toute faute est détectée en temps born\'e et avant d'avoir été r\'epar\'ee.
 
-Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la R-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un R-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la R-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la R-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
+Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la R-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un T-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la T-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
 
 \section{Pr\'erequis}
 
@@ -477,7 +477,7 @@ $$\begin{array}{l}
 \subsection{Twin machine}
 
 \subsection{T-diagnosticabilit\'e, Transient fault diagnosticability}
-
+TODO Dire que la def vien d'Hervé Marchand
 Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$
 \paragraph{T-diag (1) :}
 
@@ -607,11 +607,93 @@ Intuitivement, la borne est à $n$ car pour $k\ge n$, $A^k$ peut simuler $\text{
 Soit $A$ un automate \`a $n$ états. $A$ est $T$-diagnosticable ssi $A$ est $T_n$-diagnosticable.
 \end{myco}
 
+\begin{figure}
+\caption{Exemple d'automate $T_2$-diagnosticable mais non $T_3$-diagnosticable (et donc non $T$-diagnosticable) fourni par Eric Fabre}
+\label{t2diag}
+$D_{1,3}$ : \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
 
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
 
-On notera que la condition $k\ge n$ est imporante.
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, shape = rectangle, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, right of = 3] (4) {4};
+  \node[main node, right of = 4] (5) {5};
+  \node[main node, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
 
-$$TODO contre exemple eric$$
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge [bend right = 30] (2);
+\end{tikzpicture}
+
+$D_{2,3}$ : \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, shape = rectangle, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, right of = 5] (6) {6};
+  \node[main node, right of = 6] (7) {7};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge [bend right = 30] (2);
+\end{tikzpicture}
+
+$D_{3,3}$ : \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, right of = 1] (2) {2};
+  \node[main node, right of = 2] (3) {3};
+  \node[main node, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, shape = rectangle, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge [bend right = 30] (2);
+\end{tikzpicture}
+\end{figure}
+
+On notera que la condition $k\ge n$ est imporante. Un contre exemple pour $k<n$ est donné dans la figure \ref{t2diag}. En effet, seule la première faut est diagnostiquée car ensuite, les fautes s'enchaînent mais les trois séquences ne sont jamais fautives en même temps et on ne peut donc jamais détecter la faute. Cependant, si l'on ne considère que deux des sous-automates, alors le résultat est $T$-diagnosticable. D'ailleurs, l'automate composé des trois sous-automates est $T_2$-diagnosticable mais pas $T_3$-diagnosticable. Note : L'absence de lettres sur les transitions est due au fait qu'elles n'apportent rien. On pourrait autoriser toutes les lettres sur toutes les transitions ou choisir une lettre et ne mettre qu'elle partout, le résultat serait le même.
+
 
 \section{Diagnostiqueur}
 
@@ -703,7 +785,8 @@ La construction du diagnostiqueur est juste de faire la d\'eterminisation de l'a
 
 
 \section{Conclusion}
-The conclusion goes here.
+Dans ce papier, nous avons poser un nouveau type de diagnosticabilit\'e, nous 
+avons trouv\'e un algorithme PSPACE de ce probl\`eme. Cette notion extendre la diagnosticabilit\'e avec les fautes r\'eparables qui est souvent le cas dans notre vie courrante. La propri\'et\'e que nous nous avons int\'eress\'e est aussi applicable \`a des cas concr\`etes, par examples dans les syst\`emes qui peut r\'eparer des pannes tout seul, mais nous avons quand m\^eme envie de d\'etecter les fautes qu'il a eu lieu.
 
 
 
@@ -715,7 +798,7 @@ The conclusion goes here.
 \section*{Acknowledgment}
 
 
-The authors would like to thank...
+TODO The authors would like to thank...
 
 
 
