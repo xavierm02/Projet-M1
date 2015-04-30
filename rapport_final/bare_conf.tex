@@ -362,6 +362,7 @@
 \newtheorem{myco}{Corollaire}
 \newtheorem{myconj}{Conjecture}
 \newtheorem{mydis}{Discussion}
+\newtheorem{myid}{Idée}
 
 \usepackage{amssymb}\usepackage{varwidth}
 \usetikzlibrary{arrows,positioning,automata,shadows}
@@ -563,7 +564,7 @@ a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
 \end{mydef}
 
 \subsection{Diagnosticabilité classique}
-\'Etant donné un système qui peut commettre des fautes, il est important de s'assurer que ce qu'on observe du système suffit pour détecter une faute, c'est à dire de s'assurer que le système est \emph{diagnosticable}. On appelle \emph{diagnosticabilité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter les erreurs du système. La diagnosticabilité introduite par Sampath et autres\cite{SamSRST96} est décidable polynomialement mais est restreinte aux systèmes dont les fautes sont définitives, à dire que à partir du moment où le système est en faute il le restera toujours.
+\'Etant donné un système qui peut commettre des fautes, il est important de s'assurer que ce qu'on observe du système suffit pour détecter une faute, c'est à dire de s'assurer que le système est \emph{diagnosticable}. On appelle \emph{diagnosticabilité} le problème qui consiste à dire si, oui ou non, les évènements observables d'un système suffisent à détecter les erreurs du système. La diagnosticabilité introduite par Sampath et autres\cite{SamSRST96} est décidable polynomialement mais est restreinte aux systèmes dont les fautes sont définitives, c'est-à-dire que à partir du moment où le système est en faute il le restera toujours.
 \newline
 Plus exactement, soit un automate fini d\'eterministe $S$ dont tous les états sont finaux appel\'e syst\`eme. Les états de $S$ sont marqués fautifs ou non fautifs et, comme les fautes ne sont pas réparables, les successeurs d'un état fautif sont toujours fautifs. On note  $L_F(S)$, le langage de faute, l'ensemble des mots que le système peut reconnaitre en terminant sur un état fautif. Les lettres de l'alphabet $\Sigma=\Sigma_o\sqcup \Sigma_{no}$ de $S$ représentent les évènements. On dira qu'un \'ev\`enement est observable (resp. non-observable) s'il est dans $\Sigma_o$ (resp. $\Sigma_{no}$).
 
@@ -664,7 +665,7 @@ Nous voyons que dans ces deux ex\'ecutions, la faute qui est pass\'ee par $N,E$ 
 
 \subsection{T-Diagnostiqueur}
 Comme pour la diagnosticabilité classique, pour détecter effectivement les fautes sur des séquences d'évènements, on utilise un diagnostiqueur.
-La construction du T-diagnostiqueur consiste seulement à d\'eterminiser l'automate $S$. Pour utiliser ce T-diagnostiqueur sur une séquence d'évènements, on lit le mot correspondant avec le déterminisé et quand on arrive dans un \'etat qui correspond uniquement à des \'etats $\Box$, on peut lever une alarme pour indiquer qu'il y a eu une faute. Si le système est T-diagnosticable alors toute faute sera suivie d'un instant non-ambigu où tous les états dans lesquels pourraient être le système sont fautifs. LE T-diagnostiqueur ne manque donc aucune faute lorsque le système est T-diagnosticable.
+La construction du T-diagnostiqueur consiste seulement à d\'eterminiser l'automate $S$. Pour utiliser ce T-diagnostiqueur sur une séquence d'évènements, on lit le mot correspondant avec le déterminisé et quand on arrive dans un \'etat qui correspond uniquement à des \'etats $\Box$, on peut lever une alarme pour indiquer qu'il y a eu une faute. Si le système est T-diagnosticable alors toute faute sera suivie d'un instant non-ambigu où tous les états dans lesquels pourraient être le système sont fautifs. Le T-diagnostiqueur ne manque donc aucune faute lorsque le système est T-diagnosticable.
 
 \subsection{La T-diagnosticabilité généralise la diagnosticabilité}
 
@@ -1015,9 +1016,9 @@ On notera que la condition $k\ge n$ est imporante. Un contre exemple pour $k<n$ 
 Le problème de décision de la T-diagnosticabilité est PSPACE-dur.
 \end{myconj}
 
-\begin{mydis}
+\begin{myid}
 On exhibe une réduction polynomiale du problème de la vacuité de l'intersection de $k$ langages rationnels dont ont sait qu'il est PSPACE-complète \cite{Lange92theemptiness}. Soit $L_1, \dots, L_k$ des langages rationnels. Soient $D_{1,k},\dots, D_{k,k}$ les automates construits précédement. Soit $\alpha$ une lettre n'apparaissant dans l'aphabet d'aucun des $L_i$. Soit $A$ l'automate consistant de $L_1, \dots, L_k, D_{1,k},\dots, D_{k,k}$ avec des transitions étiquettées par $\alpha$ des états finaux de $L_i$ à l'état initial de $D_{i,k}$, et ce pour chaque $i$. Les états initiaux de $A$ sont les états initiaux des $L_i$. Alors $A$ est $T$-diagnosticable ssi l'intersection des $L_i$ est vide. L'idée est que si l'intersection est vide alors pour tout mot, il y aura au moins un des $D_{i,k}$ que l'on ne pourra pas atteindre et on sera donc $T$-diagnosticable. Et si l'intersection des $L_i$ est non-vide alors après avoir lu ce mot, un $\alpha$, on peut entrer dans tous les $D_{i,k}$ et le résultat n'est donc pas $T$-diagnosticable. On notera que le $\alpha$ sert a synchroniser les différents morceaux de l'automate (dans le sente où lorsque l'on va construire $A^k$, on pourra soit lire alpha partout, soit ne pas le lire, ce qui évite que pour certains $i$, le mot lu par $L_i$ soit plus court que pour d'autres (un préfixe en fait), ce qui aurait pour effet de fausser le résultat et de déphaser les $D_{i,k}$.
-\end{mydis}
+\end{myid}
 
 En admettant cette conjecture (dont nous sommes persuadés mais n'en ayant pas encore trop discuté avec nos encadrants, nous préférons rester prudents) on peut prouver que la T-diagnosticabilité est PSPACE-complète.
 \begin{myth}
@@ -1113,7 +1114,7 @@ T-diagnosticabilité est PSPACE car nous avons donné un algorithme poylnomial e
 
 \section{Conclusion}
 On veut souvent s'assurer que toutes les fautes d'un système à évènements discrets pourront être détecté en temps réel. La diagnosticabilité classique permettait d'exprimer cette propriété pour les systèmes qui tombaient en panne sans réparation possible. Dans ce papier, nous avons généralisé cette notion de diagnosticabilit\'e en autorisant les réparations, c'est à dire les fautes intermittentes. Nous 
-avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliquer pourquoi nous pensons que ce problème est PSPACE-complète. Nous cherchons maintenant à prouver rigoureusement cette conjecture.
+avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliqué pourquoi nous pensons que ce problème est PSPACE-complete. Nous cherchons maintenant à prouver rigoureusement cette conjecture.
 
 
 
@@ -1124,12 +1125,6 @@ avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliquer pou
 % use section* for acknowledgement
 \section*{Remerciements}
 Nous remercions nos encadrants \'Eric Fabre, Loïc Hélouët et Hervé Marchand pour le temps qu'ils nous ont consacré et pour les idées et conseils qu'ils nous ont donné.
-
-TODO The authors would like to thank...
-
-
-
-
 
 % trigger a \newpage just before the given reference
 % number - used to balance the columns on the last page
