@@ -354,6 +354,10 @@
 \usepackage{amssymb}
 \usepackage{tikz}
 \usepackage{wasysym}
+\usepackage{mathtools}
+\usepackage{stmaryrd}
+\usepackage{tikz}
+\usepackage{float}
 \newtheorem{mydef}{D\'efinition}
 \newtheorem{myth}{Th\'eor\`eme}
 \newtheorem{myco}{Corollaire}
@@ -365,7 +369,7 @@
 \newcommand{\es}{\square}
 \newcommand{\fs}{\blacksquare}
 \newcommand{\ec}{\ocircle}
-
+\newcommand{\enum}[2]{\llbracket #1, #2 \rrbracket}
 
 \begin{document}
 %
@@ -456,9 +460,96 @@ TODO CHANGER Après avoir rappellé les prérequis dans la section I, la défini
 
 \section{Pr\'erequis}
 
-Automates
+\subsection{Automates}
 
-Diagnosticabilit\'e
+\begin{mydef}[Automate]
+Un automate est un 5-uplet $A = (Q, \Sigma, \Delta, q_0, F)$ o\`u
+\begin{itemize}
+	\item $Q$ est l'ensemble des états du système.
+	\item $\Sigma$ est l'ensemble des événements.
+	\item $\Delta \subseteq (Q \times (\Sigma \cup \{\varepsilon\}) \times Q)$ est une relation de transition (o\`u $\varepsilon$ est le mot vide, c'est a dire que pour tout mot $u\in\Sigma^*$, $\varepsilon u = u = u\varepsilon$).
+	\item $q_0 \in Q$ l'état initial.
+	\item $F \subseteq Q$ l'ensemble des \'etats finaux.
+\end{itemize}
+\end{mydef}
+
+Un automate fini est un automate tel que $Q$ est \emph{fini}.
+\paragraph{}
+\'Etant donn\'es $p,q \in Q$ et $l\in \Sigma \cup \{\varepsilon\}$, on notera $p \underset{\Delta}{\overset{l}{{\to}}}q$ pour $(p,l,q) \in \Delta$. On notera \'egalement $q_0 \underset{\Delta}{\overset{l_0}{{\to}}} \dots \underset{\Delta}{\overset{l_n}{{\to}}} q_{n+1}$ pour $\forall k \in \enum{0}{n}, q_k 
+\underset{\Delta}{\overset{l_k}{{\to}}} q_{k+1}$. Pour simplifier, le $\Delta$ sera omis lorsqu'il est \'evident.
+\paragraph{}
+On dit qu'un automate est \emph{sans $\varepsilon$-transitions} si $\Delta \subseteq (Q\times \Sigma \times Q)$.
+
+Un automate \emph{complet} est un automate tel que pour tout \'etat $q$ et pour toute lettre $l$ il existe une transition partant de $q$ \'etiquet\'ee par $l$. Formellement : $\forall q \in Q, \forall l \in \Sigma, \exists p\in Q, q\overset{l}{\to}p$
+
+Un automate \emph{d\'eterministe} est un automate sans $\varepsilon$-transitions tel que $\Delta$ peut \^etre vue comme une fonction de $Q\times \Sigma$ dans $Q$: $$\forall p,q,q' \in Q, \forall l \in \Sigma, p\overset{l}{{\to}}q \land p\overset{l}{{\to}}q' \implies q=q'$$
+
+\begin{mydef}[Langage reconnu par un automate]
+Un mot $l_1...l_n \in \left(\Sigma\cup \{\varepsilon\}\right)^*$ est reconnu par un automate $A$ si il existe $n \in \mathbb N$ et $q_1,...,q_n \in Q$ tels que $q_0 \overset{l_1}{{\to}} q_1 \overset{l_2}{{\to}} \dots \overset{l_n}{{\to}} q_{n}$ et $q_{n} \in F$.
+
+Le langage $\mathcal{L}(A)$ reconnu par un automate $A$ est l'ensemble des mots de $\Sigma^*$ reconnus par $A$.
+\end{mydef}
+
+\begin{mydef}[$\varepsilon$-clôture]
+L'$\varepsilon$-clôture \`a gauche  d'un automate $A$ est l'automate $\operatorname{cl}_\varepsilon(A) = (Q, \Sigma, \Delta', q_0, F)$ et l'on a $p \underset{\Delta'}{\overset{l}{{\to}}} r$ si et seulement si il existe $n\ge 1$ et $q_1,\dots,q_n \in Q,$ tels que $q_1 = p$, $q_n = r$ et $q_1 \underset{\Delta}{\overset{\varepsilon}{{\to}}} \dots \underset{\Delta}{\overset{l}{{\to}}} q_n$.
+\end{mydef}
+On peut prouver que $\mathcal L(\operatorname{cl}_\varepsilon(A))=\mathcal L(A)$.
+
+\begin{mydef}[Compl\'et\'e d'un automate]
+Le compl\'et\'e d'un automate déterminisé complet $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $\operatorname{complete}(A) = (Q\cup\{\bot\}, \Sigma, \Delta', q_0, F)$ o\`u $\bot\not\in Q$ est un nouvel \'etat et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p,q \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}q \iff p\underset{\Delta}{\overset{l}{{\to}}}q\right)$$
+$$\forall l \in \Sigma, \forall p \in Q, \left(p\underset{\Delta'}{\overset{l}{{\to}}}\bot \iff \left(\forall q \in Q, p\underset{\Delta}{\overset{l}{{\not\to}}}q\right)\right)$$
+
+$$\forall l \in \Sigma, \forall q \in Q,\bot\underset{\Delta'}{\overset{l}{{\not\to}}}q$$
+
+$$\forall l \in \Sigma, \bot\underset{\Delta'}{\overset{l}{{\to}}}\bot$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\operatorname{complete}(A)) = \mathcal L(A)$ et que $\operatorname{complete}(A)$ est complet.
+
+\begin{mydef}[D\'eterminis\'e d'un automate]
+Le d\'eterminis\'e d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions est l'automate $$\det(A) = (\mathcal P(Q), \Sigma, \Delta', \{q_0\}, \mathcal P(F))$$ o\`u $\mathcal P(X)=\{Y\mid Y \subseteq X\}$ est l'ensemble des parties de $X$ et $\Delta'$ est d\'efinie par :
+$$\forall l \in \Sigma,\forall p',q' \in \mathcal P(Q), \left(p'\underset{\Delta'}{\overset{l}{{\to}}}q' \iff \left( \exists p \in p', \exists q \in q', p\underset{\Delta}{\overset{l}{{\to}}}q\right)\right)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L(\det(A))=\mathcal L(A)$ et que $\det(A)$ est un automate d\'eterministe.
+
+\begin{mydef}[Compl\'ementaire d'un automate]
+Le compl\'ementaire d'un automate $A = (Q, \Sigma, \Delta, q_0, F)$ sans $\varepsilon$-transitions, d\'eterministe et complet est l'automate $$\overline{A} = (Q, \Sigma, \Delta, q_0, Q\setminus F)$$
+\end{mydef}
+
+On peut prouver que $\mathcal L\left(\overline{A}\right) = \Sigma^* \setminus \mathcal L(A)$.
+
+\begin{mydef}[Produit synchrone]
+Soient $A = (Q, \Sigma, \Delta, q_0, F)$ et $A' = (Q', \Sigma', \Delta', q_0', F')$ deux automates sans $\varepsilon$. On définit le produit synchrone de ces automates comme \'etant $$A\times A' = (Q \times Q', \Sigma \cap \Sigma', \Delta'', (q_0, q_0'), F\times F')$$ o\`u $\Delta''$ est d\'efinie par $(p,p')\overset{l}{{\to}}(q,q')$ pour $l\in \Sigma\cap \Sigma'$ si et seulement si $p\overset{l}{{\to}}q$ et $p'\overset{l}{{\to}}q'$.
+\end{mydef}
+On peut prouver que $\mathcal L(A\times B) = \mathcal L(A) \cap \mathcal L(B)$.
+
+\begin{mydef}[Langage extension-clos]
+Un langage $L$ est dit extension-clos si $\forall u \in L, \forall v \in \Sigma^*, uv \in L$.
+\end{mydef}
+
+\begin{mydef}[Projection]
+Soit $\Sigma'\subseteq \Sigma$. On d\'efinit la projection $\pi_{\Sigma'}$ de $\Sigma^*$ dans $\Sigma'^*$ par:
+
+$$\begin{array}{llll}
+&\pi_{\Sigma'}(\varepsilon) &= &\varepsilon\\
+\forall a \in \Sigma, \forall u \in \Sigma^*, &\pi_{\Sigma'}(au) &= &\left\{\begin{array}{ll}
+a\pi_{\Sigma'}(u) &\text{ si } a \in \Sigma'\\
+\pi_{\Sigma'}(u) &\text{ si } a \not\in \Sigma'
+\end{array}\right.
+\end{array}$$
+\end{mydef}
+
+\subsection{Diagnosticabilité classique}
+
+
+
+$$\begin{array}{l}
+\exists n_0 \in \mathbb N, \forall x \in L_F(S),\\
+\forall y \in \Sigma^*, \left(||y||_{\Sigma_o} \ge n \land xy \in  L(S)\right) \implies\\
+\forall z \in L(S), \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
+\end{array}$$
 
 R\'eduction : Langage de fautes $\Rightarrow$ \'etats fautifs / non-fautifs
 
@@ -466,14 +557,7 @@ R\'eduction aux mots fautifs minimaux
 
 \section{T-Diagnosticabilité}
 
-\subsection{Diagnosticabilité classique}
-$$\begin{array}{l}
-\exists n_0 \in \mathbb N, \forall x \in L_F(S),\\
-\forall y \in \Sigma^*, \left(||y||_{\Sigma_o} \ge n \land xy \in  L(S)\right) \implies\\
-\forall z \in L(S), \pi_{\Sigma_o}(z)=\pi_{\Sigma_o}(xy) \implies z \in L_F(S)
-\end{array}$$
 
-\subsection{Twin machine}
 
 \subsection{T-diagnosticabilité, Transient fault diagnosticability}
 Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$.
