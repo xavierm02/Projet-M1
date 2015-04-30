@@ -588,6 +588,10 @@ $$\begin{array}{l}
 \end{array}$$
 \end{mydef}
 
+\section{T-Diagnostiqueur}
+Comme pour la diagnosticabilité classique, pour détecter effectivement les fautes sur des séquences d'évènements, on utilise un diagnostiqueur.
+La construction du T-diagnostiqueur consiste seulement à d\'eterminiser l'automate $S$. Pour utiliser ce T-diagnostiqueur sur une séquence d'évènements, on lit le mot correspondant avec le déterminisé et quand on arrive dans un \'etat qui correspond uniquement à des \'etats $\Box$, on peut lever une alarme pour indiquer qu'il y a eu une faute.
+
 \subsection{La T-diagnosticabilité généralise la diagnosticabilité}
 
 \begin{myth}[Diag $\Rightarrow$ T-diag]
@@ -932,10 +936,6 @@ Le problème de décision de la T-diagnosticabilité est PSPACE-complet.
 
 
 
-\section{Diagnostiqueur}
-
-La construction du diagnostiqueur est juste de faire la d\'eterminisation de l'automate $\mathcal{A}_{2Etats}$. Pour utiliser ce diagnostiqueur, nous allons ex\'ecuter les mots sur ce diagnostiqueur. Quand nous arrivons dans un \'etat qui est compos\'e que par des \'etats $\Box$, nous allons lever un alarme pour indiquer qu'il y a eu une faute.
-
 
 % An example of a floating figure using the graphicx package.
 % Note that \label must occur AFTER (or within) \caption.
@@ -1019,11 +1019,9 @@ La construction du diagnostiqueur est juste de faire la d\'eterminisation de l'a
 % footnotes above bottom floats. This can be corrected via the \fnbelowfloat
 % command of the stfloats package.
 
-
-
 \section{Conclusion}
-Dans ce papier, nous avons poser un nouveau type de diagnosticabilit\'e, nous 
-avons trouv\'e un algorithme PSPACE de ce probl\`eme. Cette notion extendre la diagnosticabilit\'e avec les fautes r\'eparables qui est souvent le cas dans notre vie courrante. La propri\'et\'e que nous nous avons int\'eress\'e est aussi applicable \`a des cas concr\`etes, par examples dans les syst\`emes qui peut r\'eparer des pannes tout seul, mais nous avons quand m\^eme envie de d\'etecter les fautes qu'il a eu lieu.
+Dans ce papier, nous avons généralisé la notion classique de diagnosticabilit\'e en autorisant les fautes intermitentes. Nous 
+avons trouv\'e un algorithme PSPACE pour ce probl\`eme. Nous avons expliquer pouquoi nous pensons que ce problème est PSPACE-complet. Nous cherchons maintenant à prouver rigoureusement cette conjecture.
 
 
 
