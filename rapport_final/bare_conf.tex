@@ -420,7 +420,7 @@ La notion classique de diagnosticabilit\'e ne permet de mod\'eliser que des faut
 
 Nous montrons que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, les notions de T-diagnosticabilit\'e et de diagnosticabilit\'e coincident.
 
-Nous proposons un algorithme de d\'ecision PSPACE pour la T-diagnosticabilit\'e et une construction de R-diagnostiqueur.
+Nous proposons un algorithme de d\'ecision PSPACE pour la T-diagnosticabilit\'e et une construction de T-diagnostiqueur.
 \end{abstract}
 % IEEEtran.cls defaults to using nonbold math in the Abstract.
 % This preserves the distinction between vectors and scalars. However,
@@ -450,9 +450,9 @@ Nous proposons un algorithme de d\'ecision PSPACE pour la T-diagnosticabilit\'e 
 % no \IEEEPARstart
 De nos jours, les syst\`emes d'information ont tendance \`a \^etre trop complexes pour que l'on puisse se convaincre de leur sûret\'e. On les mod\'elise donc formellement pour prouver des propriétés. La diagnosticabilit\'e est une propri\'et\'e qui exprime la capacit\'e \`a d\'etecter les fautes du syst\`eme \`a partir d'une connaissance partielle de son \'etat.
 
-La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux systèmes où les fautes sont définitives. Dans ce papier, nous généralisons cette notion afin de prendre en compte les systèmes où les fautes peuvent être r\'eparées. Notre nouvelle notion, la R-diagnosticabilit\'e, formalise le fait que toute faute est détectée en temps born\'e et avant d'avoir été r\'epar\'ee.
+La notion classique de diagnosticabilit\'e\cite{SamSRST96} ne s'applique qu'aux systèmes où les fautes sont définitives. Dans ce papier, nous généralisons cette notion afin de prendre en compte les systèmes où les fautes peuvent être r\'eparées. Notre nouvelle notion, la T-diagnosticabilit\'e, formalise le fait que toute faute est détectée en temps born\'e et avant d'avoir été r\'epar\'ee.
 
-Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la R-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un T-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la T-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
+TODO CHANGER Après avoir rappellé les prérequis dans la section I, la définition classique de la diagnosticabilité dans la section II et introduit la définition de la T-diagnosticabilit\'e dans la section III, nous proposerons dans la section IV un T-diagnostiqueur et un algorithme de d\'ecision quadratique pour la R-diagnosticabilit\'e. Nous montrerons ensuite dans la section V que la T-diagnosticabilit\'e \'etend bien la notion de diagnosticabilit\'e, c'est-\`a-dire que pour un syst\`eme dont les fautes sont permanentes, la T-diagnosticabilit\'e et la diagnosticabilit\'e sont \'equivalentes.
 
 \section{Pr\'erequis}
 
@@ -466,9 +466,9 @@ R\'eduction aux mots fautifs minimaux
 
 Simulation
 
-\section{T-Diagnosticabilit\'e}
+\section{T-Diagnosticabilité}
 
-\subsection{Diag classique}
+\subsection{Diagnosticabilité classique}
 $$\begin{array}{l}
 \exists n_0 \in \mathbb N, \forall x \in L_F(S),\\
 \forall y \in \Sigma^*, \left(||y||_{\Sigma_o} \ge n \land xy \in  L(S)\right) \implies\\
@@ -477,27 +477,27 @@ $$\begin{array}{l}
 
 \subsection{Twin machine}
 
-\subsection{T-diagnosticabilit\'e, Transient fault diagnosticability}
-TODO Dire que la def vien d'Hervé Marchand
-Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$
-\paragraph{T-diag (1) :}
+\subsection{T-diagnosticabilité, Transient fault diagnosticability}
+Soit $S$ un système dont les évènements sont dans $\Sigma = \Sigma_o \ \bigsqcup \Sigma_{no}$.
 
-\begin{multline*}
-\forall u \in L_F(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
-(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
-\end{multline*}
+\begin{mydef}[Langage de faute minimal]
+$$\begin{array}{lll}
+L_{F}^{MIN}(S)&=\{u \in L_F(S) \mid & \forall v,w \in \Sigma^*, u = vw \\
+&&\land v.\text{Pref}(w)\subseteq L_F(S) \implies w = \varepsilon \}\\
+ & = \{u \in L_F(S) \mid \\
+ &&\forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies\\
+ && v \not \in L_F^{MIN}(S)\}
+\end{array}$$
+\end{mydef}
 
+\begin{mydef}[T-diagnosticabilité, par Hervé Marchand]
 
-\paragraph{Langage de faute minimal :}
-$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall v,w \in \Sigma^*, u = vw \land v.\text{Pref}(w)\subseteq L_F(S) \implies w = \varepsilon \}$$
-ou bien
-$$L_{FMIN}(S) = \{u \in L_F(S) \mid \forall a \in \Sigma, \forall v \in \Sigma^*, u = va \implies v \not \in L_{FMIN}(S)\}$$
-\paragraph{T-diag (2) :}
-\begin{multline*}
-\forall u \in L_{FMIN}(S).\ \exists n \in \mathbb{N}.\ \forall v \in \Sigma^*.\ \exists v' \in \Sigma^*. \\
-(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow (v'\leq v \ \wedge \  u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
-\end{multline*}
-
+$$\begin{array}{l}
+\forall u \in L^{MIN}_F(S),\ \exists n \in \mathbb{N}, \forall v \in \Sigma^*.\\
+(uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow \ \exists v' \leq v. \\
+(u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+\end{array}$$
+\end{mydef}
 
 \subsection{T-diag généralise diag}
 
@@ -613,7 +613,7 @@ Le problème de décision de la T-diagnosticabilité est PSPACE.
 \end{myth}
 
 \begin{figure}
-\caption{Exemple d'automate $T_2$-diagnosticable mais non $T_3$-diagnosticable (et donc non $T$-diagnosticable) fourni par Eric Fabre}
+\caption{Exemple d'automate $T_2$-diagnosticable mais non $T_3$-diagnosticable (et donc non $T$-diagnosticable) par Eric Fabre}
 \label{t2diag}
 $D_{1,3}$ : \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
   thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
@@ -832,7 +832,7 @@ Le problème de décision de la T-diagnosticabilité est PSPACE-dur.
 \end{myconj}
 
 \begin{proof}
-On exhibe une réduction polynomiale du problème de la vacuité de l'intersection de $k$ langages rationnels. Soit $L_1, \dots, L_k$ des langages rationnels. Soient $D_{1,k},\dots, D_{k,k}$ les automates construits précédement. Soit $\alpha$ une lettre n'apparaissant dans l'aphabet d'aucun des $L_i$. Soit $A$ l'automate consistant de $L_1, \dots, L_k, D_{1,k},\dots, D_{k,k}$ avec des transitions étiquettées par $\alpha$ des états finaux de $L_i$ à l'état initial de $D_{i,k}$, et ce pour chaque $i$. Les états initiaux de $A$ sont les états initiaux des $L_i$. Alors $A$ est $T$-diagnosticable ssi l'intersection des $L_i$ est vide. L'idée est que si l'intersection est vide alors pour tout mot, il y aura au moins un des $D_{i,k}$ que l'on ne pourra pas atteindre et on sera donc $T$-diagnosticable. Et si l'intersection des $L_i$ est non-vide alors après avoir lu ce mot, un $\alpha$, on peut entrer dans tous les $D_{i,k}$ et le résultat n'est donc pas $T-diagnosticable$. On notera que le $\alpha$ sert a synchroniser les différents morceaux de l'automate (dans le sente où lorsque l'on va construire $A^k$, on pourra soit lire alpha partout, soit ne pas le lire, ce qui évite que pour certains $i$, le mot lu par $L_i$ soit plus court que pour d'autres (un préfixe en fait), ce qui aurait pour effet de fausser le résultat et de déphaser les $D_{i,k}$.
+On exhibe une réduction polynomiale du problème de la vacuité de l'intersection de $k$ langages rationnels dont ont sait qu'il est PSPACE-complet \cite{Lange92theemptiness}. Soit $L_1, \dots, L_k$ des langages rationnels. Soient $D_{1,k},\dots, D_{k,k}$ les automates construits précédement. Soit $\alpha$ une lettre n'apparaissant dans l'aphabet d'aucun des $L_i$. Soit $A$ l'automate consistant de $L_1, \dots, L_k, D_{1,k},\dots, D_{k,k}$ avec des transitions étiquettées par $\alpha$ des états finaux de $L_i$ à l'état initial de $D_{i,k}$, et ce pour chaque $i$. Les états initiaux de $A$ sont les états initiaux des $L_i$. Alors $A$ est $T$-diagnosticable ssi l'intersection des $L_i$ est vide. L'idée est que si l'intersection est vide alors pour tout mot, il y aura au moins un des $D_{i,k}$ que l'on ne pourra pas atteindre et on sera donc $T$-diagnosticable. Et si l'intersection des $L_i$ est non-vide alors après avoir lu ce mot, un $\alpha$, on peut entrer dans tous les $D_{i,k}$ et le résultat n'est donc pas $T$-diagnosticable. On notera que le $\alpha$ sert a synchroniser les différents morceaux de l'automate (dans le sente où lorsque l'on va construire $A^k$, on pourra soit lire alpha partout, soit ne pas le lire, ce qui évite que pour certains $i$, le mot lu par $L_i$ soit plus court que pour d'autres (un préfixe en fait), ce qui aurait pour effet de fausser le résultat et de déphaser les $D_{i,k}$.
 \end{proof}
 
 En admettant cette conjecture (dont nous sommes persuadés mais n'en ayant pas encore trop discutté avec nos encadrants, nous préférons rester prudents).
@@ -973,13 +973,8 @@ TODO The authors would like to thank...
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}{1}
-
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
-
-\end{thebibliography}
+\bibliographystyle{plain}
+\bibliography{bibliography}
 
 
 
