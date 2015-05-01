@@ -606,6 +606,7 @@ $$\begin{array}{l}
 (uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow \ \exists v' \leq v. \\
 (u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
 \end{array}$$
+
 \end{mydef}
 
 Intuitivement, pour chaque faute $u$, il existe une borne $n$ telle que si l'on a attendu $n$ nouveaux observables ($v$), alors il y a eu un moment où l'on a observé $uv'$ et où tous les mots qui pouvaient produire la m\^eme observation que $uv'$ contiennent une faute. Ainsi, lorsque une faute a eu lieu, on peut toujours affirmer sans se tromper qu'elle eu lieu (au plus tard $n$ observables après qu'elle se soit produite).
@@ -635,7 +636,7 @@ Prenons un exemple de T-diagnosticabilit\'e :
     \caption{V\'erification de T-diagnosticabilit\'e. Les \'etats carr\'es repr\'esentent les \'etats fautifs et les cercles repr\'esentent les \'etats non-fautifs}
 \end{figure}
 
-Ce syst\`eme sans les deux fl\`eches $c$ est T-diagnosticable. Si on ajoute les deux fl\`eches $c$. Consid\'erons les deux ex\'ecutions suivantes:
+Ce syst\`eme sans la fl\`eche $b$  de $O$ vers $S$ est T-diagnosticable. Si on ajoute cette fl\`eche $b$, ce n'est plus T-diagnosticable. Consid\'erons les deux ex\'ecutions suivantes:
 
 \begin{figure}[H]
   \caption{Deux ex\'ecutions qui montrent que le syst\`eme est non-T-diagnosticable}
