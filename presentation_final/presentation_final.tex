@@ -19,13 +19,16 @@
 \newtheorem{mydis}{Discussion}
 \newtheorem{myid}{Idée}
 
+\bibliographystyle{plain}
+\setbeamertemplate{bibliography item}{[\theenumiv]}
+
 \usepackage{wasysym}
 \newcommand{\es}{\square}
 \newcommand{\fs}{\blacksquare}
 \newcommand{\ec}{\ocircle}
 
 \author{François Godi \and Xavier Montillet \and Chen Qian}
-\title{Opacit\'e des automates}
+\title{T-diagnosticabilit\'e}
 \setbeamercovered{transparent} 
 \setbeamertemplate{navigation symbols}{} 
 %\logo{} 
@@ -458,6 +461,13 @@ La décision de la T-diagnosticabilité est PSPACE-dure.
 \end{myth}
 \end{frame}
 
+\end{section}
+
+\begin{section}{Bibliographie}
+  \begin{frame}
+    \bibliographystyle{plain}
+    \bibliography{bibliography}
+  \end{frame}
 \end{section}
 
 \end{document}
