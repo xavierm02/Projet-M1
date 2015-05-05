@@ -668,12 +668,12 @@ $D_{3,4}$ :
   \lineskiplimit=4cm
   \lineskip=0.1cm
 
-  \node[main node, initial, initial text={}] (a1) {$A_1$};
-  \node[main node, shape = rectangle, right of = a1] (d1) {$D_1$};
+  \node[main node, initial, initial text={}] (a1) {$L_1$};
+  \node[main node, shape = rectangle, right of = a1] (d1) {$D_{1,n}$};
   \node[below of = a1] (ai) {$\vdots$};
   \node[right of = ai] (di) {$\vdots$};
-  \node[main node, initial, initial text={}, below of = ai] (an) {$A_n$};
-  \node[main node, shape = rectangle, right of = an] (dn) {$D_n$};
+  \node[main node, initial, initial text={}, below of = ai] (an) {$L_n$};
+  \node[main node, shape = rectangle, right of = an] (dn) {$D_{n,n}$};
 	\draw[->,>=latex] (a1)->(d1) node[midway,above]{$\alpha$};
 	\draw[->,>=latex] (an)->(dn) node[midway,above]{$\alpha$};
 \end{tikzpicture}
