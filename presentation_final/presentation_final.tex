@@ -9,8 +9,20 @@
 \usepackage{tikz}
 \usepackage{float}
 
+\usetikzlibrary{arrows,positioning,automata,shadows}
+
 
 \newtheorem{mydef}{D\'efinition}
+\newtheorem{myth}{Th\'eor\`eme}
+\newtheorem{myco}{Corollaire}
+\newtheorem{myconj}{Conjecture}
+\newtheorem{mydis}{Discussion}
+\newtheorem{myid}{Idée}
+
+\usepackage{wasysym}
+\newcommand{\es}{\square}
+\newcommand{\fs}{\blacksquare}
+\newcommand{\ec}{\ocircle}
 
 \author{François Godi \and Xavier Montillet \and Chen Qian}
 \title{Opacit\'e des automates}
@@ -152,6 +164,295 @@
     La T-diagnosticabilité généralise la diagnosticabilité
 
   \end{frame}
+\end{section}
+
+\begin{section}{Décision et complexité}
+
+\iffalse
+\begin{frame}{Algorithme}
+La seule difficultée est de différentier les $\es$ des $\fs$ :
+\begin{itemize}
+	\item Pour chaque état $q$ de $A$, on calcule l'ensemble des états que l'on peut atteindre avec une exécution équivalente, c'est-à-dire l'ensemble $E_q = \{q' \mid \exists u, q_0 \overset{u}{\to}q \land q_0 \overset{u}{\to}q' \}$. Pour ce faire, on calcule le point fixe avec $q'\in E_q \land q \overset{x}{\to} p \land q' \overset{x}{\to} p' \implies p' \in E_p$, initialisé par $q\in E_q$. On marque ensuite comme $\fs$ les états $q$ fautifs tels que $E_q$ ne contient que des états fautifs. Ces états correspondent aux états pouvant être la composante gauche de $(\fs, \{\es\})$.
+
+	\item On colorie ensuite les $\es$ pouvant être la composante gauche de $(\fs,\{\ec, \es\})$. Pour ce faire, on calcule le point fixe de la règle suivante : un $\es$ dont tous les prédécesseurs sont des $\fs$ devient un $\fs$.
+\end{itemize}
+On sait donc décider si un état fautif peut être un $\es$ ou non. L'alorithme ci-dessus est PSPACE.
+\end{frame}
+
+\begin{frame}{Algorithme (suite)}
+\begin{itemize}
+	\item Pour vérifier si une transition interdite est utilisée, on itère sur toutes les paires d'états de $A\times \text{det}(A)$ (sans construire $\text{det}(A)$ exlicitement) et s'il y a une transition entre les deux, on vérifie si elle est valide, si nécessaire un utilisant l'agorithme précédent pour savoir si l'on peut utiliser les transitions qui sont interdites depuis $(\es,\{\ec,\es\})$.
+	\item Pour vérifier l'absence de cycles de $(\es,\{\ec,\es\})$
+\end{itemize}
+\end{frame}
+\fi
+
+\begin{frame}{Algorithme}
+On construit $A\times \text{det}(A) \times B$ où B est l'automate ci-dessous complété par les transitions interdites. On vérifie ensuite que les transitions interdites ne sont en fait pas utilisées et qu'il n'y a pas de cycle dont la composante de droite reste dans l'état $(\es,\{\ec, \es\})$. Cet algorithme est EXPTIME.
+
+\begin{myth}
+La décision de la T-diagnosticabilité est EXPTIME.
+\end{myth}
+
+Nous pensons qu'il est possible d'éviter de construire explicitement le déterminisé afin d'obtenir un algorithme PSPACE.
+\end{frame}
+
+\begin{frame}{PSPACE-dur}
+\begin{figure}
+\label{t2diag}
+$D_{1,3}$ : 
+\scalebox{0.95}{
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, shape = rectangle, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, right of = 3] (4) {4};
+  \node[main node, right of = 4] (5) {5};
+  \node[main node, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+$D_{2,3}$ : 
+\scalebox{0.95}{
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, shape = rectangle, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, right of = 5] (6) {6};
+  \node[main node, right of = 6] (7) {7};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+$D_{3,3}$ : 
+\scalebox{0.95}{
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, right of = 1] (2) {2};
+  \node[main node, right of = 2] (3) {3};
+  \node[main node, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, shape = rectangle, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{PSPACE-dur (2)}
+\begin{figure}
+\label{t3diag}
+$D_{1,4}$ :
+\scalebox{0.9}{
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=0.8cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, shape = rectangle, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, shape = rectangle, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, right of = 5] (6) {6};
+  \node[main node, right of = 6] (7) {7};
+  \node[main node, right of = 7] (8) {8};
+  \node[main node, shape = rectangle, right of = 8] (9) {9};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+    (8) edge (9)
+    (9) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+$D_{2,4}$ :
+\scalebox{0.9}{
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=0.8cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, shape = rectangle, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, shape = rectangle, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
+  \node[main node, right of = 7] (8) {8};
+  \node[main node, right of = 8] (9) {9};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+    (8) edge (9)
+    (9) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+$D_{3,4}$ :
+\scalebox{0.9}{
+ \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=0.8cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, right of = 1] (2) {2};
+  \node[main node, right of = 2] (3) {3};
+  \node[main node, right of = 3] (4) {4};
+  \node[main node, shape = rectangle, right of = 4] (5) {5};
+  \node[main node, shape = rectangle, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
+  \node[main node, shape = rectangle, right of = 7] (8) {8};
+  \node[main node, shape = rectangle, right of = 8] (9) {9};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+    (8) edge (9)
+    (9) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+$D_{3,4}$ : 
+\scalebox{0.9}{
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=0.8cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (0) {0};
+  \node[main node, shape = rectangle, right of = 0] (1) {1};
+  \node[main node, shape = rectangle, right of = 1] (2) {2};
+  \node[main node, shape = rectangle, right of = 2] (3) {3};
+  \node[main node, right of = 3] (4) {4};
+  \node[main node, right of = 4] (5) {5};
+  \node[main node, right of = 5] (6) {6};
+  \node[main node, shape = rectangle, right of = 6] (7) {7};
+  \node[main node, shape = rectangle, right of = 7] (8) {8};
+  \node[main node, shape = rectangle, right of = 8] (9) {9};
+
+  \path[every node/.style={font=\sffamily\small}]
+    (0) edge (1)
+    (1) edge (2)
+    (2) edge (3)
+    (3) edge (4)
+    (4) edge (5)
+    (5) edge (6)
+    (6) edge (7)
+    (7) edge (8)
+    (8) edge (9)
+    (9) edge [bend right = 30] (2);
+\end{tikzpicture}
+}\newline
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{PSPACE-dur (3)}
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=2cm,
+  thick,main node/.style={circle,draw,font=\sffamily\bfseries}, align=center]
+
+  \baselineskip=0.1cm
+  \lineskiplimit=4cm
+  \lineskip=0.1cm
+
+  \node[main node, initial, initial text={}] (a1) {$A_1$};
+  \node[main node, shape = rectangle, right of = a1] (d1) {$D_1$};
+  \node[below of = a1] (ai) {$\vdots$};
+  \node[right of = ai] (di) {$\vdots$};
+  \node[main node, initial, initial text={}, below of = ai] (an) {$A_n$};
+  \node[main node, shape = rectangle, right of = an] (dn) {$D_n$};
+	\draw[->,>=latex] (a1)->(d1) node[midway,above]{$\alpha$};
+	\draw[->,>=latex] (an)->(dn) node[midway,above]{$\alpha$};
+\end{tikzpicture}
+
+\begin{myth}
+La décision de la T-diagnosticabilité est PSPACE-dure.
+\end{myth}
+\end{frame}
+
 \end{section}
 
 \end{document}
