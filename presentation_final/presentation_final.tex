@@ -1,0 +1,158 @@
+\documentclass[11pt]{beamer}
+\usetheme{Singapore}
+\usepackage[utf8]{inputenc}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{float}
+
+
+\newtheorem{mydef}{D\'efinition}
+
+\author{François Godi \and Xavier Montillet \and Chen Qian}
+\title{Opacit\'e des automates}
+\setbeamercovered{transparent} 
+\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+%\institute{} 
+%\date{} 
+%\subject{} 
+\usepackage{tcolorbox}
+\tcbuselibrary{skins}
+
+\colorlet{xlightblue}{blue!5}
+
+\newtcolorbox{beamerlikethm}[1]{
+  title=#1,
+  beamer,
+  colback=xlightblue,
+  colframe=blue!30,
+  fonttitle=\bfseries,
+  left=1mm,
+  right=1mm,
+  top=1mm,
+  bottom=1mm,
+  middle=1mm
+}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\tableofcontents
+\end{frame}
+
+\begin{section}{T-diagnosticabilit\'e}
+
+  \begin{frame}{T-diagnosticabilit\'e}
+    \begin{block}{Intuition}
+      Il existe une borne $n$ telle que, pour toute faute $u$, si l'on a attendu $n$ nouveaux observables ($v$) après que $u$ ce soit produite, alors il y a eu un moment où l'on avait observé $\pi_{\Sigma_o}(uv')$ et où tous les autres mots qui produisent l'observation $\pi_{\Sigma_o}(uv')$ contiennent une faute. Ainsi, lorsque une faute a eu lieu, on peut toujours affirmer sans se tromper qu'elle eu lieu (au plus tard $n$ observables après qu'elle se soit produite).
+    \end{block}
+  \end{frame}
+
+  \begin{frame}{D\'efinition formelle}
+    Formellement nous pouvons d\'efinir la T-diagnosticabilit\'e comme ci-dessous
+    
+    \begin{mydef}{T-diagnosticabilité}
+      
+      $$
+      \begin{array}{l}
+        \exists n \in \mathbb{N}, \ \forall u \in L^{MIN}_F(S), \forall v \in \Sigma^*.\\
+        (uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow \ \exists v' \leq v. \\
+(u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+      \end{array}
+      $$
+
+    \end{mydef}
+    
+  \end{frame}
+
+  \begin{frame}{Example}
+    
+    \begin{figure}[H]
+      \begin{center}
+        \scalebox{1.5}{
+          \begin{tikzpicture}
+            \node[] (0) at (-1,0) {};
+            \node[draw,circle] (1) at (0,0) {O};
+            \node[draw,rectangle] (2) at (1.5,1) {N};
+            \node[draw,rectangle] (3) at (3,0) {E};
+            \node[draw,circle] (4) at (1.5,-1) {S};
+            \draw[->,>=latex] (0)->(1) {}; 
+            \draw[->,>=latex] (1)->(2) node[midway,above]{$a$};
+            \draw[->,>=latex] (2)->(3) node[midway,above]{$a,b$};
+            \draw[->,>=latex] (3)->(4) node[midway,below]{$b$};
+            \draw[->,>=latex] (4)->(1) node[midway,below]{$a,b$};
+            \draw [->,>=latex] (1) edge[in=100,out=80,loop] node[above] {$a$} (1);
+            \draw [->,>=latex] (3) edge[in=100,out=80,loop] node[above] {$b$} (3);
+            \draw [->,>=latex,dashed] (1) edge [in=110,out=0] node[midway,above]{$b$} (4) ;
+          \end{tikzpicture}
+        }
+      \end{center}
+      \caption{V\'erification de T-diagnosticabilit\'e. Les \'etats carr\'es repr\'esentent les \'etats fautifs et les cercles repr\'esentent les \'etats non-fautifs}
+    \end{figure}
+
+  \end{frame}
+
+  \begin{frame}{Non-T-diagnosticabilit\'e}
+    \begin{figure}[H]
+      \caption{Deux ex\'ecutions qui montrent que le syst\`eme est non-T-diagnosticable}
+      \begin{center}
+        \begin{tikzpicture}
+          \node[](0) at (-1,0) {};
+          \node[draw,circle] (1) at (0,0) {O};
+          \node[draw,rectangle] (2) at (2,0) {N};
+          \node[draw,rectangle] (3) at (4,0) {E};
+          \node[draw,circle] (4) at (6,0) {S};
+          \draw[->,>=latex] (0)->(1) {};
+          \draw[->,>=latex] (1)->(2) node[midway,above]{$a$};
+          \draw[->,>=latex] (2)->(3) node[midway,above]{$a$};
+          \draw[->,>=latex] (3)->(4) node[midway,above]{$b$};
+          
+          
+          \node[](5) at (-1,-2) {};
+          \node[draw,circle] (6) at (0,-2) {O};
+          \node[draw,circle] (7) at (2,-2) {O};
+          \node[draw,circle] (8) at (4,-2) {O};
+          \node[draw,circle] (9) at (6,-2) {S};
+          
+          \draw[->,>=latex] (5)->(6) {};
+          \draw[->,>=latex] (6)->(7) node[midway,above]{$a$};
+          \draw[->,>=latex] (7)->(8) node[midway,above]{$a$};
+          \draw[->,>=latex] (8)->(9) node[midway,above]{$b$};
+        \end{tikzpicture}
+      \end{center}
+    \end{figure}
+  \end{frame}
+  \begin{frame}{T-Diagnostiqueur}
+    La construction du T-diagnostiqueur consiste seulement à d\'eterminiser l'automate $S$. 
+  \end{frame}
+
+  \begin{frame}{Relation T-diagnosticabilit\'e et diagnosticabilit\'e}
+    Reprenons les deux d\'efinition :
+    \begin{itemize}
+    \item $$\begin{array}{l}
+      \exists n \in \mathbb N, \forall u \in L_F(S),\\
+      \forall v \in \Sigma^*, \left(||v||_{\Sigma_o} \ge n \land uv \in  L(S)\right) \implies\\
+      \forall w \in L(S), \pi_{\Sigma_o}(w)=\pi_{\Sigma_o}(uv) \implies w \in L_F(S)
+    \end{array}$$
+    \item $$\begin{array}{l}
+      \exists n \in \mathbb{N}, \ \forall u \in L^{MIN}_F(S), \forall v \in \Sigma^*.\\
+      (uv \in L(S) \ \wedge \  ||v||_{\Sigma_o}\geq n) \Rightarrow \ \exists v' \leq v. \\
+      (u.Pref(v') \subseteq L_F(S) \ \wedge \  [uv'] \cap L(S) \subseteq L_F(S))
+    \end{array}$$
+
+    \end{itemize}
+
+    La T-diagnosticabilité généralise la diagnosticabilité
+
+  \end{frame}
+\end{section}
+
+\end{document}
