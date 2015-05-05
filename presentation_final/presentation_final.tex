@@ -77,7 +77,7 @@
     
     \begin{figure}[H]
       \begin{center}
-        \scalebox{1.5}{
+        \resizebox{3.0cm}{!}{
           \begin{tikzpicture}
             \node[] (0) at (-1,0) {};
             \node[draw,circle] (1) at (0,0) {O};
@@ -93,17 +93,15 @@
             \draw [->,>=latex] (3) edge[in=100,out=80,loop] node[above] {$b$} (3);
             \draw [->,>=latex,dashed] (1) edge [in=110,out=0] node[midway,above]{$b$} (4) ;
           \end{tikzpicture}
-        }
+          }
       \end{center}
       \caption{V\'erification de T-diagnosticabilit\'e. Les \'etats carr\'es repr\'esentent les \'etats fautifs et les cercles repr\'esentent les \'etats non-fautifs}
     \end{figure}
 
-  \end{frame}
 
-  \begin{frame}{Non-T-diagnosticabilit\'e}
     \begin{figure}[H]
-      \caption{Deux ex\'ecutions qui montrent que le syst\`eme est non-T-diagnosticable}
       \begin{center}
+        \resizebox{3.0cm}{!}{
         \begin{tikzpicture}
           \node[](0) at (-1,0) {};
           \node[draw,circle] (1) at (0,0) {O};
@@ -126,8 +124,9 @@
           \draw[->,>=latex] (6)->(7) node[midway,above]{$a$};
           \draw[->,>=latex] (7)->(8) node[midway,above]{$a$};
           \draw[->,>=latex] (8)->(9) node[midway,above]{$b$};
-        \end{tikzpicture}
+        \end{tikzpicture}}
       \end{center}
+      \caption{Deux ex\'ecutions qui montrent que le syst\`eme est non-T-diagnosticable}
     \end{figure}
   \end{frame}
   \begin{frame}{T-Diagnostiqueur}
